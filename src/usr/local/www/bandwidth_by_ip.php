@@ -19,6 +19,10 @@
  * limitations under the License.
  */
 
+/*
+2018.02.19 한글 번역 시작
+*/
+
 require_once('auth_check.inc');
 require_once('interfaces.inc');
 require_once('pfsense-utils.inc');
@@ -157,6 +161,6 @@ unset($listedIPs);
 
 //no bandwidth usage found
 if ($someinfo == false) {
-	echo gettext("no info");
+	echo gettext("정보를 찾을 수 없습니다.");
 }
 ?>

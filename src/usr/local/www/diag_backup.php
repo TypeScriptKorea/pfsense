@@ -487,7 +487,7 @@ if (is_subsystem_dirty('restore')):
 	<br/>
 	<form action="diag_reboot.php" method="post">
 		<input name="Submit" type="hidden" value="Yes" />
-		<?php print_info_box(gettext("The firewall configuration has been changed.") . "<br />" . gettext("The firewall is now rebooting.")); ?>
+		<?php print_info_box(gettext("방화벽 구성을 성공적으로 변경하였습니다.") . "<br />" . gettext("방화벽을 재부팅합니다.")); ?>
 		<br />
 	</form>
 <?php
@@ -554,7 +554,7 @@ $section = new Form_Section('Restore Backup');
 
 $section->addInput(new Form_StaticText(
 	null,
-	sprintf(gettext("Open a %s configuration XML file and click the button below to restore the configuration."), $g['product_name'])
+	sprintf(gettext("%s 구성 XML 파일을 열고 아래 단추를 클릭하여 구성을 복원하십시오."), $g['product_name'])
 ));
 
 $section->addInput(new Form_Select(
@@ -610,7 +610,7 @@ if (($config['installedpackages']['package'] != "") || (is_subsystem_dirty("pack
 			'Reinstall Packages',
 			null,
 			'fa-retweet'
-		))->setHelp('Click this button to reinstall all system packages.  This may take a while.')->addClass('btn-success')->setAttribute('id');
+		))->setHelp('모든 시스템 패키지를 재설치하실 경우 이 버튼을 누르십시오.')->addClass('btn-success')->setAttribute('id');
 
 		$section->add($group);
 	}
@@ -623,7 +623,7 @@ if (($config['installedpackages']['package'] != "") || (is_subsystem_dirty("pack
 			'Clear Package Lock',
 			null,
 			'fa-wrench'
-		))->setHelp('Click this button to clear the package lock if a package fails to reinstall properly after an upgrade.')->addClass('btn-warning')->setAttribute('id');
+		))->setHelp('업그레이드를 진행하신 뒤 패키지가 재설치되지 않을 경우 이 버튼을 눌러 패키지 잠금을 지우십시오.')->addClass('btn-warning')->setAttribute('id');
 
 		$section->add($group);
 	}

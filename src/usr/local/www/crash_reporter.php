@@ -19,6 +19,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-crash-reporter
 ##|*NAME=Crash reporter
@@ -71,7 +76,7 @@ $crash_report_header .= "\nCrash report details:\n";
 exec("/bin/cat /tmp/PHP_errors.log", $php_errors);
 
 	if ($_POST['Submit'] == "Yes") {
-		echo gettext("Processing...");
+		echo gettext("처리중...");
 		if (!is_dir("/var/crash")) {
 			mkdir("/var/crash", 0750, true);
 		}
@@ -83,7 +88,7 @@ exec("/bin/cat /tmp/PHP_errors.log", $php_errors);
 		exec("/usr/bin/gzip /var/crash/*");
 		$files_to_upload = glob("/var/crash/*");
 		echo "<br/>";
-		echo gettext("Uploading...");
+		echo gettext("업로드중...");
 		ob_flush();
 		flush();
 		if (is_array($files_to_upload)) {
@@ -94,11 +99,11 @@ exec("/bin/cat /tmp/PHP_errors.log", $php_errors);
 				array_map('unlink', glob("/var/crash/*"));
 				// Erase the contents of the PHP error log
 				fclose(fopen("/tmp/PHP_errors.log", 'w'));
-				echo "<br/>" . gettext("Deleted crash report files from local disk.");
+				echo "<br/>" . gettext("로컬디스크의 오류 보고서를 삭제하였습니다.");
 			}
-			echo "<p><a href=\"/\">" . gettext("Continue") . "</a>" . "</p>";
+			echo "<p><a href=\"/\">" . gettext("계속") . "</a>" . "</p>";
 		} else {
-			echo gettext("Could not find any crash files.");
+			echo gettext("크래시 파일을 찾을 수 없습니다.");
 		}
 	} else if ($_POST['Submit'] == "No") {
 		array_map('unlink', glob("/var/crash/*"));
@@ -127,12 +132,12 @@ exec("/bin/cat /tmp/PHP_errors.log", $php_errors);
 		}
 ?>
 	<div class="panel panel-default">
-		<div class="panel-heading"><h2 class="panel-title"><?=gettext("Unfortunately a Programming Bug has been detected")?></h2></div>
+		<div class="panel-heading"><h2 class="panel-title"><?=gettext("프로그램 버그가 감지되었습니다.")?></h2></div>
 		<div class="panel-body">
 			<div class="content">
 				<p>
-					<?=gettext("The programming debug logs can be submitted to the pfSense developers for inspection.")?>
-					<i><?=gettext("Please double check the contents to ensure this information is acceptable to disclose before submitting.")?></i>
+					<?=gettext("pfSense개발진에게 디버그 로그를 제출하실 수 있습니다.")?>
+					<i><?=gettext("제출하실 내용이 올바른지 다시 확인해주십시오.")?></i>
 				</p>
 				<textarea readonly style="width: 100%; height: 350px;">
 					<?=$crash_reports?>
@@ -141,11 +146,11 @@ exec("/bin/cat /tmp/PHP_errors.log", $php_errors);
 				<form action="crash_reporter.php" method="post">
 					<button class="btn btn-primary" name="Submit" type="submit" value="Yes">
 						<i class="fa fa-upload"></i>
-						<?=gettext("Yes")?> - <?=gettext("Submit this to the developers for inspection")?>
+						<?=gettext("네")?> - <?=gettext("검사를 위해 개발자에게 제출하십시오.")?>
 					</button>
 					<button class="btn btn-warning" name="Submit" type="submit" value="No">
 						<i class="fa fa-undo"></i>
-						<?=gettext("No")?> - <?=gettext("Just delete the crash report and return to the Dashboard")?>
+						<?=gettext("아니오")?> - <?=gettext("오류 보고서를 삭제하고 대시보드로 돌아갑니다.")?>
 					</button>
 				</form>
 			</div>

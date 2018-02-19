@@ -23,6 +23,10 @@
  * limitations under the License.
  */
 
+/*
+2018.02.19 번역시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-backup-restore
 ##|*NAME=Diagnostics: Backup & Restore
@@ -158,7 +162,7 @@ if ($_POST) {
 		if ($mode == "download") {
 			if ($_POST['encrypt']) {
 				if (!$_POST['encrypt_password']) {
-					$input_errors[] = gettext("A password for encryption must be supplied and confirmed.");
+					$input_errors[] = gettext("비밀번호가 필요합니다.");
 				}
 			}
 
@@ -243,13 +247,13 @@ if ($_POST) {
 					/* read the file contents */
 					$data = file_get_contents($_FILES['conffile']['tmp_name']);
 					if (!$data) {
-						log_error(sprintf(gettext("Warning, could not read file %s"), $_FILES['conffile']['tmp_name']));
+						log_error(sprintf(gettext("%s 파일을 읽을 수 없습니다."), $_FILES['conffile']['tmp_name']));
 						return 1;
 					}
 
 					if ($_POST['decrypt']) {
 						if (!tagfile_deformat($data, $data, "config.xml")) {
-							$input_errors[] = gettext("The uploaded file does not appear to contain an encrypted pfsense configuration.");
+							$input_errors[] = gettext("업로드하신 파일에 암호화된 MSI 구성을 찾을 수 없습니다.");
 							return 1;
 						}
 						$data = decrypt_data($data, $_POST['decrypt_password']);

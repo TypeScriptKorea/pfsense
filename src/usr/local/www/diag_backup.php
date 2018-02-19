@@ -233,7 +233,7 @@ if ($_POST) {
 		if ($mode == "restore") {
 			if ($_POST['decrypt']) {
 				if (!$_POST['decrypt_password']) {
-					$input_errors[] = gettext("A password for decryption must be supplied and confirmed.");
+					$input_errors[] = gettext("비밀번호가 필요합니다.");
 				}
 			}
 

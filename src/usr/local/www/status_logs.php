@@ -23,6 +23,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-logs-system
 ##|*NAME=Status: Logs: System
@@ -138,10 +143,10 @@ if (!$rawfilter) {
 		<table class="table table-striped table-hover table-condensed sortable-theme-bootstrap" data-sortable>
 			<thead>
 				<tr class="text-nowrap">
-					<th><?=gettext("Time")?></th>
-					<th><?=gettext("Process")?></th>
+					<th><?=gettext("시간")?></th>
+					<th><?=gettext("프로세스")?></th>
 					<th><?=gettext("PID")?></th>
-					<th style="width:100%"><?=gettext("Message")?></th>
+					<th style="width:100%"><?=gettext("메시지")?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -169,7 +174,7 @@ if (!$rawfilter) {
 		</table>
 <?php
 	if (count($filterlog) == 0) {
-		print_info_box(gettext('No logs to display.'));
+		print_info_box(gettext('표시할 로그가 없습니다.'));
 	}
 ?>
 		</div>
@@ -190,8 +195,8 @@ if (!$rawfilter) {
 		<table class="table table-striped table-hover table-condensed sortable-theme-bootstrap" data-sortable>
 			<thead>
 				<tr class="text-nowrap">
-					<th><?=gettext("Time")?></th>
-					<th style="width:100%"><?=gettext("Message")?></th>
+					<th><?=gettext("시간")?></th>
+					<th style="width:100%"><?=gettext("메시지")?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -217,7 +222,7 @@ events.push(function() {
 
 <?php
 	if ($rows == 0) {
-		print_info_box(gettext('No logs to display.'));
+		print_info_box(gettext('표시할 로그가 없습니다.'));
 	}
 ?>
 	</div>

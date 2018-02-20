@@ -19,6 +19,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 
+*/
+
 ##|+PRIV
 ##|*IDENT=page-package-edit
 ##|*NAME=Package: Edit
@@ -41,10 +46,10 @@ $xml = htmlspecialchars($_REQUEST['xml']);
 $xml_fullpath = realpath('/usr/local/pkg/' . $xml);
 
 if ($xml == "" || $xml_fullpath === false || substr($xml_fullpath, 0, strlen('/usr/local/pkg/')) != '/usr/local/pkg/') {
-	$pgtitle = array(gettext("Package"), gettext("Editor"));
+	$pgtitle = array(gettext("패키지"), gettext("에디터"));
 	$pglinks = array("", "@self");
 	include("head.inc");
-	print_info_box(gettext("No valid package defined."), 'danger', false);
+	print_info_box(gettext("정의된 패키지가 유효하지 않습니다."), 'danger', false);
 	include("foot.inc");
 	die;
 } else {
@@ -526,11 +531,11 @@ if ($pkg['title'] != "") {
 			$pglinks[] = ((($subtitle == "Edit") || (strlen($pkg['menu'][0]['url']) == 0)) ? "@self" : $pkg['menu'][0]['url']);
 		}
 	} else {
-		$pgtitle = array(gettext("Package"), gettext($pkg['title']));
+		$pgtitle = array(gettext("패키지"), gettext($pkg['title']));
 		$pglinks = array("", ((($subtitle == "Edit") || (strlen($pkg['menu'][0]['url']) == 0)) ? "@self" : $pkg['menu'][0]['url']));
 	}
 } else {
-	$pgtitle = array(gettext("Package"), gettext("Editor"));
+	$pgtitle = array(gettext("패키지"), gettext("에디터"));
 	$pglinks = array("", "@self");
 }
 
@@ -655,8 +660,8 @@ $form->addGlobal(new Form_Input(
 
 if ($pkg['advanced_options'] == "enabled") {
 	$advfield_count = 0;
-	$advanced = new Form_Section("Advanced Features");
-	$advanced->addClass('advancedoptions');
+	$advanced = new Form_Section("고급 기능");
+	$advanced->addClass('고급 옵션');
 }
 
 $js_array = array();
@@ -1525,8 +1530,8 @@ if ($pkg['custom_php_after_form_command']) {
 }
 
 
-$hidemsg = gettext("Show Advanced Options");
-$showmsg = gettext("Hide Advanced Options");
+$hidemsg = gettext("고급 옵션 보이기");
+$showmsg = gettext("고급 옵션 숨기기");
 
 if ($pkg['fields']['field'] != "") { ?>
 <script type="text/javascript">

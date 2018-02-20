@@ -19,6 +19,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-pf-info
 ##|*NAME=Diagnostics: pfInfo
@@ -28,9 +33,9 @@
 
 require_once("guiconfig.inc");
 
-$pgtitle = array(gettext("Diagnostics"), gettext("pfInfo"));
+$pgtitle = array(gettext("진단"), gettext("pf정보"));
 
-if (stristr($_POST['Submit'], gettext("No"))) {
+if (stristr($_POST['Submit'], gettext("아니오"))) {
 	header("Location: index.php");
 	exit;
 }
@@ -60,7 +65,7 @@ $form->addGlobal(new Form_Input(
 	'hidden',
 	'yes'
 ));
-$section = new Form_Section('Auto Update Page');
+$section = new Form_Section('페이지 자동 업데이트');
 
 $section->addInput(new Form_Checkbox(
 	'refresh',
@@ -99,9 +104,9 @@ print $form;
 </script>
 
 <div class="panel panel-default">
-	<div class="panel-heading"><h2 class="panel-title"><?=gettext('Output')?></h2></div>
+	<div class="panel-heading"><h2 class="panel-title"><?=gettext('출력')?></h2></div>
 	<div class="panel panel-body">
-		<pre id="xhrOutput"><?=gettext("Gathering PF information, please wait...")?></pre>
+		<pre id="xhrOutput"><?=gettext("PF정보를 수집중입니다. 잠시만 기다려주십시오.")?></pre>
 	</div>
 </div>
 

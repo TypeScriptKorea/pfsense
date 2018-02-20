@@ -23,6 +23,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-arptable
 ##|*NAME=Diagnostics: ARP Table
@@ -44,10 +49,10 @@ if (isset($_POST['deleteentry'])) {
 		$ret = 1;
 	}
 	if ($ret) {
-		$savemsg = sprintf(gettext("%s is not a valid IPv4 address or could not be deleted."), $ip);
+		$savemsg = sprintf(gettext("%s는 유효한 IPv4주소가 아니거나 삭제할 수 없습니다."), $ip);
 		$savemsgtype = 'alert-warning';
 	} else {
-		$savemsg = sprintf(gettext("The ARP cache entry for %s has been deleted."), $ip);
+		$savemsg = sprintf(gettext("%s의 ARP 캐시 항목이 삭제되었습니다."), $ip);
 		$savemsgtype = 'success';
 	}
 }
@@ -266,7 +271,7 @@ function _getHostName($mac, $ip) {
 	return "";
 }
 
-$pgtitle = array(gettext("Diagnostics"), gettext("ARP Table"));
+$pgtitle = array(gettext("진단"), gettext("ARP 테이블"));
 include("head.inc");
 
 // Handle save msg if defined
@@ -277,7 +282,7 @@ if ($savemsg) {
 
 <!-- On modern hardware the table will load so fast you may never see this! -->
 <div id="loading">
-	<?= gettext(" Loading, please wait...")?>
+	<?= gettext("로딩중...")?>
 </div>
 
 <?php
@@ -322,20 +327,20 @@ $data = msort($data, "dnsresolve");
 $mac_man = load_mac_manufacturer_table();
 ?>
 <div class="panel panel-default">
-	<div class="panel-heading"><h2 class="panel-title"><?=gettext('ARP Table')?></h2></div>
+	<div class="panel-heading"><h2 class="panel-title"><?=gettext('ARP 테이블')?></h2></div>
 	<div class="panel-body">
 
 <div class="table-responsive">
 	<table class="sortable-theme-bootstrap table table-striped table-hover" data-sortable>
 		<thead>
 			<tr>
-				<th><?= gettext("Interface")?></th>
-				<th><?= gettext("IP address")?></th>
-				<th><?= gettext("MAC address")?></th>
-				<th><?= gettext("Hostname")?></th>
-				<th><?= gettext("Status")?></th>
-				<th><?= gettext("Link Type")?></th>
-				<th data-sortable="false"><?=gettext("Actions")?></th>
+				<th><?= gettext("인터페이스")?></th>
+				<th><?= gettext("IP 주소")?></th>
+				<th><?= gettext("MAC 주소")?></th>
+				<th><?= gettext("호스트 이름")?></th>
+				<th><?= gettext("상태")?></th>
+				<th><?= gettext("링크 타입")?></th>
+				<th data-sortable="false"><?=gettext("작업")?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -360,7 +365,7 @@ $mac_man = load_mac_manufacturer_table();
 				<td><?=ucfirst($entry['status'])?></td>
 				<td><?=$entry['linktype']?></td>
 				<td>
-					<a class="fa fa-trash" title="<?=gettext('Delete arp cache entry')?>"	href="diag_arp.php?deleteentry=<?=$entry['ip']?>" usepost></a>
+					<a class="fa fa-trash" title="<?=gettext('apr 캐시 항목 삭제')?>"	href="diag_arp.php?deleteentry=<?=$entry['ip']?>" usepost></a>
 				</td>
 			</tr>
 		<?php endforeach?>
@@ -382,10 +387,10 @@ events.push(function() {
 
 <div class="infoblock blockopen">
 <?php
-print_info_box(sprintf(gettext('Local IPv6 peers use %1$sNDP%2$s instead of ARP.'), '<a href="diag_ndp.php">', '</a>') . '<br />' .
-   '<br />' . gettext('Permanent ARP entries are shown for local interfaces or static ARP entries.') .
-   '<br />' . gettext('Normal dynamic ARP entries show a countdown timer until they will expire and then be re-checked.') .
-   '<br />' . gettext('Incomplete ARP entries indicate that the target host has not yet replied to an ARP request.'), 'info', false);
+print_info_box(sprintf(gettext('로컬 IPv6 피어는 ARP대신 %1$sNDP%2$s 을(를) 사용합니다.'), '<a href="diag_ndp.php">', '</a>') . '<br />' .
+   '<br />' . gettext('로컬 인터페이스 혹은 정적 ARP 항목에 영구 ARP 항목이 표시됩니다.') .
+   '<br />' . gettext('정상적인 동적 ARP항목은 만료될 때 까지 카운트 다운 한 뒤 다시 확인합니다.') .
+   '<br />' . gettext('미완료 ARP항목은 대상 호스트가 ARP요청에 응답하지 않았음을 나타냅니다.'), 'info', false);
 ?>
 </div>
 

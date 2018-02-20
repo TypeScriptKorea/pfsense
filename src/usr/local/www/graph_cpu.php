@@ -25,6 +25,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-cpuutilization
 ##|*NAME=Diagnostics: CPU Utilization
@@ -73,8 +78,8 @@ print('<?xml version="1.0" encoding="UTF-8"?>' . "\n");?>
 		<text id="grid_txt2" x="100%" y="50%" <?=$attribs['grid_txt']?> text-anchor="end">50%</text>
 		<text id="grid_txt3" x="100%" y="75%" <?=$attribs['grid_txt']?> text-anchor="end">25%</text>
 		<text id="graph_cpu_txt" x="4" y="8" <?=$attribs['cpu']?>> </text>
-		<text id="error" x="50%" y="50%" visibility="hidden" <?=$attribs['error']?> text-anchor="middle"><?=gettext("Cannot get CPU load"); ?></text>
-		<text id="collect_initial" x="50%" y="50%" visibility="hidden" <?=$attribs['collect_initial']?> text-anchor="middle"><?=gettext("Collecting initial data, please wait"); ?>...</text>
+		<text id="error" x="50%" y="50%" visibility="hidden" <?=$attribs['error']?> text-anchor="middle"><?=gettext("CPU 로드를 가져올 수 없습니다."); ?></text>
+		<text id="collect_initial" x="50%" y="50%" visibility="hidden" <?=$attribs['collect_initial']?> text-anchor="middle"><?=gettext("데이터를 수집하는 중입니다. 잠시만 기다려주십시오."); ?>...</text>
 	</g>
 	<script type="text/ecmascript">
 		<![CDATA[
@@ -86,7 +91,7 @@ print('<?xml version="1.0" encoding="UTF-8"?>' . "\n");?>
 if (typeof getURL == 'undefined') {
 	getURL = function(url, callback) {
 		if (!url) {
-			throw '<?=gettext("No URL for getURL"); ?>';
+			throw '<?=gettext("에getURL URL이 없습니다."); ?>';
 		}
 
 		try {
@@ -95,7 +100,7 @@ if (typeof getURL == 'undefined') {
 			}
 		} catch (e) {}
 		if (typeof callback != 'function') {
-			throw '<?=gettext("No callback function for getURL"); ?>';
+			throw '<?=gettext("getURL에 대한 콜백함수가 없습니다."); ?>';
 		}
 
 		var http_request = null;
@@ -111,7 +116,7 @@ if (typeof getURL == 'undefined') {
 			}
 		}
 		if (!http_request) {
-			throw '<?=gettext("Both getURL and XMLHttpRequest are undefined"); ?>';
+			throw '<?=gettext("getURL 과 XMLHttpRequest 모두 정의되지 않았습니다."); ?>';
 		}
 
 		http_request.onreadystatechange = function() {

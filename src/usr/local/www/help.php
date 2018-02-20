@@ -19,6 +19,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 시작
+*/
+
 require_once("guiconfig.inc");
 
 /* Define hash of jumpto url maps */
@@ -531,12 +536,12 @@ require_once("head.inc");
 
 if (is_array($allowedpages) && str_replace('*', '', $allowedpages[0]) == "help.php") {
 	if (count($allowedpages) == 1) {
-		print_info_box(gettext("The Help page is the only page this user has privilege for."));
+		print_info_box(gettext("도움말 페이지는 해당 사용자에게 권한이 있는 유일한 페이지 입니다."));
 	} else {
-		print_info_box(gettext("Displaying the Help page because it is the first page this user has privilege for."));
+		print_info_box(gettext("해당 사용자에게 권한이 있는 첫 페이지 이므로 도움말 페이지를 표시합니다."));
 	}
 } else {
-	print_info_box(gettext("Help page accessed directly without any page parameter."));
+	print_info_box(gettext("도움말 페이지는 페이지 파라미터 없이 바로 접속하실 수 있습니다."));
 }
 
 include("foot.inc");

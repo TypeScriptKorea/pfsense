@@ -20,6 +20,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.21
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-configurationhistory
 ##|*NAME=Diagnostics: Configuration History
@@ -31,7 +36,7 @@ require_once("guiconfig.inc");
 
 if (isset($_POST['backupcount'])) {
 	if (!empty($_POST['backupcount']) && (!is_numericint($_POST['backupcount']) || ($_POST['backupcount'] < 0))) {
-		$input_errors[] = gettext("Invalid Backup Count specified");
+		$input_errors[] = gettext("백업 횟수가 잘못 지정되었습니다.");
 	}
 
 	if (!$input_errors) {
@@ -42,7 +47,7 @@ if (isset($_POST['backupcount'])) {
 			unset($config['system']['backupcount']);
 			$changedescr = gettext("(platform default)");
 		}
-		write_config(sprintf(gettext("Changed backup revision count to %s"), $changedescr));
+		write_config(sprintf(gettext("백업 개정 욋수를 %s(으)로 변경하였습니다."), $changedescr));
 	}
 }
 
@@ -52,7 +57,7 @@ if ($_POST['newver'] != "") {
 	if (config_restore($g['conf_path'] . '/backup/config-' . $_POST['newver'] . '.xml') == 0) {
 		$savemsg = sprintf(gettext('Successfully reverted to timestamp %1$s with description "%2$s".'), date(gettext("n/j/y H:i:s"), $_POST['newver']), htmlspecialchars($confvers[$_POST['newver']]['description']));
 	} else {
-		$savemsg = gettext("Unable to revert to the selected configuration.");
+		$savemsg = gettext("선택하신 구성으로 되돌릴 수 없습니다.");
 	}
 }
 
@@ -98,7 +103,7 @@ cleanup_backupcache(false);
 $confvers = get_backups();
 unset($confvers['versions']);
 
-$pgtitle = array(gettext("Diagnostics"), htmlspecialchars(gettext("Backup & Restore")), gettext("Config History"));
+$pgtitle = array(gettext("진단"), htmlspecialchars(gettext("백업 및 복원")), gettext("설정 히스토리"));
 $pglinks = array("", "diag_backup.php", "@self");
 include("head.inc");
 
@@ -111,8 +116,8 @@ if ($savemsg) {
 }
 
 $tab_array = array();
-$tab_array[] = array(htmlspecialchars(gettext("Backup & Restore")), false, "diag_backup.php");
-$tab_array[] = array(gettext("Config History"), true, "diag_confbak.php");
+$tab_array[] = array(htmlspecialchars(gettext("백업 및 복원")), false, "diag_backup.php");
+$tab_array[] = array(gettext("설정 히스토리"), true, "diag_confbak.php");
 display_top_tabs($tab_array);
 
 if ($diff) {
@@ -120,7 +125,7 @@ if ($diff) {
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h2 class="panel-title">
-			<?=sprintf(gettext('Configuration Diff from %1$s to %2$s'), date(gettext("n/j/y H:i:s"), $oldtime), date(gettext("n/j/y H:i:s"), $newtime))?>
+			<?=sprintf(gettext('%1$s 와 %2$s 사이의 구성 차이'), date(gettext("n/j/y H:i:s"), $oldtime), date(gettext("n/j/y H:i:s"), $newtime))?>
 		</h2>
 	</div>
 	<div class="panel-body table-responsive">
@@ -176,7 +181,7 @@ $section->addInput(new Form_StaticText(
 
 $section->addInput(new Form_Button(
 	'Submit',
-	gettext("Save"),
+	gettext("저장"),
 	null,
 	'fa-save'
 ))->addClass('btn-primary');
@@ -191,9 +196,8 @@ if (is_array($confvers)) {
 	<div class="infoblock blockopen">
 		<?php print_info_box(
 			gettext(
-				'To view the differences between an older configuration and a newer configuration, ' .
-				'select the older configuration using the left column of radio options and select the newer configuration in the right column, ' .
-				'then press the "Diff" button.'),
+				'이전 구성과 새로 설정된 구성간의 차이를 확인하시려면 다음과 같이 진행하십시오., ' .
+				'라디오 옵션의 좌측 열을 사용하여 이전 구성을 선택하시고 우측 열에서 더 새로운 구성을 선택하신 뒤 "Diff"버튼을 누르십시오'),
 			'info', false); ?>
 	</div>
 </div>

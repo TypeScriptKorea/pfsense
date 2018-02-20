@@ -19,6 +19,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-package-settings
 ##|*NAME=Package: Settings
@@ -39,7 +44,7 @@ if ($xml == "") {
 	$pgtitle = array(gettext("Package"), gettext("Editor"));
 	$pglinks = array("", "@self");
 	include("head.inc");
-	print_info_box(gettext("No valid package defined."), 'danger', false);
+	print_info_box(gettext("올바른 패키지가 정의되지 않았습니다."), 'danger', false);
 	include("foot.inc");
 	exit;
 } else {
@@ -47,14 +52,14 @@ if ($xml == "") {
 	$pkg_full_path = "{$pkg_xml_prefix}/{$xml}";
 	$pkg_realpath = realpath($pkg_full_path);
 	if (empty($pkg_realpath)) {
-		$path_error = sprintf(gettext("Package path %s not found."), htmlspecialchars($pkg_full_path));
+		$path_error = sprintf(gettext("패키지 경로 %s 을(를) 찾을 수 없습니다."), htmlspecialchars($pkg_full_path));
 	} else if (substr_compare($pkg_realpath, $pkg_xml_prefix, 0, strlen($pkg_xml_prefix))) {
-		$path_error = sprintf(gettext("Invalid path %s specified."), htmlspecialchars($pkg_full_path));
+		$path_error = sprintf(gettext("%s 는 잘못된 경로입니다."), htmlspecialchars($pkg_full_path));
 	}
 
 	if (!empty($path_error)) {
 		include("head.inc");
-		print_info_box($path_error . "<br />" . gettext("Try reinstalling the package."), 'danger', false);
+		print_info_box($path_error . "<br />" . gettext("패키지를 다시 설치하십시오."), 'danger', false);
 		include("foot.inc");
 		die;
 	}
@@ -63,7 +68,7 @@ if ($xml == "") {
 		$pkg = parse_xml_config_pkg($pkg_full_path, "packagegui");
 	} else {
 		include("head.inc");
-		print_info_box(sprintf(gettext("File not found %s."), htmlspecialchars($xml)), 'danger', false);
+		print_info_box(sprintf(gettext("%s 파일을 발견할 수 없습니다."), htmlspecialchars($xml)), 'danger', false);
 		include("foot.inc");
 		exit;
 	}
@@ -106,7 +111,7 @@ if ($_REQUEST['act'] == "update") {
 			$config['installedpackages'][$pkg['name']]['config'][$sort_list[$key]]=$current_values[$update_list['ids'][$key]];
 		}
 		// save current config
-		write_config(gettext("Package configuration changes saved from package settings page."));
+		write_config(gettext("패키지 구성 변경사항은 패키지 설정 페이지에 저장됩니다."));
 		// sync package
 		eval ("{$pkg['custom_php_resync_config_command']}");
 	}
@@ -129,7 +134,7 @@ if ($_REQUEST['act'] == "del") {
 
 	if ($a_pkg[$_REQUEST['id']]) {
 		unset($a_pkg[$_REQUEST['id']]);
-		write_config(gettext("Package configuration item deleted from package settings page."));
+		write_config(gettext("패키지 설정 페이지에서 패키지 구성 항목을 삭제합니다."));
 		if ($pkg['custom_delete_php_command'] != "") {
 			if ($pkg['custom_php_command_before_form'] != "") {
 				eval($pkg['custom_php_command_before_form']);
@@ -259,8 +264,8 @@ events.push(function() {
 
 function save_changes_to_xml(xml) {
 	var ids = $('#mainarea table tbody').sortable('serialize', {key:"ids[]"});
-	var strloading="<?=gettext('Saving changes...')?>";
-	if (confirm("<?=gettext("Confirmation Required to save changes.")?>")) {
+	var strloading="<?=gettext('변경사항 저장중...')?>";
+	if (confirm("<?=gettext("변경사항이 저장되었는지 확인하십시오.")?>")) {
 		$.ajax({
 			type: 'get',
 			cache: false,
@@ -378,8 +383,8 @@ if ($savemsg) {
 		echo "<tr><th colspan='" . count($pkg['adddeleteeditpagefields']['columnitem']) . "'>";
 		echo "<table width='100%' summary=''>";
 		echo "<tr>";
-		echo "<td class='text-left'>" . sprintf(gettext('Displaying page %1$s of %2$s'), $page, $totalpages) . "</b></td>";
-		echo "<td class='text-right'>" . gettext("Rows per page: ") . "<select onchange='document.pkgform.submit();' name='display_maximum_rows'>";
+		echo "<td class='text-left'>" . sprintf(gettext('%1$s 또는 %2$s 페이지 표시'), $page, $totalpages) . "</b></td>";
+		echo "<td class='text-right'>" . gettext("페이지당 행 개수: ") . "<select onchange='document.pkgform.submit();' name='display_maximum_rows'>";
 		for ($x = 0; $x < 250; $x++) {
 			if ($x == $display_maximum_rows) {
 				$SELECTED = "selected";
@@ -512,12 +517,12 @@ if ($savemsg) {
 							<tr>
 <?php
 			#Show custom description to edit button if defined
-			$edit_msg=($pkg['adddeleteeditpagefields']['edittext']?$pkg['adddeleteeditpagefields']['edittext']:gettext("Edit this item"));
+			$edit_msg=($pkg['adddeleteeditpagefields']['edittext']?$pkg['adddeleteeditpagefields']['edittext']:gettext("항목 편집"));
 ?>
 								<td><a class="fa fa-pencil" href="pkg_edit.php?xml=<?=$xml?>&amp;act=edit&amp;id=<?=$i?>" title="<?=$edit_msg?>"></a></td>
 <?php
 			#Show custom description to delete button if defined
-			$delete_msg=($pkg['adddeleteeditpagefields']['deletetext']?$pkg['adddeleteeditpagefields']['deletetext']:gettext("Delete this item"));
+			$delete_msg=($pkg['adddeleteeditpagefields']['deletetext']?$pkg['adddeleteeditpagefields']['deletetext']:gettext("항목 삭제"));
 ?>
 								<td>&nbsp;<a class="fa fa-trash" href="pkg.php?xml=<?=$xml?>&amp;act=del&amp;id=<?=$i?>" title="<?=$delete_msg?>"></a></td>
 							</tr>
@@ -541,7 +546,7 @@ if ($savemsg) {
 					} else if ($startdisplayingat > 1) {
 						$final_footer .= "<a href='pkg.php?xml=" . $_REQUEST['xml'] . "&amp;startdisplayingat=0&amp;display_maximum_rows={$display_maximum_rows}'>";
 					}
-					$final_footer .= "<font size='2'><< " . gettext("Previous page") . "</font></a>";
+					$final_footer .= "<font size='2'><< " . gettext("이전 페이지") . "</font></a>";
 					if ($tmppp + $display_maximum_rows > count($evaledvar)) {
 						$endingrecord = count($evaledvar);
 					} else {
@@ -554,7 +559,7 @@ if ($savemsg) {
 					if (($i+1) < count($evaledvar)) {
 						$final_footer .= "<a href='pkg.php?xml=" . $_REQUEST['xml'] . "&amp;startdisplayingat=" . ($startdisplayingat + $display_maximum_rows) . "&amp;display_maximum_rows={$display_maximum_rows}'>";
 					}
-					$final_footer .= "<font size='2'>" . gettext("Next page") . " >></font></a>";
+					$final_footer .= "<font size='2'>" . gettext("다음 페이지") . " >></font></a>";
 					$final_footer .= "</td></tr></table></td></tr>";
 					$i = count($evaledvar);
 					break;
@@ -572,9 +577,9 @@ if ($savemsg) {
 							<tr>
 <?php
 	#Show custom description to add button if defined
-	$add_msg=($pkg['adddeleteeditpagefields']['addtext']?$pkg['adddeleteeditpagefields']['addtext']:gettext("Add a new item"));
+	$add_msg=($pkg['adddeleteeditpagefields']['addtext']?$pkg['adddeleteeditpagefields']['addtext']:gettext("항목 추가"));
 ?>
-								<td><a href="pkg_edit.php?xml=<?=$xml?>&amp;id=<?=$i?>" class="btn btn-sm btn-success" title="<?=$add_msg?>"><i class="fa fa-plus icon-embed-btn"></i><?=gettext('Add')?></a></td>
+								<td><a href="pkg_edit.php?xml=<?=$xml?>&amp;id=<?=$i?>" class="btn btn-sm btn-success" title="<?=$add_msg?>"><i class="fa fa-plus icon-embed-btn"></i><?=gettext('추가')?></a></td>
 <?php
 	#Show description button and info if defined
 	if ($pkg['adddeleteeditpagefields']['description']) {
@@ -592,7 +597,7 @@ if ($savemsg) {
 				<?=$final_footer?>
 			</table>
 			</div>
-		<button class="btn btn-primary" type="button" value="Save" name="Submit" onclick="save_changes_to_xml('<?=$xml?>')"><i class="fa fa-save icon-embed-btn"></i><?=gettext("Save")?></button>
+		<button class="btn btn-primary" type="button" value="Save" name="Submit" onclick="save_changes_to_xml('<?=$xml?>')"><i class="fa fa-save icon-embed-btn"></i><?=gettext("")?></button>
 
 </form>
 <?php

@@ -19,6 +19,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-services-dynamicdnsclients
 ##|*NAME=Services: Dynamic DNS clients
@@ -45,7 +50,7 @@ if ($_POST['act'] == "del") {
 	@unlink("{$g['conf_path']}/dyndns_{$conf['interface']}{$conf['type']}" . escapeshellarg($hostname) . "{$conf['id']}.cache");
 	unset($a_dyndns[$_POST['id']]);
 
-	write_config(gettext("Dynamic DNS client deleted."));
+	write_config(gettext("동적 DNS 클라이언트가 삭제되었습니다."));
 	services_dyndns_configure();
 
 	header("Location: services_dyndns.php");
@@ -54,10 +59,10 @@ if ($_POST['act'] == "del") {
 	if ($a_dyndns[$_POST['id']]) {
 		if (isset($a_dyndns[$_POST['id']]['enable'])) {
 			unset($a_dyndns[$_POST['id']]['enable']);
-			$wc_msg = gettext('Dynamic DNS client disabled.');
+			$wc_msg = gettext('동적 DNS 클라이언트를 비활성화하였습니다.');
 		} else {
 			$a_dyndns[$_POST['id']]['enable'] = true;
-			$wc_msg = gettext('Dynamic DNS client enabled.');
+			$wc_msg = gettext('동적 DNS 클라이언트를 활성화하였습니다.');
 		}
 		write_config($wc_msg);
 		services_dyndns_configure();
@@ -67,7 +72,7 @@ if ($_POST['act'] == "del") {
 	}
 }
 
-$pgtitle = array(gettext("Services"), gettext("Dynamic DNS"), gettext("Dynamic DNS Clients"));
+$pgtitle = array(gettext("서비스"), gettext("동적 DNS"), gettext("동적 DNS 클라이언트"));
 $pglinks = array("", "@self", "@self");
 include("head.inc");
 
@@ -83,18 +88,18 @@ display_top_tabs($tab_array);
 ?>
 <form action="services_dyndns.php" method="post" name="iform" id="iform">
 	<div class="panel panel-default">
-		<div class="panel-heading"><h2 class="panel-title"><?=gettext('Dynamic DNS Clients')?></h2></div>
+		<div class="panel-heading"><h2 class="panel-title"><?=gettext(' DNS 클라이언트')?></h2></div>
 		<div class="panel-body">
 			<div class="table-responsive">
 				<table class="table table-striped table-hover table-condensed table-rowdblclickedit">
 					<thead>
 						<tr>
-							<th><?=gettext("Interface")?></th>
-							<th><?=gettext("Service")?></th>
-							<th><?=gettext("Hostname")?></th>
-							<th><?=gettext("Cached IP")?></th>
-							<th><?=gettext("Description")?></th>
-							<th><?=gettext("Actions")?></th>
+							<th><?=gettext("인터페이스")?></th>
+							<th><?=gettext("서비스")?></th>
+							<th><?=gettext("호스트이름")?></th>
+							<th><?=gettext("캐시된 IP")?></th>
+							<th><?=gettext("발신지")?></th>
+							<th><?=gettext("행동")?></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -188,16 +193,16 @@ foreach ($a_dyndns as $dyndns):
 ?>
 							</td>
 							<td>
-								<a class="fa fa-pencil" title="<?=gettext('Edit service')?>" href="services_dyndns_edit.php?id=<?=$i?>"></a>
+								<a class="fa fa-pencil" title="<?=gettext('서비스 편집')?>" href="services_dyndns_edit.php?id=<?=$i?>"></a>
 <?php if (isset($dyndns['enable'])) {
 ?>
-								<a class="fa fa-ban" title="<?=gettext('Disable service')?>" href="?act=toggle&amp;id=<?=$i?>" usepost></a>
+								<a class="fa fa-ban" title="<?=gettext('서비스 비활성화')?>" href="?act=toggle&amp;id=<?=$i?>" usepost></a>
 <?php } else {
 ?>
-								<a class="fa fa-check-square-o" title="<?=gettext('Enable service')?>" href="?act=toggle&amp;id=<?=$i?>" usepost></a>
+								<a class="fa fa-check-square-o" title="<?=gettext('서비스 활성화')?>" href="?act=toggle&amp;id=<?=$i?>" usepost></a>
 <?php }
 ?>
-								<a class="fa fa-trash" title="<?=gettext('Delete service')?>"	href="services_dyndns.php?act=del&amp;id=<?=$i?>" usepost></a>
+								<a class="fa fa-trash" title="<?=gettext('서비스 ')?>"	href="services_dyndns.php?act=del&amp;id=<?=$i?>" usepost></a>
 							</td>
 						</tr>
 <?php
@@ -214,13 +219,13 @@ foreach ($a_dyndns as $dyndns):
 <nav class="action-buttons">
 	<a href="services_dyndns_edit.php" class="btn btn-sm btn-success btn-sm">
 		<i class="fa fa-plus icon-embed-btn"></i>
-		<?=gettext('Add')?>
+		<?=gettext('추가')?>
 	</a>
 </nav>
 
 <div>
-	<?=sprintf(gettext('IP addresses appearing in %1$sgreen%2$s are up to date with Dynamic DNS provider. '), '<span class="text-success">', '</span>')?>
-	<?=gettext('An update for an IP address can be forced on the edit page for that service.')?>
+	<?=sprintf(gettext('%1$s이곳%2$s에 나타나는 IP주소는 동적 DNS공급자를 사용하여 최신 상태를 유지합니다. '), '<span class="text-success">', '</span>')?>
+	<?=gettext('편집 페이지에서 IP주소에 대한 업데이트를 강제 적용할 수 있습니다.')?>
 </div>
 
 <?php

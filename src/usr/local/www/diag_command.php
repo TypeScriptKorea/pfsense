@@ -27,6 +27,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-command
 ##|*NAME=Diagnostics: Command
@@ -75,7 +80,7 @@ function puts($arg) {
 	echo "$arg\n";
 }
 
-$pgtitle = array(gettext("Diagnostics"), gettext("Command Prompt"));
+$pgtitle = array(gettext("진단"), gettext("명령 프롬프트"));
 include("head.inc");
 ?>
 <script type="text/javascript">
@@ -171,12 +176,12 @@ if (isBlank($_POST['txtRecallBuffer'])) {
 <?php
 
 if (isBlank($_POST['txtCommand']) && isBlank($_POST['txtPHPCommand']) && isBlank($ulmsg)) {
-	print_callout(gettext("The capabilities offered here can be dangerous. No support is available. Use them at your own risk!"), 'danger', gettext('Advanced Users Only'));
+	print_callout(gettext("해당 기능들은 사용하시는데에 있어 주의를 필요로 합니다. 신중히 사용하시길 바랍니다."), 'danger', gettext('어드벤스드 유저 전용'));
 }
 
 if ($_POST['submit'] == "EXEC" && !isBlank($_POST['txtCommand'])):?>
 	<div class="panel panel-success responsive">
-		<div class="panel-heading"><h2 class="panel-title"><?=sprintf(gettext('Shell Output - %s'), htmlspecialchars($_POST['txtCommand']))?></h2></div>
+		<div class="panel-heading"><h2 class="panel-title"><?=sprintf(gettext('쉘 출력 - %s'), htmlspecialchars($_POST['txtCommand']))?></h2></div>
 		<div class="panel-body">
 			<div class="content">
 <?php
@@ -195,7 +200,7 @@ if ($_POST['submit'] == "EXEC" && !isBlank($_POST['txtCommand'])):?>
 
 <form action="diag_command.php" method="post" enctype="multipart/form-data" name="frmExecPlus" onsubmit="return frmExecPlus_onSubmit( this );">
 	<div class="panel panel-default">
-		<div class="panel-heading"><h2 class="panel-title"><?=gettext('Execute Shell Command')?></h2></div>
+		<div class="panel-heading"><h2 class="panel-title"><?=gettext('쉘 명령 실행')?></h2></div>
 		<div class="panel-body">
 			<div class="content">
 				<input id="txtCommand" name="txtCommand" placeholder="Command" type="text" class="col-sm-7"	 value="<?=htmlspecialchars($_POST['txtCommand'])?>" />
@@ -203,19 +208,19 @@ if ($_POST['submit'] == "EXEC" && !isBlank($_POST['txtCommand'])):?>
 				<input type="hidden" name="txtRecallBuffer" value="<?=htmlspecialchars($_POST['txtRecallBuffer']) ?>" />
 
 				<div class="btn-group">
-					<button type="button" class="btn btn-success btn-sm" name="btnRecallPrev" onclick="btnRecall_onClick( this.form, -1 );" title="<?=gettext("Recall Previous Command")?>">
+					<button type="button" class="btn btn-success btn-sm" name="btnRecallPrev" onclick="btnRecall_onClick( this.form, -1 );" title="<?=gettext("이전 명령 실행")?>">
 						<i class="fa fa-angle-double-left"></i>
 					</button>
-					<button name="submit" type="submit" class="btn btn-warning btn-sm" value="EXEC" title="<?=gettext("Execute the entered command")?>">
+					<button name="submit" type="submit" class="btn btn-warning btn-sm" value="EXEC" title="<?=gettext("입력하신 명령을 실행하십시오.")?>">
 						<i class="fa fa-bolt"></i>
-						<?=gettext("Execute"); ?>
+						<?=gettext("실행"); ?>
 					</button>
-					<button type="button" class="btn btn-success btn-sm" name="btnRecallNext" onclick="btnRecall_onClick( this.form,  1 );" title="<?=gettext("Recall Next Command")?>">
+					<button type="button" class="btn btn-success btn-sm" name="btnRecallNext" onclick="btnRecall_onClick( this.form,  1 );" title="<?=gettext("다음 명령 실행")?>">
 						<i class="fa fa-angle-double-right"></i>
 					</button>
-					<button style="margin-left: 10px;" type="button" class="btn btn-default btn-sm" onclick="return Reset_onClick( this.form );" title="<?=gettext("Clear command entry")?>">
+					<button style="margin-left: 10px;" type="button" class="btn btn-default btn-sm" onclick="return Reset_onClick( this.form );" title="<?=gettext("커맨드 항목 클리어")?>">
 						<i class="fa fa-undo"></i>
-						<?=gettext("Clear"); ?>
+						<?=gettext("전체 지움"); ?>
 					</button>
 				</div>
 			</div>
@@ -223,14 +228,14 @@ if ($_POST['submit'] == "EXEC" && !isBlank($_POST['txtCommand'])):?>
 	</div>
 
 	<div class="panel panel-default">
-		<div class="panel-heading"><h2 class="panel-title"><?=gettext('Download File')?></h2></div>
+		<div class="panel-heading"><h2 class="panel-title"><?=gettext('다운로드')?></h2></div>
 		<div class="panel-body">
 			<div class="content">
 				<input name="dlPath" type="text" id="dlPath" placeholder="File to download" class="col-sm-4" value="<?=htmlspecialchars($_REQUEST['dlPath']);?>"/>
 				<br /><br />
 				<button name="submit" type="submit" class="btn btn-primary btn-sm" id="download" value="DOWNLOAD">
 					<i class="fa fa-download icon-embed-btn"></i>
-					<?=gettext("Download")?>
+					<?=gettext("다운로드")?>
 				</button>
 			</div>
 		</div>
@@ -242,14 +247,14 @@ if ($_POST['submit'] == "EXEC" && !isBlank($_POST['txtCommand'])):?>
 	}
 ?>
 	<div class="panel panel-default">
-		<div class="panel-heading"><h2 class="panel-title"><?=gettext('Upload File')?></h2></div>
+		<div class="panel-heading"><h2 class="panel-title"><?=gettext('파일 업로드')?></h2></div>
 		<div class="panel-body">
 			<div class="content">
 				<input name="ulfile" type="file" class="btn btn-default btn-sm btn-file" id="ulfile" />
 				<br />
 				<button name="submit" type="submit" class="btn btn-primary btn-sm" id="upload" value="UPLOAD">
 					<i class="fa fa-upload icon-embed-btn"></i>
-					<?=gettext("Upload")?>
+					<?=gettext("업로드")?>
 				</button>
 			</div>
 		</div>
@@ -293,10 +298,10 @@ END_FILE;
 			*/
 			if ($matches[1] > $lineno_correction) {
 				$errline = $matches[1] - $lineno_correction;
-				$errtext = sprintf(gettext('Line %s appears to have generated an error, and has been highlighted. The full response is below.'), $errline);
+				$errtext = sprintf(gettext('%s 행에서 오류가 감지됩니다. 전체 응답은 다음과 같습니다.'), $errline);
 			} else {
 				$errline = -1;
-				$errtext = gettext('The code appears to have generated an error, but the line responsible cannot be identified. The full response is below.');
+				$errtext = gettext('코드에서 오류가 발생하였으나 오류가 발생한 코드의 행을 찾을 수 없습니다. 전체 응답은 다음과 같습니다.');
 			}
 			$errtext .= '<br/>' . sprintf(gettext('Note that the line number in the full PHP response will be %s lines too large. Nested code and eval() errors may incorrectly point to "line 1".'), $lineno_correction);
 			$syntax_output = array();
@@ -310,7 +315,7 @@ END_FILE;
 				$html .= "<span style='color:black;backgroundcolor:lightgrey'><tt>{$margin}</tt></span>&nbsp;&nbsp;{$syntax_output[$lineno + $lineno_correction - 1]}<br/>\n";
 			}
 			print_info_box($errtext, 'danger');
-			print "<div style='margin:20px'><b>" . gettext("Error locator:") . "</b>\n";
+			print "<div style='margin:20px'><b>" . gettext("오류발생위치:") . "</b>\n";
 			print "<div id='errdiv' style='height:7em; width:60%; overflow:auto; white-space: nowrap; border:darkgrey solid 1px; margin-top: 20px'>\n";
 			print $html . "\n</div></div>\n";
 		}
@@ -339,16 +344,16 @@ END_FILE;
 }
 ?>
 	<div class="panel panel-default responsive">
-		<div class="panel-heading"><h2 class="panel-title"><?=gettext('Execute PHP Commands')?></h2></div>
+		<div class="panel-heading"><h2 class="panel-title"><?=gettext('PHP 명령 실행')?></h2></div>
 		<div class="panel-body">
 			<div class="content">
 				<textarea id="txtPHPCommand" placeholder="Command" name="txtPHPCommand" rows="9" cols="80"><?=htmlspecialchars($_POST['txtPHPCommand'])?></textarea>
 				<br />
-				<button name="submit" type="submit" class="btn btn-warning btn-sm" value="EXECPHP" title="<?=gettext("Execute this PHP Code")?>">
+				<button name="submit" type="submit" class="btn btn-warning btn-sm" value="EXECPHP" title="<?=gettext("해당 PHP 코드를 실행합니다.")?>">
 					<i class="fa fa-bolt"></i>
-					<?=gettext("Execute")?>
+					<?=gettext("실행")?>
 				</button>
-				<?=gettext("Example"); ?>: <code>print("Hello World!");</code>
+				<?=gettext("예시"); ?>: <code>print("Hello World!");</code>
 			</div>
 		</div>
 	</div>

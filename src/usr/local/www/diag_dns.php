@@ -19,6 +19,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-dns
 ##|*NAME=Diagnostics: DNS Lookup
@@ -26,7 +31,7 @@
 ##|*MATCH=diag_dns.php*
 ##|-PRIV
 
-$pgtitle = array(gettext("Diagnostics"), gettext("DNS Lookup"));
+$pgtitle = array(gettext("진단"), gettext("DNS Lookup"));
 require_once("guiconfig.inc");
 
 $host = trim($_REQUEST['host'], " \t\n\r\0\x0B[];\"'");
@@ -115,13 +120,13 @@ if (isAllowedPage('firewall_aliases_edit.php') && isset($_POST['create_alias']) 
 			$newalias['name'] = $aliasname;
 			$newalias['type'] = "network";
 			$newalias['address'] = $addresses;
-			$newalias['descr'] = gettext("Created from Diagnostics-> DNS Lookup");
+			$newalias['descr'] = gettext("진단을 통해 생성-> DNS Lookup");
 			if ($alias_exists) {
 				$a_aliases[$id] = $newalias;
 			} else {
 				$a_aliases[] = $newalias;
 			}
-			write_config(gettext("Created an alias from Diagnostics - DNS Lookup page."));
+			write_config(gettext("진단을 통해 alias 생성 - DNS Lookup page."));
 			$createdalias = true;
 		}
 	} else {
@@ -138,7 +143,7 @@ if ($_POST) {
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, $input_errors);
 
 	if (!is_hostname($host) && !is_ipaddr($host)) {
-		$input_errors[] = gettext("Host must be a valid hostname or IP address.");
+		$input_errors[] = gettext("호스트는 유효한 호스트 이름 혹은 IP 주소여야 합니다.");
 	} else {
 		// Test resolution speed of each DNS server.
 		$dns_speeds = array();
@@ -147,7 +152,7 @@ if ($_POST) {
 		foreach ($dns_servers as $dns_server) {
 			$query_time = exec("/usr/bin/drill {$host_esc} " . escapeshellarg("@" . trim($dns_server)) . " | /usr/bin/grep Query | /usr/bin/cut -d':' -f2");
 			if ($query_time == "") {
-				$query_time = gettext("No response");
+				$query_time = gettext("응답없음");
 			}
 			$new_qt = array();
 			$new_qt['dns_server'] = $dns_server;
@@ -188,8 +193,8 @@ if ($_POST['host'] && $_POST['dialog_output']) {
 function display_host_results ($address, $hostname, $dns_speeds) {
 	$map_lengths = function($element) { return strlen($element[0]); };
 
-	echo gettext("IP Address") . ": " . htmlspecialchars($address) . " \n";
-	echo gettext("Host Name") . ": " . htmlspecialchars($hostname) .  " \n";
+	echo gettext("IP 주소") . ": " . htmlspecialchars($address) . " \n";
+	echo gettext("호스트 이름") . ": " . htmlspecialchars($hostname) .  " \n";
 	echo "\n";
 	$text_table = array();
 	$text_table[] = array(gettext("Server"), gettext("Query Time"));
@@ -210,14 +215,14 @@ include("head.inc");
 if ($input_errors) {
 	print_input_errors($input_errors);
 } else if (!$resolved && $type) {
-	print_info_box(sprintf(gettext('Host "%s" could not be resolved.'), $host), 'warning', false);
+	print_info_box(sprintf(gettext('호스트 "%s" 를 확인할 수 없습니다.'), $host), 'warning', false);
 }
 
 if ($createdalias) {
 	if ($alias_exists) {
-		print_info_box(gettext("Alias was updated successfully."), 'success');
+		print_info_box(gettext("alias를 성공적으로 업데이트 하였습니다."), 'success');
 	} else {
-		print_info_box(gettext("Alias was created successfully."), 'success');
+		print_info_box(gettext("alias를 성공적으로 생성 하였습니다."), 'success');
 	}
 
 	$alias_exists = true;
@@ -225,9 +230,9 @@ if ($createdalias) {
 
 if ($couldnotcreatealias) {
 	if ($alias_exists) {
-		print_info_box(sprintf(gettext("Could not update alias for %s"), $host), 'warning', false);
+		print_info_box(sprintf(gettext("%s 에 대한 alias 업데이트를 실패하였습니다."), $host), 'warning', false);
 	} else {
-		print_info_box(sprintf(gettext("Could not create alias for %s"), $host), 'warning', false);
+		print_info_box(sprintf(gettext("%s 에 대한 alias 생성을 실패하였습니다."), $host), 'warning', false);
 	}
 }
 
@@ -253,9 +258,9 @@ $form->addGlobal(new Form_Button(
 
 if (!empty($resolved) && isAllowedPage('firewall_aliases_edit.php')) {
 	if ($alias_exists) {
-		$button_text = gettext("Update alias");
+		$button_text = gettext("alias 업데이트");
 	} else {
-		$button_text = gettext("Add alias");
+		$button_text = gettext("alias 추가");
 	}
 	$form->addGlobal(new Form_Button(
 		'create_alias',
@@ -271,14 +276,14 @@ if (!$input_errors && $type) {
 	if ($resolved):
 ?>
 <div class="panel panel-default">
-	<div class="panel-heading"><h2 class="panel-title"><?=gettext('Results')?></h2></div>
+	<div class="panel-heading"><h2 class="panel-title"><?=gettext('결과')?></h2></div>
 	<div class="panel-body">
 
 		<table class="table">
 		<thead>
 			<tr>
-				<th><?=gettext('Result')?></th>
-				<th><?=gettext('Record type')?></th>
+				<th><?=gettext('결과')?></th>
+				<th><?=gettext('레코드 타입')?></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -300,8 +305,8 @@ if (!$input_errors && $type) {
 		<table class="table">
 		<thead>
 			<tr>
-				<th><?=gettext('Name server')?></th>
-				<th><?=gettext('Query time')?></th>
+				<th><?=gettext('네임 서버')?></th>
+				<th><?=gettext('쿼리 타임')?></th>
 			</tr>
 		</thead>
 
@@ -318,13 +323,13 @@ if (!$input_errors && $type) {
 
 <!-- Third table displays "More information" -->
 <div class="panel panel-default">
-	<div class="panel-heading"><h2 class="panel-title"><?=gettext('More Information')?></h2></div>
+	<div class="panel-heading"><h2 class="panel-title"><?=gettext('더보기')?></h2></div>
 	<div class="panel-body">
 		<ul class="list-group">
 			<li class="list-group-item"><a href="/diag_ping.php?host=<?=htmlspecialchars($host)?>&amp;count=3"><?=gettext("Ping")?></a></li>
 			<li class="list-group-item"><a href="/diag_traceroute.php?host=<?=htmlspecialchars($host)?>&amp;ttl=18"><?=gettext("Traceroute")?></a></li>
 		</ul>
-		<h5><?=gettext("NOTE: The following links are to external services, so their reliability cannot be guaranteed.");?></h5>
+		<h5><?=gettext("알림: 해당 링크는 외부 서비스 이므로 신뢰성을 보장할 수 없습니다.");?></h5>
 		<ul class="list-group">
 			<li class="list-group-item"><a target="_blank" href="http://private.dnsstuff.com/tools/whois.ch?ip=<?=$ipaddr;?>"><?=gettext("IP WHOIS @ DNS Stuff");?></a></li>
 			<li class="list-group-item"><a target="_blank" href="http://private.dnsstuff.com/tools/ipall.ch?ip=<?=$ipaddr;?>"><?=gettext("IP Info @ DNS Stuff");?></a></li>

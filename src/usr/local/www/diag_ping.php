@@ -24,6 +24,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-ping
 ##|*NAME=Diagnostics: Ping
@@ -32,7 +37,7 @@
 ##|-PRIV
 
 $allowautocomplete = true;
-$pgtitle = array(gettext("Diagnostics"), gettext("Ping"));
+$pgtitle = array(gettext("진단"), gettext("Ping"));
 require_once("guiconfig.inc");
 
 define('MAX_COUNT', 10);
@@ -51,16 +56,16 @@ if ($_POST || $_REQUEST['host']) {
 	do_input_validation($_REQUEST, $reqdfields, $reqdfieldsn, $input_errors);
 
 	if (($_REQUEST['count'] < 1) || ($_REQUEST['count'] > MAX_COUNT)) {
-		$input_errors[] = sprintf(gettext("Count must be between 1 and %s"), MAX_COUNT);
+		$input_errors[] = sprintf(gettext("개수는 1 에서 %s 사이어야 합니다."), MAX_COUNT);
 	}
 
 	$host = trim($_REQUEST['host']);
 	$ipproto = $_REQUEST['ipproto'];
 	if (($ipproto == "ipv4") && is_ipaddrv6($host)) {
-		$input_errors[] = gettext("When using IPv4, the target host must be an IPv4 address or hostname.");
+		$input_errors[] = gettext("IPv4를 사용하는 경우, 대상 호스트는 IPv4 주소 또는 호스트 이름이어야합니다.");
 	}
 	if (($ipproto == "ipv6") && is_ipaddrv4($host)) {
-		$input_errors[] = gettext("When using IPv6, the target host must be an IPv6 address or hostname.");
+		$input_errors[] = gettext("IPv6를 사용하는 경우, 대상 호스트는 IPv6 주소 또는 호스트 이름이어야합니다.");
 	}
 
 	if (!$input_errors) {
@@ -111,7 +116,7 @@ if ($do_ping) {
 	$result = shell_exec($cmd);
 
 	if (empty($result)) {
-		$input_errors[] = sprintf(gettext('Host "%s" did not respond or could not be resolved.'), $host);
+		$input_errors[] = sprintf(gettext('Host "%s" 이(가) 응답하지 않습니다.'), $host);
 	}
 
 }
@@ -146,14 +151,14 @@ $section->addInput(new Form_Select(
 	'*Source address',
 	$sourceip,
 	array('' => gettext('Automatically selected (default)')) + get_possible_traffic_source_addresses(true)
-))->setHelp('Select source address for the ping.');
+))->setHelp('발신 주소를 선택하십시오.');
 
 $section->addInput(new Form_Select(
 	'count',
 	'Maximum number of pings',
 	$count,
 	array_combine(range(1, MAX_COUNT), range(1, MAX_COUNT))
-))->setHelp('Select the maximum number of pings.');
+))->setHelp('최대 ping 수를 선택하십시오');
 
 $form->add($section);
 
@@ -170,7 +175,7 @@ if ($do_ping && !empty($result) && !$input_errors) {
 ?>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h2 class="panel-title"><?=gettext('Results')?></h2>
+			<h2 class="panel-title"><?=gettext('결과')?></h2>
 		</div>
 
 		<div class="panel-body">

@@ -20,6 +20,12 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 시작
+*/
+
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-smart
 ##|*NAME=Diagnostics: S.M.A.R.T. Status
@@ -33,13 +39,13 @@ require_once("guiconfig.inc");
 // If they "get" a page but don't pass all arguments, smartctl will throw an error
 $action = $_POST['action'];
 
-$pgtitle = array(gettext("Diagnostics"), gettext("S.M.A.R.T. Status"));
+$pgtitle = array(gettext("진단"), gettext("S.M.A.R.T. 상태"));
 $pglinks = array("", "@self", "@self");
 
 if ($action != 'config') {
 	$pgtitle[] = htmlspecialchars(gettext('Information & Tests'));
 } else {
-	$pgtitle[] = gettext('Config');
+	$pgtitle[] = gettext('설정');
 }
 
 $smartctl = "/usr/local/sbin/smartctl";
@@ -56,9 +62,9 @@ function add_colors($string) {
 	$patterns[0] = '/PASSED/';
 	$patterns[1] = '/FAILED/';
 	$patterns[2] = '/Warning/';
-	$replacements[0] = '<span class="text-success">' . gettext("PASSED") . '</span>';
-	$replacements[1] = '<span class="text-alert">' . gettext("FAILED") . '</span>';
-	$replacements[2] = '<span class="text-warning">' . gettext("Warning") . '</span>';
+	$replacements[0] = '<span class="text-success">' . gettext("통과") . '</span>';
+	$replacements[1] = '<span class="text-alert">' . gettext("실패") . '</span>';
+	$replacements[2] = '<span class="text-warning">' . gettext("경고") . '</span>';
 	ksort($patterns);
 	ksort($replacements);
 	return preg_replace($patterns, $replacements, $string);
@@ -73,7 +79,7 @@ if (!file_exists('/dev/' . $targetdev)) {
 
 $specplatform = system_identify_specific_platform();
 if (($specplatform['name'] == "Hyper-V") || ($specplatform['name'] == "uFW")) {
-	echo sprintf(gettext("S.M.A.R.T. is not supported on this system (%s)."), $specplatform['descr']);
+	echo sprintf(gettext("S.M.A.R.T. 은 해당 시스템에서 지원되지 않습니다. (%s)."), $specplatform['descr']);
 	include("foot.inc");
 	exit;
 }
@@ -84,14 +90,14 @@ switch ($action) {
 	{
 		$test = $_POST['testType'];
 		if (!in_array($test, $valid_test_types)) {
-			echo gettext("Invalid test type, bailing.");
+			echo gettext("올바르지않은 테스트 타입입니다.");
 			return;
 		}
 
 		$output = add_colors(shell_exec($smartctl . " -t " . escapeshellarg($test) . " /dev/" . escapeshellarg($targetdev)));
 ?>
 		<div class="panel  panel-default">
-			<div class="panel-heading"><h2 class="panel-title"><?=gettext('Test Results')?></h2></div>
+			<div class="panel-heading"><h2 class="panel-title"><?=gettext('결과 테스트')?></h2></div>
 			<div class="panel-body">
 				<pre><?=$output?></pre>
 			</div>
@@ -101,13 +107,13 @@ switch ($action) {
 			<input type="hidden" name="device" value="<?=$targetdev?>" />
 			<input type="hidden" name="action" value="abort" />
 			<nav class="action-buttons">
-				<button type="submit" name="submit" class="btn btn-danger" value="<?=gettext("Abort")?>">
+				<button type="submit" name="submit" class="btn btn-danger" value="<?=gettext("중단")?>">
 					<i class="fa fa-times icon-embed-btn"></i>
-					<?=gettext("Abort Test")?>
+					<?=gettext("테스트 중단")?>
 				</button>
 				<a href="<?=$_SERVER['PHP_SELF']?>" class="btn btn-info">
 					<i class="fa fa-undo icon-embed-btn"></i>
-					<?=gettext("Back")?>
+					<?=gettext("뒤로")?>
 				</a>
 			</nav>
 		</form>
@@ -122,14 +128,14 @@ switch ($action) {
 		$type = $_POST['type'];
 
 		if (!in_array($type, $valid_info_types)) {
-			print_info_box(gettext("Invalid info type, bailing."), 'danger');
+			print_info_box(gettext("올바르지않은 정보 타입입니다., bailing."), 'danger');
 			return;
 		}
 
 		$output = add_colors(shell_exec($smartctl . " -" . escapeshellarg($type) . " /dev/" . escapeshellarg($targetdev)));
 ?>
 		<div class="panel  panel-default">
-			<div class="panel-heading"><h2 class="panel-title"><?=gettext('Information')?></h2></div>
+			<div class="panel-heading"><h2 class="panel-title"><?=gettext('정보')?></h2></div>
 			<div class="panel-body">
 				<pre><?=$output?></pre>
 			</div>
@@ -138,7 +144,7 @@ switch ($action) {
 		<nav class="action-buttons">
 			<a href="<?=$_SERVER['PHP_SELF']?>" class="btn btn-info">
 				<i class="fa fa-undo icon-embed-btn"></i>
-				<?=gettext("Back")?>
+				<?=gettext("뒤로")?>
 			</a>
 		</nav>
 <?php
@@ -150,14 +156,14 @@ switch ($action) {
 	{
 		$type = $_POST['type'];
 		if (!in_array($type, $valid_log_types)) {
-			print_info_box(gettext("Invalid log type, bailing."), 'danger');
+			print_info_box(gettext("잘못된 로그 타입입니다."), 'danger');
 			return;
 		}
 
 		$output = add_colors(shell_exec($smartctl . " -l " . escapeshellarg($type) . " /dev/" . escapeshellarg($targetdev)));
 ?>
 		<div class="panel  panel-default">
-			<div class="panel-heading"><h2 class="panel-title"><?=gettext('Logs')?></h2></div>
+			<div class="panel-heading"><h2 class="panel-title"><?=gettext('로그')?></h2></div>
 			<div class="panel-body">
 				<pre><?=$output?></pre>
 			</div>
@@ -166,7 +172,7 @@ switch ($action) {
 		<nav class="action-buttons">
 			<a href="<?=$_SERVER['PHP_SELF']?>" class="btn btn-info">
 				<i class="fa fa-undo icon-embed-btn"></i>
-				<?=gettext("Back")?>
+				<?=gettext("뒤로")?>
 			</a>
 		</nav>
 <?php
@@ -179,7 +185,7 @@ switch ($action) {
 		$output = shell_exec($smartctl . " -X /dev/" . escapeshellarg($targetdev));
 ?>
 		<div class="panel  panel-default">
-			<div class="panel-heading"><h2 class="panel-title"><?=gettext('Abort')?></h2></div>
+			<div class="panel-heading"><h2 class="panel-title"><?=gettext('중단')?></h2></div>
 			<div class="panel-body">
 				<pre><?=$output?></pre>
 			</div>
@@ -204,7 +210,7 @@ switch ($action) {
 		$btnview->addClass('btn-primary');
 		$btnview->setAttribute('id');
 
-		$section = new Form_Section('Information');
+		$section = new Form_Section('정보');
 
 		$section->addInput(new Form_Input(
 			'action',
@@ -327,7 +333,7 @@ switch ($action) {
 			'conveyance'
 		))->displayAsRadio();
 
-		$group->setHelp('Select "Conveyance" for ATA disks only.');
+		$group->setHelp('ATA 디스크에 한정하여 "Conveyance"를 선택하십시오.');
 		$section->add($group);
 
 		$section->addInput(new Form_Select(
@@ -413,7 +419,7 @@ switch ($action) {
 
 		$form = new Form(false);
 
-		$section = new Form_Section('Abort');
+		$section = new Form_Section('중단');
 
 		$section->addInput(new Form_Input(
 			'action',

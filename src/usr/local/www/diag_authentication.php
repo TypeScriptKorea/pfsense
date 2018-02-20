@@ -19,6 +19,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-authentication
 ##|*NAME=Diagnostics: Authentication
@@ -35,19 +40,19 @@ if ($_POST) {
 
 	$authcfg = auth_get_authserver($_POST['authmode']);
 	if (!$authcfg) {
-		$input_errors[] =  sprintf(gettext('%s is not a valid authentication server'), $_POST['authmode']);
+		$input_errors[] =  sprintf(gettext('%s 은(는) 유효한 인증서버가 아닙니다.'), $_POST['authmode']);
 	}
 
 	if (empty($_POST['username']) || empty($_POST['password'])) {
-		$input_errors[] = gettext("A username and password must be specified.");
+		$input_errors[] = gettext("사용자 이름과 암호를 지정해주십시오.");
 	}
 
 	if (!$input_errors) {
 		$attributes = array();
 		if (authenticate_user($_POST['username'], $_POST['password'], $authcfg, $attributes)) {
-			$savemsg = sprintf(gettext('User %s authenticated successfully.'), $_POST['username']);
+			$savemsg = sprintf(gettext('사용자 %s 가 정상적으로 인증되었습니다.'), $_POST['username']);
 			$groups = getUserGroups($_POST['username'], $authcfg, $attributes);
-			$savemsg .= "&nbsp;" . gettext("This user is a member of groups") . ": <br /><br />";
+			$savemsg .= "&nbsp;" . gettext("해당 사용자는 그룹맴버입니다.") . ": <br /><br />";
 			$savemsg .= "<ul>";
 			foreach ($groups as $group) {
 				$savemsg .= "<li>" . "{$group} " . "</li>";
@@ -55,7 +60,7 @@ if ($_POST) {
 			$savemsg .= "</ul>";
 
 		} else {
-			$input_errors[] = gettext("Authentication failed.");
+			$input_errors[] = gettext("인증이 실패하였습니다.");
 		}
 	}
 } else {
@@ -66,7 +71,7 @@ if ($_POST) {
 	}
 }
 
-$pgtitle = array(gettext("Diagnostics"), gettext("Authentication"));
+$pgtitle = array(gettext("진단"), gettext("인증"));
 $shortcut_section = "authentication";
 include("head.inc");
 

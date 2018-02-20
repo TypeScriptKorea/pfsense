@@ -19,6 +19,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-gmirror
 ##|*NAME=Diagnostics: GEOM Mirrors
@@ -30,18 +35,18 @@ require_once("guiconfig.inc");
 require_once("config.inc");
 require_once("gmirror.inc");
 
-$pgtitle = array(gettext("Diagnostics"), gettext("GEOM Mirrors"));
+$pgtitle = array(gettext("진단"), gettext("GEOM Mirrors"));
 
 include("head.inc");
 
 $action_list = array(
-	"forget" => gettext("Forget all formerly connected consumers"),
-	"clear" => gettext("Remove metadata from disk"),
-	"insert" => gettext("Insert consumer into mirror"),
-	"remove" => gettext("Remove consumer from mirror"),
-	"activate" => gettext("Reactivate consumer on mirror"),
-	"deactivate" => gettext("Deactivate consumer from mirror"),
-	"rebuild" => gettext("Force rebuild of mirror consumer"),
+	"forget" => gettext("연결된 모든 고객 삭제"),
+	"clear" => gettext("디스크 메타데이터 삭제"),
+	"insert" => gettext("미러에 고객 입력"),
+	"remove" => gettext("미러에 저장된 고객 삭제"),
+	"activate" => gettext("미러에 고객 재활성화"),
+	"deactivate" => gettext("미러에 고객 비활성화"),
+	"rebuild" => gettext("미러 소비자 강제 재구축"),
 );
 
 /* User tried to pass a bogus action */
@@ -51,7 +56,7 @@ if (!empty($_REQUEST['action']) && !array_key_exists($_REQUEST['action'], $actio
 }
 
 if ($_POST) {
-	if (!isset($_POST['confirm']) || ($_POST['confirm'] != gettext("Confirm"))) {
+	if (!isset($_POST['confirm']) || ($_POST['confirm'] != gettext("확인"))) {
 		header("Location: diag_gmirror.php");
 		return;
 	}
@@ -59,43 +64,43 @@ if ($_POST) {
 	$input_errors = "";
 
 	if (($_POST['action'] != "clear") && !is_valid_mirror($_POST['mirror'])) {
-		$input_errors[] = gettext("A valid mirror name must be supplied.");
+		$input_errors[] = gettext("미러 이름이 유효하지 않습니다.");
 	}
 
 	if (!empty($_POST['consumer']) && !is_valid_consumer($_POST['consumer'])) {
-		$input_errors[] = gettext("A valid consumer name must be supplied");
+		$input_errors[] = gettext("고객 이름이 유효하지 않습니다.");
 	}
 
 	/* Additional action-specific validation that hasn't already been tested */
 	switch ($_POST['action']) {
 		case "insert":
 			if (!is_consumer_unused($_POST['consumer'])) {
-				$input_errors[] = gettext("Consumer is already in use and cannot be inserted. Remove consumer from existing mirror first.");
+				$input_errors[] = gettext("이미 존재하는 고객입니다. 미러에서 기존 고객을 먼저 제거하십시오.");
 			}
 			if (gmirror_consumer_has_metadata($_POST['consumer'])) {
-				$input_errors[] = gettext("Consumer has metadata from an existing mirror. Clear metadata before inserting consumer.");
+				$input_errors[] = gettext("해당 고객을 삽입하기 전에 기존 미러의 메타데이터를 지우십시오.");
 			}
 			$mstat = gmirror_get_status_single($_POST['mirror']);
 			if (strtoupper($mstat) != "COMPLETE") {
-				$input_errors[] = gettext("Mirror is not in a COMPLETE state, cannot insert consumer. Forget disconnected disks or wait for rebuild to finish.");
+				$input_errors[] = gettext("미러가 완료되지않았으므로 고객을 추가할 수 없습니다. 작업이 완료될때까지 기다려주십시오.");
 			}
 			break;
 
 		case "clear":
 			if (!is_consumer_unused($_POST['consumer'])) {
-				$input_errors[] = gettext("Consumer is in use and cannot be cleared. Deactivate disk first.");
+				$input_errors[] = gettext("사용중인 디스크입니다. 먼저 디스크를 비활성화하십시오.");
 			}
 			if (!gmirror_consumer_has_metadata($_POST['consumer'])) {
-				$input_errors[] = gettext("Consumer has no metadata to clear.");
+				$input_errors[] = gettext("삭제할 데이터가 없습니다.");
 			}
 			break;
 
 		case "activate":
 			if (is_consumer_in_mirror($_POST['consumer'], $_POST['mirror'])) {
-				$input_errors[] = gettext("Consumer is already present on specified mirror.");
+				$input_errors[] = gettext("미러에 존재하는 고객입니다.");
 			}
 			if (!gmirror_consumer_has_metadata($_POST['consumer'])) {
-				$input_errors[] = gettext("Consumer has no metadata and cannot be reactivated.");
+				$input_errors[] = gettext("메타데이터가 존재하지않으므로 재활성화가 불가능합니다.");
 			}
 
 			break;
@@ -104,7 +109,7 @@ if ($_POST) {
 		case "deactivate":
 		case "rebuild":
 			if (!is_consumer_in_mirror($_POST['consumer'], $_POST['mirror'])) {
-				$input_errors[] = gettext("Consumer must be present on the specified mirror.");
+				$input_errors[] = gettext("해당 고객은 지정된 미러에 있어야합니다.");
 			}
 			break;
 	}
@@ -163,7 +168,7 @@ if ($input_errors) {
 	print_input_errors($input_errors);
 }
 if ($_REQUEST["error"] && ($_REQUEST["error"] != 0)) {
-	print_info_box(gettext("There was an error performing the chosen mirror operation. Check the System Log for details."));
+	print_info_box(gettext("작업을 수행하는 도중 오류가 발생했습니다. 자세한 내용은 시스템 로그를 확인하십시오."));
 }
 
 ?>
@@ -173,14 +178,14 @@ if ($_REQUEST["error"] && ($_REQUEST["error"] != 0)) {
 <?php
 if ($_REQUEST["action"]):  ?>
 	<div class="panel panel-default">
-		<div class="panel-heading"><h2 class="panel-title"><?=gettext('Confirm Action')?></h2></div>
+		<div class="panel-heading"><h2 class="panel-title"><?=gettext('동작 확인')?></h2></div>
 		<div class="panel-body">
-			<strong><?=gettext('Please confirm the selected action: '); ?></strong>
+			<strong><?=gettext('선택하신 동작을 확인하십시오: '); ?></strong>
 			<span style="color:green"><?=$action_list[$_REQUEST["action"]]; ?></span>
 			<input type="hidden" name="action" value="<?=htmlspecialchars($_REQUEST['action']); ?>" />
 <?php
 	if (!empty($_REQUEST["mirror"])): ?>
-			<br /><strong><?=gettext("Mirror: "); ?></strong>
+			<br /><strong><?=gettext("미러: "); ?></strong>
 			<?=htmlspecialchars($_REQUEST['mirror']); ?>
 			<input type="hidden" name="mirror" value="<?=htmlspecialchars($_REQUEST['mirror']); ?>" />
 <?php
@@ -188,16 +193,16 @@ if ($_REQUEST["action"]):  ?>
 
 <?php
 	if (!empty($_REQUEST["consumer"])): ?>
-			<br /><strong><?=gettext("Consumer"); ?>:</strong>
+			<br /><strong><?=gettext("고객"); ?>:</strong>
 			<?=htmlspecialchars($_REQUEST["consumer"]); ?>
 			<input type="hidden" name="consumer" value="<?=htmlspecialchars($_REQUEST["consumer"]); ?>" />
 <?php
 	endif; ?>
 			<br />
 			<br />
-			<button type="submit" name="confirm" class="btn btn-sm btn-success" value="<?=gettext("Confirm")?>">
+			<button type="submit" name="confirm" class="btn btn-sm btn-success" value="<?=gettext("확인")?>">
 				<i class="fa fa-check icon-embed-btn"></i>
-				<?=gettext("Confirm")?>
+				<?=gettext("확인")?>
 			</button>
 		</div>
 	</div>
@@ -218,9 +223,9 @@ else:
 			<table class="table table-striped table-hover table-condensed">
 				<thead>
 					<tr>
-						<th><?=gettext("Name"); ?></th>
-						<th><?=gettext("Status"); ?></th>
-						<th><?=gettext("Component"); ?></th>
+						<th><?=gettext("이름"); ?></th>
+						<th><?=gettext("상태"); ?></th>
+						<th><?=gettext("구성"); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -236,7 +241,7 @@ else:
 <?php
 			if (strtoupper($name['status']) == "DEGRADED"): ?>
 							<br />
-							<a class="btn btn-xs btn-danger" href="diag_gmirror.php?action=forget&amp;mirror=<?=htmlspecialchars($name['name']); ?>"><i class="fa fa-trash icon-embed-btn"></i><?=gettext("Forget Disconnected Disks"); ?></a>
+							<a class="btn btn-xs btn-danger" href="diag_gmirror.php?action=forget&amp;mirror=<?=htmlspecialchars($name['name']); ?>"><i class="fa fa-trash icon-embed-btn"></i><?=gettext("연결이 끊긴 디스크를 삭제하십시오."); ?></a>
 <?php
 			endif; ?>
 						</td>
@@ -245,9 +250,9 @@ else:
 							<?php list($cname, $cstatus) = explode(" ", $name['components'][0], 2); ?><br />
 <?php
 			if ((strtoupper($name['status']) == "COMPLETE") && (count($name["components"]) > 1)): ?>
-							<a class="btn btn-xs btn-info" href="diag_gmirror.php?action=rebuild&amp;consumer=<?=htmlspecialchars($cname); ?>&amp;mirror=<?=htmlspecialchars($name['name']); ?>"><i class="fa fa-refresh icon-embed-btn"></i><?=gettext("Rebuild"); ?></a>
-							<a class="btn btn-xs btn-warning" href="diag_gmirror.php?action=deactivate&amp;consumer=<?=htmlspecialchars($cname); ?>&amp;mirror=<?=htmlspecialchars($name['name']); ?>"><i class="fa fa-chain-broken icon-embed-btn"></i><?=gettext("Deactivate"); ?></a>
-							<a class="btn btn-xs btn-danger" href="diag_gmirror.php?action=remove&amp;consumer=<?=htmlspecialchars($cname); ?>&amp;mirror=<?=htmlspecialchars($name['name']); ?>"><i class="fa fa-trash icon-embed-btn"></i><?=gettext("Remove"); ?></a>
+							<a class="btn btn-xs btn-info" href="diag_gmirror.php?action=rebuild&amp;consumer=<?=htmlspecialchars($cname); ?>&amp;mirror=<?=htmlspecialchars($name['name']); ?>"><i class="fa fa-refresh icon-embed-btn"></i><?=gettext("재구성"); ?></a>
+							<a class="btn btn-xs btn-warning" href="diag_gmirror.php?action=deactivate&amp;consumer=<?=htmlspecialchars($cname); ?>&amp;mirror=<?=htmlspecialchars($name['name']); ?>"><i class="fa fa-chain-broken icon-embed-btn"></i><?=gettext("비활성화"); ?></a>
+							<a class="btn btn-xs btn-danger" href="diag_gmirror.php?action=remove&amp;consumer=<?=htmlspecialchars($cname); ?>&amp;mirror=<?=htmlspecialchars($name['name']); ?>"><i class="fa fa-trash icon-embed-btn"></i><?=gettext("삭제"); ?></a>
 <?php
 			endif; ?>
 						</td>
@@ -280,7 +285,7 @@ else:
 			</table>
 <?php
 	else: ?>
-		<?=gettext("No Mirrors Found"); ?>
+		<?=gettext("미러가 발견되지 않았습니다."); ?>
 
 <?php
 	endif; ?>
@@ -288,20 +293,20 @@ else:
 		</div>
 	</div>
 
-<?php print_info_box(gettext("Some disk operations may only be performed when there are multiple consumers present in a mirror."), 'default'); ?>
+<?php print_info_box(gettext("일부 작업은 미러안에 여러 고객이 있는 경우에 한하여 수행할 수 있습니다."), 'default'); ?>
 
 	<!-- Consumer information table -->
 	<div class="panel panel-default">
-		<div class="panel-heading"><h2 class="panel-title"><?=gettext('Consumer Information - Available Consumers')?></h2></div>
+		<div class="panel-heading"><h2 class="panel-title"><?=gettext('고객 정보 - 유효한 고객')?></h2></div>
 		<div class="panel-body table-responsive">
 <?php
 	if (count($unused_consumers) > 0): ?>
 			<table class="table table-striped table-hover table-condensed">
 				<thead>
 					<tr>
-						<th><?=gettext("Name"); ?></th>
-						<th><?=gettext("Size"); ?></th>
-						<th><?=gettext("Add to Mirror"); ?></th>
+						<th><?=gettext("이름"); ?></th>
+						<th><?=gettext("사이즈"); ?></th>
+						<th><?=gettext("미러에 추가"); ?></th>
 					</tr>
 				</thead>
 
@@ -328,7 +333,7 @@ else:
 
 							<a class="btn btn-xs btn-danger" href="diag_gmirror.php?action=clear&amp;consumer=<?=htmlspecialchars($consumer['name']); ?>">
 								<i class="fa fa-trash icon-embed-btn"></i>
-								<?=gettext("Clear Metadata"); ?>
+								<?=gettext("메타데이터 지우기"); ?>
 							</a>
 <?php
 			else: ?>
@@ -357,14 +362,14 @@ else:
 			</table>
 <?php
 	else: ?>
-		<?=gettext("No unused consumers found"); ?>
+		<?=gettext("사용하지않는 고객을 찾을 수 없습니다."); ?>
 <?php
 	endif; ?>
 		</div>
 	</div>
 <?php
-	print_info_box(gettext("Consumers may only be added to a mirror if they are larger than the size of the mirror.") . '<br />' .
-				   gettext("To repair a failed mirror, first perform a 'Forget' command on the mirror, followed by an 'insert' action on the new consumer."), 'default');
+	print_info_box(gettext("고객은 미러의 크기보다 큰 경우에 한하여 추가할 수 있습니다.") . '<br />' .
+				   gettext("실패한 미러를 복구하시려면 'Forget' 명령을 수행하신 뒤, 'insert' 명령으로 새 고객을 ."), 'default');
 endif; ?>
 </form>
 

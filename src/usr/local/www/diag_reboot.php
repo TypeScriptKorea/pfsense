@@ -23,6 +23,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-rebootsystem
 ##|*NAME=Diagnostics: Reboot System
@@ -40,13 +45,13 @@ require_once("captiveportal.inc");
 $guitimeout = 90;	// Seconds to wait before reloading the page after reboot
 $guiretry = 20;		// Seconds to try again if $guitimeout was not long enough
 
-$pgtitle = array(gettext("Diagnostics"), gettext("Reboot"));
+$pgtitle = array(gettext("진단"), gettext("Reboot"));
 include("head.inc");
 
 if (($_SERVER['REQUEST_METHOD'] == 'POST') && (empty($_POST['override']) ||
     ($_POST['override'] != "yes"))):
 	if (DEBUG) {
-		print_info_box(gettext("Not actually rebooting (DEBUG is set true)."), 'success');
+		print_info_box(gettext("실제 재부팅 되는것이 아닙니다(DEBUG가 true로 설정됨)."), 'success');
 	} else {
 		print('<div><pre>');
 		system_reboot();
@@ -76,7 +81,7 @@ events.push(function() {
 	function startCountdown() {
 		setInterval(function() {
 			if (time == "<?=$guitimeout?>") {
-				$('#countdown').html('<h4><?=sprintf(gettext('Rebooting%1$sPage will automatically reload in %2$s seconds'), "<br />", "<span id=\"secs\"></span>");?></h4>');
+				$('#countdown').html('<h4><?=sprintf(gettext('%1$s 페이지를 재부팅하면 %2$s초 후에 자동으로 다시 로드됩니다.'), "<br />", "<span id=\"secs\"></span>");?></h4>');
 			}
 
 			if (time > 0) {
@@ -84,7 +89,7 @@ events.push(function() {
 				time--;
 			} else {
 				time = "<?=$guiretry?>";
-				$('#countdown').html('<h4><?=sprintf(gettext('Not yet ready%1$s Retrying in another %2$s seconds'), "<br />", "<span id=\"secs\"></span>");?></h4>');
+				$('#countdown').html('<h4><?=sprintf(gettext('아직 %1$s에 대한 준비가 끝나지 않았습니다. %2$s 초 후 다시 시도합니다.'), "<br />", "<span id=\"secs\"></span>");?></h4>');
 				$('#secs').html(time);
 				checkonline();
 			}
@@ -104,19 +109,19 @@ else:
 
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<h2 class="panel-title"><?=gettext('System Reboot Confirmation')?></h2>
+		<h2 class="panel-title"><?=gettext('시스템 재부팅 확인')?></h2>
 	</div>
 	<div class="panel-body">
 		<div class="content">
-			<p><?=gettext('Click "Reboot" to reboot the system immediately, or "Cancel" to go to the system dashboard without rebooting. (There will be a brief delay before the dashboard appears.)')?></p>
+			<p><?=gettext('시스템을 즉시 재부팅하시려면 "재부팅"을 클릭하시고, 재부팅없이 대시보드로 이동하시려면 "취소" 클릭하십시오.')?></p>
 			<form action="diag_reboot.php" method="post">
-				<button type="submit" class="btn btn-danger pull-center" name="Submit" value="<?=gettext("Reboot")?>" title="<?=gettext("Reboot the system")?>">
+				<button type="submit" class="btn btn-danger pull-center" name="Submit" value="<?=gettext("재부팅")?>" title="<?=gettext("시스템 재부팅")?>">
 					<i class="fa fa-refresh"></i>
-					<?=gettext("Reboot")?>
+					<?=gettext("재부팅")?>
 				</button>
 				<a href="/" class="btn btn-info">
 					<i class="fa fa-undo"></i>
-					<?=gettext("Cancel")?>
+					<?=gettext("")?>
 				</a>
 			</form>
 		</div>

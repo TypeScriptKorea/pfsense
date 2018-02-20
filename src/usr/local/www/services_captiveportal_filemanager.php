@@ -25,6 +25,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-services-captiveportal-filemanager
 ##|*NAME=Services: Captive Portal: File Manager
@@ -63,7 +68,7 @@ if (!is_array($config['captiveportal'])) {
 
 $a_cp =& $config['captiveportal'];
 
-$pgtitle = array(gettext("Services"), gettext("Captive Portal"), $a_cp[$cpzone]['zone'], gettext("File Manager"));
+$pgtitle = array(gettext("서비스"), gettext("전속 포"), $a_cp[$cpzone]['zone'], gettext("파일 매니저"));
 $pglinks = array("", "services_captiveportal_zones.php", "services_captiveportal.php?zone=" . $cpzone, "@self");
 $shortcut_section = "captiveportal";
 
@@ -94,14 +99,14 @@ if ($_POST['Submit']) {
 		// is there already a file with that name?
 		foreach ($a_element as $element) {
 			if ($element['name'] == $name) {
-				$input_errors[] = sprintf(gettext("A file with the name '%s' already exists."), $name);
+				$input_errors[] = sprintf(gettext("'%s'은 이미 존재하는 파일입니다."), $name);
 				break;
 			}
 		}
 
 		// check total file size
 		if (($total_size + $size) > $g['captiveportal_element_sizelimit']) {
-			$input_errors[] = sprintf(gettext("The total size of all files uploaded may not exceed %s."),
+			$input_errors[] = sprintf(gettext("%s을(를) 초과하여 업로드할 수 없습니다."),
 				format_bytes($g['captiveportal_element_sizelimit']));
 		}
 
@@ -136,12 +141,12 @@ if ($input_errors) {
 }
 
 $tab_array = array();
-$tab_array[] = array(gettext("Configuration"), false, "services_captiveportal.php?zone={$cpzone}");
+$tab_array[] = array(gettext("배치"), false, "services_captiveportal.php?zone={$cpzone}");
 $tab_array[] = array(gettext("MACs"), false, "services_captiveportal_mac.php?zone={$cpzone}");
-$tab_array[] = array(gettext("Allowed IP Addresses"), false, "services_captiveportal_ip.php?zone={$cpzone}");
-$tab_array[] = array(gettext("Allowed Hostnames"), false, "services_captiveportal_hostname.php?zone={$cpzone}");
-$tab_array[] = array(gettext("Vouchers"), false, "services_captiveportal_vouchers.php?zone={$cpzone}");
-$tab_array[] = array(gettext("File Manager"), true, "services_captiveportal_filemanager.php?zone={$cpzone}");
+$tab_array[] = array(gettext("허용 IP 주소"), false, "services_captiveportal_ip.php?zone={$cpzone}");
+$tab_array[] = array(gettext("허용 호스트 이름"), false, "services_captiveportal_hostname.php?zone={$cpzone}");
+$tab_array[] = array(gettext("바우처"), false, "services_captiveportal_vouchers.php?zone={$cpzone}");
+$tab_array[] = array(gettext("파일 매니저"), true, "services_captiveportal_filemanager.php?zone={$cpzone}");
 display_top_tabs($tab_array, true);
 
 if ($_REQUEST['act'] == 'add') {
@@ -180,15 +185,15 @@ if ($_REQUEST['act'] == 'add') {
 if (is_array($a_cp[$cpzone]['element'])):
 ?>
 	<div class="panel panel-default">
-		<div class="panel-heading"><h2 class="panel-title"><?=gettext("Installed Files")?></h2></div>
+		<div class="panel-heading"><h2 class="panel-title"><?=gettext("설치된 파일")?></h2></div>
 		<div class="panel-body">
 			<div class="table-responsive">
 				<table class="table table-striped table-hover table-condensed">
 					<thead>
 						<tr>
-							<th><?=gettext("Name"); ?></th>
-							<th><?=gettext("Size"); ?></th>
-							<th><?=gettext("Actions"); ?></th>
+							<th><?=gettext("이름"); ?></th>
+							<th><?=gettext("사이즈"); ?></th>
+							<th><?=gettext("행동"); ?></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -200,7 +205,7 @@ if (is_array($a_cp[$cpzone]['element'])):
 							<td><?=htmlspecialchars($element['name'])?></td>
 							<td><?=format_bytes($element['size'])?></td>
 							<td>
-								<a class="fa fa-trash"	title="<?=gettext("Delete file")?>" href="services_captiveportal_filemanager.php?zone=<?=$cpzone?>&amp;act=del&amp;id=<?=$i?>" usepost></a>
+								<a class="fa fa-trash"	title="<?=gettext("삭제")?>" href="services_captiveportal_filemanager.php?zone=<?=$cpzone?>&amp;act=del&amp;id=<?=$i?>" usepost></a>
 							</td>
 						</tr>
 <?php
@@ -211,7 +216,7 @@ if (is_array($a_cp[$cpzone]['element'])):
 ?>
 						<tr>
 							<th>
-								<?=gettext("Total");?>
+								<?=gettext("총 사이즈");?>
 							</th>
 							<th>
 								<?=format_bytes($total_size);?>
@@ -232,7 +237,7 @@ endif;
 <?php if (!$_REQUEST['act'] == 'add'): ?>
 			<a href="services_captiveportal_filemanager.php?zone=<?=$cpzone?>&amp;act=add" class="btn btn-success">
 		   		<i class="fa fa-plus icon-embed-btn"></i>
-		   		<?=gettext("Add")?>
+		   		<?=gettext("추가")?>
 		   	</a>
 <?php endif; ?>
 	   </nav>
@@ -243,17 +248,14 @@ endif;
 <div class="infoblock panel panel-default">
 	<div class="panel-heading"><h2 class="panel-title"><?=gettext("Notes");?></h2></div>
 	<div class="panel-body">
-	<?=gettext("Any files that are uploaded here with the filename prefix of captiveportal- will " .
-	"be made available in the root directory of the captive portal HTTP(S) server. " .
-	"An icon file named favicon.ico may also be uploaded and will remain without prefix. " .
-	"They may be referenced directly from the portal page HTML code using relative paths. " .
-	"Example: An image uploaded with the name 'captiveportal-test.jpg' using the " .
-	"file manager can then be included in the portal page like this:")?><br /><br />
+	<?=gettext("captiveportal 이라는 접두어로 전속 포털 HTTP(s)서버의 루트 디렉토리에서 이곳에 업로드된 모든 파일을 사용할 수 있습니다." .
+	"favicon.ico같은 아이콘 파일도 업로드될 수 있으며 접두사 없이 그대로 유지됩니다. " .
+	"포털 페이지 HTML코드에서 직접 상대 경로를 사용하여 참조할 수 있습니다. " .
+	"exam: 파일 매니저를 사용하여 captiveportal-test.jpg란 이름으로 업로드한 이미지를 다음과 같은 방법으로 페이지에 적용할 수 있습니다.")?><br /><br />
 	<pre>&lt;img src=&quot;captiveportal-test.jpg&quot; width=... height=...&gt;</pre><br />
-	<?=gettext("In addition, .php files can also be uploaded for execution.	The filename can be passed " .
-	"to the custom page from the initial page by using text similar to:")?><br /><br />
+	<?=gettext("또한 .php파일을 업로드하여 실행할 수 있습니다. 파일 이름은 다음과 같은 방법으로 처음 페이지에서 사용자 지정 페이지로 전달할 수 있습니다.")?><br /><br />
 	<pre>&lt;a href="/captiveportal-aup.php?zone=$PORTAL_ZONE$&amp;redirurl=$PORTAL_REDIRURL$"&gt;<?=gettext("Acceptable usage policy"); ?>&lt;/a&gt;</pre><br />
-	<?=sprintf(gettext("The total size limit for all files is %s."), format_bytes($g['captiveportal_element_sizelimit']))?>
+	<?=sprintf(gettext("파일의 총 크기 제한은 %s입니다."), format_bytes($g['captiveportal_element_sizelimit']))?>
 	</div>
 </div>
 <?php

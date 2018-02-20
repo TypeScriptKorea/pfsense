@@ -20,6 +20,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-sourcetracking
 ##|*NAME=Diagnostics: Show Source Tracking
@@ -36,7 +41,7 @@ if ($_POST['action']) {
 			$retval = mwexec("/sbin/pfctl -K " . escapeshellarg($_POST['srcip']) . " -K " . escapeshellarg($_POST['dstip']));
 			echo htmlentities("|{$_POST['srcip']}|{$_POST['dstip']}|{$retval}|");
 		} else {
-			echo gettext("invalid input");
+			echo gettext("입력이 올바르지않습니다.");
 		}
 		exit;
 	}
@@ -50,14 +55,14 @@ if ($_POST['filter']) {
 }
 
 
-$pgtitle = array(gettext("Diagnostics"), gettext("States"), gettext("Source Tracking"));
+$pgtitle = array(gettext("진단"), gettext("상태"), gettext("소스 트래킹"));
 $pglinks = array("", "diag_dump_states.php", "@self");
 include("head.inc");
 
 $tab_array = array();
-$tab_array[] = array(gettext("States"), false, "diag_dump_states.php");
-$tab_array[] = array(gettext("Source Tracking"), true, "diag_dump_states_sources.php");
-$tab_array[] = array(gettext("Reset States"), false, "diag_resetstate.php");
+$tab_array[] = array(gettext("상태"), false, "diag_dump_states.php");
+$tab_array[] = array(gettext("소스 트래킹"), true, "diag_dump_states_sources.php");
+$tab_array[] = array(gettext("상태 리셋"), false, "diag_resetstate.php");
 display_top_tabs($tab_array);
 
 ?>
@@ -112,7 +117,7 @@ print $form;
 
 ?>
 <div class="panel panel-default">
-	<div class="panel-heading"><h2 class="panel-title"><?=gettext("Current Source Tracking Entries")?></h2></div>
+	<div class="panel-heading"><h2 class="panel-title"><?=gettext("해당 소스 추적 항목")?></h2></div>
 	<div class="panel-body">
 		<table class="table table-striped">
 			<thead>
@@ -151,7 +156,7 @@ if (count($sources) > 0) {
 
 					<td>
 						<a class="btn btn-xs btn-danger" data-entry="<?=$srcip?>|<?=$dstip?>"
-							title="<?=sprintf(gettext('Remove all source tracking entries from %1$s to %2$s'), $srcip, $dstip);?>"><?=gettext("Remove")?></a>
+							title="<?=sprintf(gettext('%1$s 부터 %2$s 까지의 모든 소스 추적 항목을 삭제합니다.'), $srcip, $dstip);?>"><?=gettext("삭제")?></a>
 					</td>
 				</tr>
 <?php
@@ -165,7 +170,7 @@ if (count($sources) > 0) {
 </div>
 <?php
 if ($row == 0) {
-	print_info_box(gettext('No source tracking entries were found.'), 'warning', false);
+	print_info_box(gettext('소스 추적 항목을 발견하지 못했습니다.'), 'warning', false);
 }
 
 include("foot.inc");

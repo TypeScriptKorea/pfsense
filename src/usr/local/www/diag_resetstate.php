@@ -23,6 +23,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.21
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-resetstate
 ##|*NAME=Diagnostics: Reset states
@@ -41,7 +46,7 @@ if ($_POST) {
 		if ($savemsg) {
 			$savemsg .= " ";
 		}
-		$savemsg .= gettext("The state table has been flushed successfully.");
+		$savemsg .= gettext("The state table has been flushed successfully.");/*has been flushed??? 무슨뜻인지 모르겠다.*/
 	}
 
 	if ($_POST['sourcetracking']) {
@@ -65,31 +70,29 @@ if ($savemsg) {
 	print_info_box($savemsg, 'success');
 }
 
-$statetablehelp = sprintf(gettext('Resetting the state tables will remove all entries from the corresponding tables. This means that all open connections ' .
-					'will be broken and will have to be re-established. This may be necessary after making substantial changes to the ' .
-					'firewall and/or NAT rules, especially if there are IP protocol mappings (e.g. for PPTP or IPv6) with open connections.%1$s' .
-					'The firewall will normally leave the state tables intact when changing rules.%2$s' .
-					'%3$sNOTE:%4$s Resetting the firewall state table may cause the browser session to appear hung after clicking &quot;Reset&quot;. ' .
-					'Simply refresh the page to continue.'), "<br /><br />", "<br /><br />", "<strong>", "</strong>");
+$statetablehelp = sprintf(gettext('상태 테이블을 재설정하면 해당 테이블에서 모든 항목이 제거됩니다. 즉, 모든연결이 끊어지며 다시 설정하셔야 한다는 의미입니다.' .
+					'이 기능은 방화벽 또는 NAT규칙을 변경한 후 필요할 수 있으며, 특히, 사용중이신 IP매핑 프로토콜(예:PPTP 아니면 IPv6같은 경우)이 있는 경우 필요할 수 있습니다. %1$s' .
+					'방화벽은 규칙을 변경할 때 일반적으로 상태 테이블을 그대로 유지합니다. %2$s' .
+					'%3$sNOTE:%4$s 상태 테이블 재설정을 위해 &quot;재설정&quot; 버튼을 클릭하면 브라우저 세션이 중단된 것처럼 보일 수 있습니다.' .
+					'계속하시려면 페이지를 새로고침 하십시오.'), "<br /><br />", "<br /><br />", "<strong>", "</strong>");
 
-$sourcetablehelp = sprintf(gettext('Resetting the source tracking table will remove all source/destination associations. ' .
-					'This means that the "sticky" source/destination association ' .
-					'will be cleared for all clients.%s' .
-					'This does not clear active connection states, only source tracking.'), "<br /><br />");
+$sourcetablehelp = sprintf(gettext('원본 추적 테이블을 재설정하면 모든 발신/수신 연결이제거됩니다. ' .
+					'이는 "고정" 발신/수신 연결이 모든 클라이언트에 대해 지워짐을 의미합니다.%s' .
+					'이는 연결상태는 지우지 않고 오로지 발신 추적만을 삭제합니다.'), "<br /><br />");
 
 $tab_array = array();
-$tab_array[] = array(gettext("States"), false, "diag_dump_states.php");
+$tab_array[] = array(gettext("상태"), false, "diag_dump_states.php");
 
 if (isset($config['system']['lb_use_sticky'])) {
-	$tab_array[] = array(gettext("Source Tracking"), false, "diag_dump_states_sources.php");
+	$tab_array[] = array(gettext("발신지 추적"), false, "diag_dump_states_sources.php");
 }
 
-$tab_array[] = array(gettext("Reset States"), true, "diag_resetstate.php");
+$tab_array[] = array(gettext("상태 리셋"), true, "diag_resetstate.php");
 display_top_tabs($tab_array);
 
 $form = new Form(false);
 
-$section = new Form_Section('State reset options');
+$section = new Form_Section('상태 리셋 옵션');
 
 $section->addInput(new Form_Checkbox(
 	'statetable',
@@ -118,8 +121,8 @@ $form->addGlobal(new Form_Button(
 
 print $form;
 
-$nonechecked = gettext("Please select at least one reset option");
-$cfmmsg = gettext("Do you really want to reset the selected states?");
+$nonechecked = gettext("하나 이상의 옵션을 선택하셔야합니다.");
+$cfmmsg = gettext("선택한 옵션으로 재설정 하시겠습니까?");
 ?>
 
 <script type="text/javascript">

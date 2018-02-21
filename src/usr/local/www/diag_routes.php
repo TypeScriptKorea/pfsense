@@ -20,6 +20,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.21
+한글화 번역 
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-routingtables
 ##|*NAME=Diagnostics: Routing tables
@@ -63,7 +68,7 @@ if (isset($_REQUEST['isAjax'])) {
 }
 require_once('guiconfig.inc');
 
-$pgtitle = array(gettext("Diagnostics"), gettext("Routes"));
+$pgtitle = array(gettext("진단"), gettext("Routes"));
 $shortcut_section = "routing";
 
 include('head.inc');
@@ -75,15 +80,15 @@ $form->addGlobal(new Form_Input(
 	'hidden',
 	1
 ));
-$section = new Form_Section('Routing Table Display Options');
+$section = new Form_Section('라우팅 테이블 표시 옵션');
 
 $section->addInput(new Form_Checkbox(
 	'resolve',
 	'Resolve names',
 	'Enable',
 	$resolve
-))->setHelp('Enabling name resolution may cause the query to take longer.'.
-	' It can be stopped at any time by clicking the Stop button in the browser.');
+))->setHelp('이름을 확인하도록 설정하시면 쿼리 시간이 더 오래 걸릴 수 있습니다.'.
+	' 브라우저에서 중지 버튼을 클릭하여 언제든지 작업을 중단할 수 있습니다.');
 
 $validLimits = array('10', '50', '100', '200', '500', '1000', 'all');
 $section->addInput(new Form_Select(
@@ -98,7 +103,7 @@ $section->addInput(new Form_Input(
 	'Filter',
 	'text',
 	$host
-))->setHelp('Use a regular expression to filter the tables.');
+))->setHelp('정규식을 사용하여 표를 필터링할 수 있습니다.');
 
 $form->add($section);
 
@@ -199,7 +204,7 @@ events.push(function() {
 		</thead>
 		<tbody>
 			<tr>
-				<td><?=gettext("Gathering data, please wait...")?></td>
+				<td><?=gettext("데이터를 수집중입니다. 잠시만 기다려주십시오...")?></td>
 			</tr>
 		</tbody>
 		</table>
@@ -217,7 +222,7 @@ events.push(function() {
 		</thead>
 		<tbody>
 			<tr>
-				<td><?=gettext("Gathering data, please wait...")?></td>
+				<td><?=gettext("데이터를 수집중입니다. 잠시만 기다려주십시오...")?></td>
 			</tr>
 		</tbody>
 		</table>

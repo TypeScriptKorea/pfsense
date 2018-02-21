@@ -19,6 +19,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.21
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-edit
 ##|*NAME=Diagnostics: Edit File
@@ -29,7 +34,7 @@
 ##|*MATCH=vendor/filebrowser/browser.php*
 ##|-PRIV
 
-$pgtitle = array(gettext("Diagnostics"), gettext("Edit File"));
+$pgtitle = array(gettext("진단"), gettext("Edit File"));
 require_once("guiconfig.inc");
 
 if ($_POST['action']) {
@@ -37,21 +42,21 @@ if ($_POST['action']) {
 		case 'load':
 			if (strlen($_POST['file']) < 1) {
 				print('|5|');
-				print_info_box(gettext("No file name specified."), 'danger');
+				print_info_box(gettext("파일 이름이 지정되지 않았습니다."), 'danger');
 				print('|');
 			} elseif (is_dir($_POST['file'])) {
 				print('|4|');
-				print_info_box(gettext("Loading a directory is not supported."), 'danger');
+				print_info_box(gettext("디렉토리를 로드할 수 없습니다."), 'danger');
 				print('|');
 			} elseif (!is_file($_POST['file'])) {
 				print('|3|');
-				print_info_box(gettext("File does not exist or is not a regular file."), 'danger');
+				print_info_box(gettext("존재하지 않는 파일이거나 일반 파일이 아닙니다."), 'danger');
 				print('|');
 			} else {
 				$data = file_get_contents(urldecode($_POST['file']));
 				if ($data === false) {
 					print('|1|');
-					print_info_box(gettext("Failed to read file."), 'danger');
+					print_info_box(gettext("파일을 읽을 수 없습니다."), 'danger');
 					print('|');
 				} else {
 					$data = base64_encode($data);
@@ -63,7 +68,7 @@ if ($_POST['action']) {
 		case 'save':
 			if (strlen($_POST['file']) < 1) {
 				print('|');
-				print_info_box(gettext("No file name specified."), 'danger');
+				print_info_box(gettext("파일 이름이 지정되지 않았습니다."), 'danger');
 				print('|');
 			} else {
 				$_POST['data'] = str_replace("\r", "", base64_decode($_POST['data']));
@@ -76,15 +81,15 @@ if ($_POST['action']) {
 				}
 				if ($ret === false) {
 					print('|');
-					print_info_box(gettext("Failed to write file."), 'danger');
+					print_info_box(gettext("파일 작성에 실패하였습니다."), 'danger');
 					print('|');
 				} elseif ($ret != strlen($_POST['data'])) {
 					print('|');
-					print_info_box(gettext("Error while writing file."), 'danger');
+					print_info_box(gettext("파일 작성중 오류가 발생했습니다."), 'danger');
 					print('|');
 				} else {
 					print('|');
-					print_info_box(gettext("File saved successfully."), 'success');
+					print_info_box(gettext("파일을 성공적으로 저장했습니다."), 'success');
 					print('|');
 				}
 			}
@@ -95,7 +100,7 @@ if ($_POST['action']) {
 
 require_once("head.inc");
 
-print_callout(gettext("The capabilities offered here can be dangerous. No support is available. Use them at your own risk!"), 'danger', gettext('Advanced Users Only'));
+print_callout(gettext("다음 기능들은 사용하시는데에 있어 주의를 필요로 합니다."), 'danger', gettext('고급 유저 전용'));
 
 ?>
 <!-- file status box -->
@@ -104,24 +109,24 @@ print_callout(gettext("The capabilities offered here can be dangerous. No suppor
 </div>
 
 <div class="panel panel-default">
-	<div class="panel-heading"><h2 class="panel-title"><?=gettext("Save / Load a File from the Filesystem")?></h2></div>
+	<div class="panel-heading"><h2 class="panel-title"><?=gettext("파일시스템으로부터 파일을 저장 및 로드")?></h2></div>
 	<div class="panel-body">
 		<div class="content">
 			<form>
-				<p><input type="text" class="form-control" id="fbTarget" placeholder="<?=gettext('Path to file to be edited')?>"/></p>
+				<p><input type="text" class="form-control" id="fbTarget" placeholder="<?=gettext('편집할 파일의 경로')?>"/></p>
 				<div class="btn-group">
 					<p>
-						<button type="button" class="btn btn-default btn-sm" onclick="loadFile();"	value="<?=gettext('Load')?>">
+						<button type="button" class="btn btn-default btn-sm" onclick="loadFile();"	value="<?=gettext('로드')?>">
 							<i class="fa fa-file-text-o"></i>
-							<?=gettext('Load')?>
+							<?=gettext('로드')?>
 						</button>
 						<button type="button" class="btn btn-default btn-sm" id="fbOpen"		value="<?=gettext('Browse')?>">
 							<i class="fa fa-list"></i>
 							<?=gettext('Browse')?>
 						</button>
-						<button type="button" class="btn btn-default btn-sm" onclick="saveFile();"	value="<?=gettext('Save')?>">
+						<button type="button" class="btn btn-default btn-sm" onclick="saveFile();"	value="<?=gettext('저장')?>">
 							<i class="fa fa-save"></i>
-							<?=gettext('Save')?>
+							<?=gettext('저장')?>
 						</button>
 					</p>
 				</div>

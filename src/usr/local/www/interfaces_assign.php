@@ -24,6 +24,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.21
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-interfaces-assignnetworkports
 ##|*NAME=Interfaces: Interface Assignments
@@ -33,7 +38,7 @@
 
 //$timealla = microtime(true);
 
-$pgtitle = array(gettext("Interfaces"), gettext("Interface Assignments"));
+$pgtitle = array(gettext("인터페이스"), gettext("Interface Assignments"));
 $shortcut_section = "interfaces";
 
 require_once("guiconfig.inc");
@@ -270,7 +275,7 @@ if (isset($_REQUEST['add']) && isset($_REQUEST['if_add'])) {
 				$members = explode(",", strtoupper($bridge['members']));
 				foreach ($members as $member) {
 					if ($member == $ifnames[0]) {
-						$input_errors[] = sprintf(gettext('Cannot set port %1$s to interface %2$s because this interface is a member of %3$s.'), $portname, $member, $portname);
+						$input_errors[] = sprintf(gettext('이 인터페이스가 %3$s의 멤버이기 때문에 포트 %1$s 를 인터페이스 %2$s로 설정할 수 없습니다.'), $portname, $member, $portname);
 						break;
 					}
 				}
@@ -281,7 +286,7 @@ if (isset($_REQUEST['add']) && isset($_REQUEST['if_add'])) {
 	if (is_array($config['vlans']['vlan'])) {
 		foreach ($config['vlans']['vlan'] as $vlan) {
 			if (does_interface_exist($vlan['if']) == false) {
-				$input_errors[] = sprintf(gettext('Vlan parent interface %1$s does not exist anymore so vlan id %2$s cannot be created please fix the issue before continuing.'), $vlan['if'], $vlan['tag']);
+				$input_errors[] = sprintf(gettext('Vlan상위 인터페이스 %1$s이(가)더 이상 없으므로 VLAN ID %2$s를 생성할 수 없습니다.'), $vlan['if'], $vlan['tag']);
 			}
 		}
 	}
@@ -349,15 +354,15 @@ if (isset($_REQUEST['add']) && isset($_REQUEST['if_add'])) {
 		$id = $delbtn;
 
 		if (link_interface_to_group($id)) {
-			$input_errors[] = gettext("The interface is part of a group. Please remove it from the group to continue");
+			$input_errors[] = gettext("이 인터페이스는 그룹에 속해있습니다. 계속하시려면 그룹에서 해당 항목을 제거하십시오.");
 		} else if (link_interface_to_bridge($id)) {
-			$input_errors[] = gettext("The interface is part of a bridge. Please remove it from the bridge to continue");
+			$input_errors[] = gettext("이 인터페이스는 브리지에 속해있습니다. 계속하시려면 브리지에서 해당 항목을 제거하십시오.");
 		} else if (link_interface_to_gre($id)) {
-			$input_errors[] = gettext("The interface is part of a gre tunnel. Please delete the tunnel to continue");
+			$input_errors[] = gettext("이 인터페이스는 Gre터널에 속해있습니다. 계속하시려면 터널에서 해당 항목을 제거하십시오.");
 		} else if (link_interface_to_gif($id)) {
-			$input_errors[] = gettext("The interface is part of a gif tunnel. Please delete the tunnel to continue");
+			$input_errors[] = gettext("이 인터페이스는 gif터널에 속해있습니다. 계속하시려면 터널에서 해당 항목을 제거하십시오.");
 		} else if (interface_has_queue($id)) {
-			$input_errors[] = gettext("The interface has a traffic shaper queue configured.\nPlease remove all queues on the interface to continue.");
+			$input_errors[] = gettext("인터페이스에 트래픽 조절 대기열이 구성되어 있습니다.\n계속하려면 인터페이스에 존재하는 모든 대기 열을 제거하십시오.");
 		} else {
 			unset($config['interfaces'][$id]['enable']);
 			$realid = get_real_interface($id);
@@ -402,7 +407,7 @@ if (isset($_REQUEST['add']) && isset($_REQUEST['if_add'])) {
 
 			link_interface_to_vlans($realid, "update");
 
-			$action_msg = gettext("Interface has been deleted.");
+			$action_msg = gettext("인터페이스가 제거되었습니다.");
 			$class = "success";
 		}
 	}
@@ -423,21 +428,21 @@ include("head.inc");
 if (file_exists("/var/run/interface_mismatch_reboot_needed")) {
 	if ($_POST) {
 		if ($rebootingnow) {
-			$action_msg = gettext("The system is now rebooting. Please wait.");
+			$action_msg = gettext("시스템이 재부팅됩니다. 잠시 기다려주십시오.");
 			$class = "success";
 		} else {
-			$applymsg = gettext("Reboot is needed. Please apply the settings in order to reboot.");
+			$applymsg = gettext("재부팅이 필요합니다. 재부팅하려면 설정을 적용하십시오.");
 			$class = "warning";
 		}
 	} else {
-		$action_msg = gettext("Interface mismatch detected. Please resolve the mismatch, save and then click 'Apply Changes'. The firewall will reboot afterwards.");
+		$action_msg = gettext("인터페이스가 일치하지 않습니다. 오류를 해결하신 뒤 저장하시고 '변경 사항 적용'을 클릭하십시오. 이후 방화벽이 재부팅됩니다.");
 		$class = "warning";
 	}
 }
 
 if (file_exists("/tmp/reload_interfaces")) {
 	echo "<p>\n";
-	print_apply_box(gettext("The interface configuration has been changed.") . "<br />" . gettext("The changes must be applied for them to take effect."));
+	print_apply_box(gettext("인터페이스 구성이 변경되었습니다.") . "<br />" . gettext("변경 사항을 저장하시면 변경 내용이 적용됩니다."));
 	echo "<br /></p>\n";
 } elseif ($applymsg) {
 	print_apply_box($applymsg);
@@ -482,8 +487,8 @@ foreach ($portlist as $portname => $portinfo) {
 	<table class="table table-striped table-hover">
 	<thead>
 		<tr>
-			<th><?=gettext("Interface")?></th>
-			<th><?=gettext("Network port")?></th>
+			<th><?=gettext("인터페이스")?></th>
+			<th><?=gettext("네트워크 포트")?></th>
 			<th>&nbsp;</th>
 		</tr>
 	</thead>
@@ -522,7 +527,7 @@ endforeach;
 ?>
 		<tr>
 			<th>
-				<?=gettext("Available network ports:")?>
+				<?=gettext("사용 가능한 네트워크 포트:")?>
 			</th>
 			<td>
 				<select name="if_add" id="if_add" class="form-control">
@@ -535,7 +540,7 @@ foreach ($unused_portlist as $portname => $portinfo):?>
 				</select>
 			</td>
 			<td>
-				<button type="submit" name="add" title="<?=gettext("Add selected interface")?>" value="add interface" class="btn btn-success btn-sm" >
+				<button type="submit" name="add" title="<?=gettext("선택한 인터페이스 추가")?>" value="add interface" class="btn btn-success btn-sm" >
 					<i class="fa fa-plus icon-embed-btn"></i>
 					<?=$gettextArray["add"]?>
 				</button>
@@ -546,14 +551,14 @@ foreach ($unused_portlist as $portname => $portinfo):?>
 	</table>
 	</div>
 
-	<button name="Submit" type="submit" class="btn btn-primary" value="<?=gettext('Save')?>"><i class="fa fa-save icon-embed-btn"></i><?=gettext('Save')?></button>
+	<button name="Submit" type="submit" class="btn btn-primary" value="<?=gettext('저장')?>"><i class="fa fa-save icon-embed-btn"></i><?=gettext('저장')?></button>
 </form>
 <br />
 
 <?php
-print_info_box(gettext("Interfaces that are configured as members of a lagg(4) interface will not be shown.") .
+print_info_box(gettext("lagg(4)인터페이스로 구성된 인터페이스는 표시되지 않습니다.") .
     '<br/><br/>' .
-    gettext("Wireless interfaces must be created on the Wireless tab before they can be assigned."), 'info', false);
+    gettext("무선 인터페이스는 무선 탭에서 생성해서 할당 할 수 있습니다."), 'info', false);
 ?>
 
 <?php include("foot.inc")?>

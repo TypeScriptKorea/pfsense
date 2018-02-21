@@ -23,6 +23,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.21
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-firewall-nat-portforward
 ##|*NAME=Firewall: NAT: Port Forward
@@ -189,8 +194,8 @@ if ($_POST['apply']) {
 }
 
 if (is_subsystem_dirty('natconf')) {
-	print_apply_box(gettext('The NAT configuration has been changed.') . '<br />' .
-					gettext('The changes must be applied for them to take effect.'));
+	print_apply_box(gettext('NAT 구성이 변경되었습니다.') . '<br />' .
+					gettext('변경사항을 저장하시면 적용됩니다.'));
 }
 
 $tab_array = array();
@@ -213,7 +218,7 @@ $columns_in_table = 13;
 
 <form action="firewall_nat.php" method="post" name="iform">
 	<div class="panel panel-default">
-		<div class="panel-heading"><h2 class="panel-title"><?=gettext('Rules')?></h2></div>
+		<div class="panel-heading"><h2 class="panel-title"><?=gettext('규칙')?></h2></div>
 		<div class="panel-body table-responsive">
 			<table id="ruletable" class="table table-striped table-hover table-condensed">
 				<thead>
@@ -221,15 +226,15 @@ $columns_in_table = 13;
 						<th><!-- Checkbox --></th>
 						<th><!-- Icon --></th>
 						<th><!-- Rule type --></th>
-						<th><?=gettext("Interface")?></th>
-						<th><?=gettext("Protocol")?></th>
-						<th><?=gettext("Source Address")?></th>
-						<th><?=gettext("Source Ports")?></th>
-						<th><?=gettext("Dest. Address")?></th>
-						<th><?=gettext("Dest. Ports")?></th>
+						<th><?=gettext("인터페이스")?></th>
+						<th><?=gettext("프로토콜")?></th>
+						<th><?=gettext("발신 주소")?></th>
+						<th><?=gettext("발신 포트")?></th>
+						<th><?=gettext("수신 주소")?></th>
+						<th><?=gettext("수신 포트")?></th>
 						<th><?=gettext("NAT IP")?></th>
-						<th><?=gettext("NAT Ports")?></th>
-						<th><?=gettext("Description")?></th>
+						<th><?=gettext("NAT 포트")?></th>
+						<th><?=gettext("종류")?></th>
 						<th><?=gettext("Actions")?></th>
 					</tr>
 				</thead>
@@ -290,7 +295,7 @@ foreach ($a_nat as $natent):
 							<a href="?act=toggle&amp;id=<?=$i?>" usepost>
 								<i class="fa fa-check" title="<?=gettext("click to toggle enabled/disabled status")?>"></i>
 <?php 	if (isset($natent['nordr'])) { ?>
-								&nbsp;<i class="fa fa-hand-stop-o text-danger" title="<?=gettext("Negated: This rule excludes NAT from a later rule")?>"></i>
+								&nbsp;<i class="fa fa-hand-stop-o text-danger" title="<?=gettext("제외: 해당 규칙은 이후 적용될 규칙에서 NAT을 제외합니다.")?>"></i>
 <?php 	} ?>
 							</a>
 						</td>
@@ -298,11 +303,11 @@ foreach ($a_nat as $natent):
 <?php
 	if ($natent['associated-rule-id'] == "pass"):
 ?>
-							<i class="fa fa-play" title="<?=gettext("All traffic matching this NAT entry is passed")?>"></i>
+							<i class="fa fa-play" title="<?=gettext("이 NAT 항목과 일치하는 모든 트래픽이 전달됩니다.")?>"></i>
 <?php
 	elseif (!empty($natent['associated-rule-id'])):
 ?>
-							<i class="fa fa-random" title="<?=sprintf(gettext("Firewall rule ID %s is managed by this rule"), htmlspecialchars($natent['associated-rule-id']))?>"></i>
+							<i class="fa fa-random" title="<?=sprintf(gettext("방화벽 규칙 ID %s 은(는) 해당 규칙에 의해 관리됩니다."), htmlspecialchars($natent['associated-rule-id']))?>"></i>
 <?php
 	endif;
 ?>
@@ -329,7 +334,7 @@ foreach ($a_nat as $natent):
 <?php
 	if (isset($alias['src'])):
 ?>
-							<a href="/firewall_aliases_edit.php?id=<?=$alias['src']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias details')?>" data-content="<?=alias_info_popup($alias['src'])?>" data-html="true">
+							<a href="/firewall_aliases_edit.php?id=<?=$alias['src']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias 자세히')?>" data-content="<?=alias_info_popup($alias['src'])?>" data-html="true">
 <?php
 	endif;
 ?>
@@ -346,7 +351,7 @@ foreach ($a_nat as $natent):
 <?php
 	if (isset($alias['srcport'])):
 ?>
-							<a href="/firewall_aliases_edit.php?id=<?=$alias['srcport']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias details')?>" data-content="<?=alias_info_popup($alias['srcport'])?>" data-html="true">
+							<a href="/firewall_aliases_edit.php?id=<?=$alias['srcport']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias 자세히')?>" data-content="<?=alias_info_popup($alias['srcport'])?>" data-html="true">
 <?php
 	endif;
 ?>
@@ -364,7 +369,7 @@ foreach ($a_nat as $natent):
 <?php
 	if (isset($alias['dst'])):
 ?>
-							<a href="/firewall_aliases_edit.php?id=<?=$alias['dst']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias details')?>" data-content="<?=alias_info_popup($alias['dst'])?>" data-html="true">
+							<a href="/firewall_aliases_edit.php?id=<?=$alias['dst']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias 자세히')?>" data-content="<?=alias_info_popup($alias['dst'])?>" data-html="true">
 <?php
 	endif;
 ?>
@@ -381,7 +386,7 @@ foreach ($a_nat as $natent):
 <?php
 	if (isset($alias['dstport'])):
 ?>
-							<a href="/firewall_aliases_edit.php?id=<?=$alias['dstport']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias details')?>" data-content="<?=alias_info_popup($alias['dstport'])?>" data-html="true">
+							<a href="/firewall_aliases_edit.php?id=<?=$alias['dstport']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias 자세히')?>" data-content="<?=alias_info_popup($alias['dstport'])?>" data-html="true">
 <?php
 	endif;
 ?>
@@ -398,7 +403,7 @@ foreach ($a_nat as $natent):
 <?php
 	if (isset($alias['target'])):
 ?>
-							<a href="/firewall_aliases_edit.php?id=<?=$alias['target']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias details')?>" data-content="<?=alias_info_popup($alias['target'])?>" data-html="true" >
+							<a href="/firewall_aliases_edit.php?id=<?=$alias['target']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias 자세히')?>" data-content="<?=alias_info_popup($alias['target'])?>" data-html="true" >
 <?php
 	endif;
 ?>
@@ -416,7 +421,7 @@ foreach ($a_nat as $natent):
 <?php
 	if (isset($alias['targetport'])):
 ?>
-							<a href="/firewall_aliases_edit.php?id=<?=$alias['targetport']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias details')?>" data-content="<?=alias_info_popup($alias['targetport'])?>" data-html="true">
+							<a href="/firewall_aliases_edit.php?id=<?=$alias['targetport']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias 자세히')?>" data-content="<?=alias_info_popup($alias['targetport'])?>" data-html="true">
 <?php
 	endif;
 ?>
@@ -434,9 +439,9 @@ foreach ($a_nat as $natent):
 							<?=htmlspecialchars($natent['descr'])?>
 						</td>
 						<td>
-							<a class="fa fa-pencil" title="<?=gettext("Edit rule"); ?>" href="firewall_nat_edit.php?id=<?=$i?>"></a>
-							<a class="fa fa-clone"	  title="<?=gettext("Add a new NAT based on this one")?>" href="firewall_nat_edit.php?dup=<?=$i?>"></a>
-							<a class="fa fa-trash"	title="<?=gettext("Delete rule")?>" href="firewall_nat.php?act=del&amp;id=<?=$i?>" usepost></a>
+							<a class="fa fa-pencil" title="<?=gettext("규칙 편집"); ?>" href="firewall_nat_edit.php?id=<?=$i?>"></a>
+							<a class="fa fa-clone"	  title="<?=gettext("새로운 NAT 추가")?>" href="firewall_nat_edit.php?dup=<?=$i?>"></a>
+							<a class="fa fa-trash"	title="<?=gettext("규칙 삭제")?>" href="firewall_nat.php?act=del&amp;id=<?=$i?>" usepost></a>
 						</td>
 					</tr>
 <?php
@@ -456,25 +461,25 @@ if ($seprows[$nnats]) {
 	</div>
 
 	<nav class="action-buttons">
-		<a href="firewall_nat_edit.php?after=-1" class="btn btn-sm btn-success" title="<?=gettext('Add rule to the top of the list')?>">
+		<a href="firewall_nat_edit.php?after=-1" class="btn btn-sm btn-success" title="<?=gettext('맨 위에 규칙 추가')?>">
 			<i class="fa fa-level-up icon-embed-btn"></i>
-			<?=gettext('Add')?>
+			<?=gettext('추가')?>
 		</a>
-		<a href="firewall_nat_edit.php" class="btn btn-sm btn-success" title="<?=gettext('Add rule to the end of the list')?>">
+		<a href="firewall_nat_edit.php" class="btn btn-sm btn-success" title="<?=gettext('맨 아래에 규칙 추가')?>">
 			<i class="fa fa-level-down icon-embed-btn"></i>
-			<?=gettext('Add')?>
+			<?=gettext('추가')?>
 		</a>
-		<button name="del_x" type="submit" class="btn btn-danger btn-sm" title="<?=gettext('Delete selected rules')?>">
+		<button name="del_x" type="submit" class="btn btn-danger btn-sm" title="<?=gettext('선택한 규칙 삭제')?>">
 			<i class="fa fa-trash icon-embed-btn"></i>
-			<?=gettext("Delete"); ?>
+			<?=gettext("삭제"); ?>
 		</button>
-		<button type="submit" id="order-store" name="order-store" class="btn btn-primary btn-sm" disabled title="<?=gettext('Save rule order')?>">
+		<button type="submit" id="order-store" name="order-store" class="btn btn-primary btn-sm" disabled title="<?=gettext('순서 저장')?>">
 			<i class="fa fa-save icon-embed-btn"></i>
 			<?=gettext("Save")?>
 		</button>
-		<button type="submit" id="addsep" name="addsep" class="btn btn-sm btn-warning" title="<?=gettext('Add separator')?>">
+		<button type="submit" id="addsep" name="addsep" class="btn btn-sm btn-warning" title="<?=gettext('구분 기호 추가')?>">
 			<i class="fa fa-plus icon-embed-btn"></i>
-			<?=gettext("Separator")?>
+			<?=gettext("구분 기호")?>
 		</button>
 	</nav>
 </form>
@@ -483,9 +488,9 @@ if ($seprows[$nnats]) {
 //<![CDATA[
 //Need to create some variables here so that jquery/pfSenseHelpers.js can read them
 iface = "<?=strtolower($if)?>";
-cncltxt = '<?=gettext("Cancel")?>';
-svtxt = '<?=gettext("Save")?>';
-svbtnplaceholder = '<?=gettext("Enter a description, Save, then drag to final location.")?>';
+cncltxt = '<?=gettext("취소")?>';
+svtxt = '<?=gettext("저장")?>';
+svbtnplaceholder = '<?=gettext("설명을 입력하시고 저장하신 뒤, 마지막 위치로 드래그 하십시오.")?>';
 configsection = "nat";
 dirty = false;
 
@@ -523,7 +528,7 @@ events.push(function() {
 	// provide a warning message if the user tries to change page before saving
 	$(window).bind('beforeunload', function(){
 		if (!saving && dirty) {
-			return ("<?=gettext('One or more Port Forward rules have been moved but have not yet been saved')?>");
+			return ("<?=gettext('하나 이상의 규칙이 이동되었으나 저장되지 않았습니다.')?>");
 		} else {
 			return undefined;
 		}
@@ -539,8 +544,8 @@ if (count($a_nat) > 0) {
 <div>
 	<dl class="dl-horizontal responsive">
 		<dt><?=gettext('Legend')?></dt>					<dd></dd>
-		<dt><i class="fa fa-play"></i></dt>			<dd><?=gettext('Pass')?></dd>
-		<dt><i class="fa fa-random"></i></dt>		<dd><?=gettext('Linked rule')?></dd>
+		<dt><i class="fa fa-play"></i></dt>			<dd><?=gettext('넘어가기')?></dd>
+		<dt><i class="fa fa-random"></i></dt>		<dd><?=gettext('규칙 링크')?></dd>
 	</dl>
 </div>
 

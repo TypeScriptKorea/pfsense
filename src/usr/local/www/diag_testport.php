@@ -23,6 +23,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.21
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-diagnostics-testport
 ##|*NAME=Diagnostics: Test Port
@@ -35,7 +40,7 @@
 
 $allowautocomplete = true;
 
-$pgtitle = array(gettext("Diagnostics"), gettext("Test Port"));
+$pgtitle = array(gettext("진단"), gettext("Test Port"));
 require_once("guiconfig.inc");
 
 include("head.inc");
@@ -53,22 +58,22 @@ if ($_POST || $_REQUEST['host']) {
 	do_input_validation($_REQUEST, $reqdfields, $reqdfieldsn, $input_errors);
 
 	if (!is_ipaddr($_REQUEST['host']) && !is_hostname($_REQUEST['host'])) {
-		$input_errors[] = gettext("Please enter a valid IP or hostname.");
+		$input_errors[] = gettext("유효한 IP주소 또는 호스트 이름을 적어주십시오.");
 	}
 
 	if (!is_port($_REQUEST['port'])) {
-		$input_errors[] = gettext("Please enter a valid port number.");
+		$input_errors[] = gettext("유효한 포트 번호를 적어주십시오.");
 	}
 
 	if (($_REQUEST['srcport'] != "") && (!is_numeric($_REQUEST['srcport']) || !is_port($_REQUEST['srcport']))) {
-		$input_errors[] = gettext("Please enter a valid source port number, or leave the field blank.");
+		$input_errors[] = gettext("올바른 포트 번호를 입력하시거나 입력란을 비우십시오.");
 	}
 
 	if (is_ipaddrv4($_REQUEST['host']) && ($_REQUEST['ipprotocol'] == "ipv6")) {
-		$input_errors[] = gettext("Cannot connect to an IPv4 address using IPv6.");
+		$input_errors[] = gettext("IPv6 주소를 사용하여 IPv4 주소에 연결할 수 없습니다.");
 	}
 	if (is_ipaddrv6($_REQUEST['host']) && ($_REQUEST['ipprotocol'] == "ipv4")) {
-		$input_errors[] = gettext("Cannot connect to an IPv6 address using IPv4.");
+		$input_errors[] = gettext("IPv4 주소를 사용하여 IPv6 주소에 연결할 수 없습니다.");
 	}
 
 	if (!$input_errors) {
@@ -192,29 +197,29 @@ if ($input_errors) {
 	// User asked for a port test
 	if ($retval == 0) {
 		// Good host & port
-		$alert_text = sprintf(gettext('Port test to host: %1$s Port: %2$s successful.'), $host, $port);
+		$alert_text = sprintf(gettext('호스트에 대한 포트 테스트: %1$s 포트: %2$s 성공.'), $host, $port);
 		if ($showtext) {
-			$alert_text .= ' ' . gettext('Any text received from the host will be shown below the form.');
+			$alert_text .= ' ' . gettext('호스트에서 수신된 모든 텍스트는 양식 아래에 표시됩니다.');
 		}
 		print_info_box($alert_text, 'success', false);
 	} else {
 		// netcat exit value != 0
 		if ($showtext) {
-			$alert_text = gettext('No output received, or connection failed. Try with "Show Remote Text" unchecked first.');
+			$alert_text = gettext('수신된 출력이 없거나 연결에 실패했습니다. "원격 텍스트 표시(ShowRemoteText)"를 선택 취소하십시오.');
 		} else {
-			$alert_text = gettext('Connection failed.');
+			$alert_text = gettext('연결에 실패했습니다.');
 		}
 		print_info_box($alert_text, 'danger', false);
 	}
 } else {
 	// First time, new page
-	print_info_box(gettext('This page performs a simple TCP connection test to determine if a host is up and accepting connections on a given port.') . " " .
-		gettext('This test does not function for UDP since there is no way to reliably determine if a UDP port accepts connections in this manner.'), 'warning', false);
+	print_info_box(gettext('해당 페이지는 간단한 TCP연결 테스트를 수행하여 호스트가 특정 포트에서 작동 중이며 연결이 제대로 이루어지는지 확인합니다.') . " " .
+		gettext('UDP포트는 이러한 방식으로 연결이 이루어지는지 확인할 수 없으므로 테스트가 작동하지 않습니다.'), 'warning', false);
 }
 
 $form = new Form(false);
 
-$section = new Form_Section('Test Port');
+$section = new Form_Section('테스트 포트');
 
 $section->addInput(new Form_Input(
 	'host',
@@ -245,7 +250,7 @@ $section->addInput(new Form_Checkbox(
 	'Remote text',
 	'Show remote text',
 	$showtext
-))->setHelp("Shows the text given by the server when connecting to the port. If checked it will take 10+ seconds to display in a panel below this form.");
+))->setHelp("포트에 연결할 때 서버가 제공하는 텍스트를 표시합니다. 이 옵션을 선택하면 아래의 패널에 표시하는 데 10초 이상 걸립니다.");
 
 $section->addInput(new Form_Select(
 	'sourceip',
@@ -259,8 +264,8 @@ $section->addInput(new Form_Select(
 	'*IP Protocol',
 	$ipprotocol,
 	array('ipv4' => 'IPv4', 'ipv6' => 'IPv6')
-))->setHelp("If IPv4 or IPv6 is forced and a hostname is used that does not contain a result using that protocol, it will result in an error." .
-					" For example if IPv4 is forced and a hostname is used that only returns an AAAA IPv6 IP address, it will not work.");
+))->setHelp("IPv4나 IPv6을 강제로 사용하는 경우, 해당 프로토콜을 사용하는 결과가 포함되지 않은 호스트 이름을 사용하시면 오류가 발생합니다." .
+					" 예를 들어, IPv4를 강제로 사용하고 IPv6IP주소만 반환하는 호스트 이름을 사용하는 경우에는 해당 주소가 작동하지 않습니다..");
 
 $form->add($section);
 
@@ -278,7 +283,7 @@ if ($retval == 0 && $showtext && !empty($ncoutput)):
 ?>
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h2 class="panel-title"><?=gettext('Received Remote Text')?></h2>
+			<h2 class="panel-title"><?=gettext('수신된 원격 텍스트')?></h2>
 		</div>
 		<div class="panel-body">
 			<pre><?= $ncoutput ?></pre>

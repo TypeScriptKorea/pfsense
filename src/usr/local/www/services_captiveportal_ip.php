@@ -24,6 +24,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.22
+한글화 번역 
+*/
+
 ##|+PRIV
 ##|*IDENT=page-services-captiveportal-allowedips
 ##|*NAME=Services: Captive Portal: Allowed IPs
@@ -56,7 +61,7 @@ if (isset($cpzone) && !empty($cpzone) && isset($a_cp[$cpzone]['zoneid'])) {
 	$cpzoneid = $a_cp[$cpzone]['zoneid'];
 }
 
-$pgtitle = array(gettext("Services"), gettext("Captive Portal"), $a_cp[$cpzone]['zone'], gettext("Allowed IP Addresses"));
+$pgtitle = array(gettext("Services"), gettext("Captive Portal"), $a_cp[$cpzone]['zone'], gettext("허용된 IP 주소"));
 $pglinks = array("", "services_captiveportal_zones.php", "services_captiveportal.php?zone=" . $cpzone, "@self");
 $shortcut_section = "captiveportal";
 
@@ -104,7 +109,7 @@ display_top_tabs($tab_array, true);
 	<table class="table table-hover table-striped table-condensed table-rowdblclickedit sortable-theme-bootstrap" data-sortable>
 		<thead>
 			<tr>
-				<th><?=gettext("IP Addresses"); ?></th>
+				<th><?=gettext("IP 주소"); ?></th>
 				<th><?=gettext("Description"); ?></th>
 				<th data-sortable="false"><?=gettext("Actions"); ?></th>
 			</tr>
@@ -125,8 +130,8 @@ if (is_array($a_cp[$cpzone]['allowedip'])): ?>
 					<?=htmlspecialchars($ip['descr'])?>
 				</td>
 				<td>
-					<a class="fa fa-pencil"	title="<?=gettext("Edit IP"); ?>" href="services_captiveportal_ip_edit.php?zone=<?=$cpzone?>&amp;id=<?=$i?>"></a>
-					<a class="fa fa-trash"	title="<?=gettext("Delete IP")?>" href="services_captiveportal_ip.php?zone=<?=$cpzone?>&amp;act=del&amp;id=<?=$i?>" usepost></a>
+					<a class="fa fa-pencil"	title="<?=gettext("IP 주소 편집"); ?>" href="services_captiveportal_ip_edit.php?zone=<?=$cpzone?>&amp;id=<?=$i?>"></a>
+					<a class="fa fa-trash"	title="<?=gettext("IP 주소 삭제")?>" href="services_captiveportal_ip.php?zone=<?=$cpzone?>&amp;act=del&amp;id=<?=$i?>" usepost></a>
 				</td>
 			</tr>
 <?php
@@ -135,9 +140,9 @@ if (is_array($a_cp[$cpzone]['allowedip'])): ?>
 		<tbody>
 	</table>
 
-	<?=$directionicons['to']   . ' = ' . sprintf(gettext('All connections %1$sto%2$s the address are allowed'), '<u>', '</u>') . ', '?>
-	<?=$directionicons['from'] . ' = ' . sprintf(gettext('All connections %1$sfrom%2$s the address are allowed'), '<u>', '</u>') . ', '?>
-	<?=$directionicons['both'] . ' = ' . sprintf(gettext('All connections %1$sto or from%2$s are allowed'), '<u>', '</u>')?>
+	<?=$directionicons['to']   . ' = ' . sprintf(gettext('%1$s 에서 %2$s 까지의 모든 연결이 허용됩니다.'), '<u>', '</u>') . ', '?>
+	<?=$directionicons['from'] . ' = ' . sprintf(gettext('%2$s 과 연결된 모든 노드와 %1$s와의 연결이 허용됩니다.'), '<u>', '</u>') . ', '?>
+	<?=$directionicons['both'] . ' = ' . sprintf(gettext('%1$s 에 대한 또는 %2$s 로부터의 모든 연결이 허용됩니다.'), '<u>', '</u>')?>
 <?php
 else:
 ?>
@@ -151,13 +156,13 @@ endif;
 <nav class="action-buttons">
 	<a href="services_captiveportal_ip_edit.php?zone=<?=$cpzone?>&amp;act=add" class="btn btn-success btn-sm">
 		<i class="fa fa-plus icon-embed-btn"></i>
-		<?=gettext("Add")?>
+		<?=gettext("추가")?>
 	</a>
 </nav>
 
 <div class="infoblock">
-<?php print_info_box(gettext('Adding allowed IP addresses will allow IP access to/from these addresses through the captive portal without being taken to the portal page. ' .
-					   'This can be used for a web server serving images for the portal page or a DNS server on another network, for example.'), 'info', false); ?>
+<?php print_info_box(gettext('허용된 IP주소를 추가하면 포털 페이지로 이동하지 않고 캡티브 포털을 통해 액세스 할 수 있습니다. ' .
+					   '예를들어, 웹 서버나 다른 네트워크의 DNS서버에 사용될 수 있습니다.'), 'info', false); ?>
 </div>
 
 <?php

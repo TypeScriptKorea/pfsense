@@ -19,6 +19,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.23
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-services-rfc2136clients
 ##|*NAME=Services: RFC 2136 Clients
@@ -72,18 +77,18 @@ if ($input_errors) {
 
 <form action="services_rfc2136.php" method="post" name="iform" id="iform">
 	<div class="panel panel-default">
-	<div class="panel-heading"><h2 class="panel-title"><?=gettext('RFC2136 Clients')?></h2></div>
+	<div class="panel-heading"><h2 class="panel-title"><?=gettext('RFC2136 클라이언트')?></h2></div>
 		<div class="panel-body">
 			<div class="table-responsive">
 				<table class="table table-striped table-hover table-condensed table-rowdblclickedit">
 					<thead>
 						<tr>
-							<th><?=gettext("Interface")?></th>
-							<th><?=gettext("Server")?></th>
-							<th><?=gettext("Hostname")?></th>
-							<th><?=gettext("Cached IP")?></th>
-							<th><?=gettext("Description")?></th>
-							<th><?=gettext("Actions")?></th>
+							<th><?=gettext("인터페이스")?></th>
+							<th><?=gettext("서버")?></th>
+							<th><?=gettext("호스트이름")?></th>
+							<th><?=gettext("캐시된 IP")?></th>
+							<th><?=gettext("설명")?></th>
+							<th><?=gettext("액션")?></th>
 						</tr>
 					</thead>
 					<tbody>
@@ -174,16 +179,16 @@ foreach ($a_rfc2136 as $rfc2136):
 						<?=htmlspecialchars($rfc2136['descr'])?>
 					</td>
 					<td>
-						<a class="fa fa-pencil" title="<?=gettext('Edit client')?>" href="services_rfc2136_edit.php?id=<?=$i?>"></a>
+						<a class="fa fa-pencil" title="<?=gettext('클라이언트 편집')?>" href="services_rfc2136_edit.php?id=<?=$i?>"></a>
 					<?php if (isset($rfc2136['enable'])) {
 					?>
-						<a	class="fa fa-ban" title="<?=gettext('Disable client')?>" href="?act=toggle&amp;id=<?=$i?>" usepost></a>
+						<a	class="fa fa-ban" title="<?=gettext('클라이언트 비활성화')?>" href="?act=toggle&amp;id=<?=$i?>" usepost></a>
 					<?php } else {
 					?>
-						<a class="fa fa-check-square-o" title="<?=gettext('Enable client')?>" href="?act=toggle&amp;id=<?=$i?>" usepost></a>
+						<a class="fa fa-check-square-o" title="<?=gettext('클라이언트 활성화')?>" href="?act=toggle&amp;id=<?=$i?>" usepost></a>
 					<?php }
 					?>
-						<a class="fa fa-trash" title="<?=gettext('Delete client')?>" href="services_rfc2136.php?act=del&amp;id=<?=$i?>" usepost></a>
+						<a class="fa fa-trash" title="<?=gettext('클라이언트 삭제')?>" href="services_rfc2136.php?act=del&amp;id=<?=$i?>" usepost></a>
 					</td>
 					</tr>
 <?php
@@ -200,7 +205,7 @@ endforeach; ?>
 <nav class="action-buttons">
 	<a href="services_rfc2136_edit.php" class="btn btn-sm btn-success btn-sm">
 		<i class="fa fa-plus icon-embed-btn"></i>
-		<?=gettext('Add')?>
+		<?=gettext('')?>
 	</a>
 </nav>
 

@@ -23,6 +23,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.20
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-firewall-nat-portforward-edit
 ##|*NAME=Firewall: NAT: Port Forward: Edit
@@ -150,7 +155,7 @@ foreach ($_POST as $key => $value) {
 	$newpost = htmlentities($temp);
 
 	if ($newpost != $temp) {
-		$input_errors[] = sprintf(gettext("Invalid characters detected %s. Please remove invalid characters and save again."), $temp);
+		$input_errors[] = sprintf(gettext("유효하지 않은 문자를 감지했습니다(%s)."), $temp);
 	}
 }
 
@@ -235,25 +240,25 @@ if ($_POST['save']) {
 	/* input validation */
 	if (strtoupper($_POST['proto']) == "TCP" or strtoupper($_POST['proto']) == "UDP" or strtoupper($_POST['proto']) == "TCP/UDP") {
 		$reqdfields = explode(" ", "interface proto dstbeginport dstendport");
-		$reqdfieldsn = array(gettext("Interface"), gettext("Protocol"), gettext("Destination port from"), gettext("Destination port to"));
+		$reqdfieldsn = array(gettext("인터페이스"), gettext("프로토콜"), gettext("Destination port from"), gettext("Destination port to"));
 	} else {
 		$reqdfields = explode(" ", "interface proto");
-		$reqdfieldsn = array(gettext("Interface"), gettext("Protocol"));
+		$reqdfieldsn = array(gettext("인터페이스"), gettext("프로토콜"));
 	}
 
 	if ($_POST['srctype'] == "single" || $_POST['srctype'] == "network") {
 		$reqdfields[] = "src";
-		$reqdfieldsn[] = gettext("Source address");
+		$reqdfieldsn[] = gettext("발신 주소");
 	}
 
 	if ($_POST['dsttype'] == "single" || $_POST['dsttype'] == "network") {
 		$reqdfields[] = "dst";
-		$reqdfieldsn[] = gettext("Destination address");
+		$reqdfieldsn[] = gettext("수신 주소");
 	}
 
 	if (!isset($_POST['nordr'])) {
 		$reqdfields[] = "localip";
-		$reqdfieldsn[] = gettext("Redirect target IP");
+		$reqdfieldsn[] = gettext("재연결 대상 IP");
 	}
 
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, $input_errors);
@@ -279,61 +284,61 @@ if ($_POST['save']) {
 	}
 
 	if (!array_key_exists($_POST['interface'], $interfaces)) {
-		$input_errors[] = gettext("The submitted interface does not exist.");
+		$input_errors[] = gettext("존재하지 않는 인터페이스입니다.");
 	}
 
 	if (!isset($_POST['nordr']) && ($_POST['localip'] && !is_ipaddroralias($_POST['localip']))) {
-		$input_errors[] = sprintf(gettext("\"%s\" is not a valid redirect target IP address or host alias."), $_POST['localip']);
+		$input_errors[] = sprintf(gettext("\"%s\" 은(는) 올바른 재연결 대상 IP주소 또는 호스트 alias가 아닙니다."), $_POST['localip']);
 	}
 
 	if ($_POST['localip'] && is_ipaddrv6($_POST['localip'])) {
-		$input_errors[] = sprintf(gettext("Redirect target IP must be IPv4."));
+		$input_errors[] = sprintf(gettext("재연결 대상 IP주소는 IPv4여야 합니다."));
 	}
 
 	if ($_POST['srcbeginport'] && !is_port_or_alias($_POST['srcbeginport'])) {
-		$input_errors[] = sprintf(gettext("%s is not a valid start source port. It must be a port alias or integer between 1 and 65535."), $_POST['srcbeginport']);
+		$input_errors[] = sprintf(gettext("%s 은(는) 올바른 시작 발신 포트가 아닙니다. 포트 alias 또는 1 에서 65535 사이의 정수여야합니다."), $_POST['srcbeginport']);
 	}
 	if ($_POST['srcendport'] && !is_port_or_alias($_POST['srcendport'])) {
-		$input_errors[] = sprintf(gettext("%s is not a valid end source port. It must be a port alias or integer between 1 and 65535."), $_POST['srcendport']);
+		$input_errors[] = sprintf(gettext("%s 은(는) 올바른 종료 발신 포트가 아닙니다. 포트 alias 또는 1 에서 65535 사이의 정수여야합니다."), $_POST['srcendport']);
 	}
 	if ($_POST['dstbeginport'] && !is_port_or_alias($_POST['dstbeginport'])) {
-		$input_errors[] = sprintf(gettext("%s is not a valid start destination port. It must be a port alias or integer between 1 and 65535."), $_POST['dstbeginport']);
+		$input_errors[] = sprintf(gettext("%s 은(는) 올바른 시작 수신 포트가 아닙니다. 포트 alias 또는 1 에서 65535 사이의 정수여야합니다."), $_POST['dstbeginport']);
 	}
 	if ($_POST['dstendport'] && !is_port_or_alias($_POST['dstendport'])) {
-		$input_errors[] = sprintf(gettext("%s is not a valid end destination port. It must be a port alias or integer between 1 and 65535."), $_POST['dstendport']);
+		$input_errors[] = sprintf(gettext("%s 은(는) 올바른 종료 수신 포트가 아닙니다. 포트 alias 또는 1 에서 65535 사이의 정수여야합니다."), $_POST['dstendport']);
 	}
 
 	if ((strtoupper($_POST['proto']) == "TCP" || strtoupper($_POST['proto']) == "UDP" || strtoupper($_POST['proto']) == "TCP/UDP") && (!isset($_POST['nordr']) && !is_port_or_alias($_POST['localbeginport']))) {
-		$input_errors[] = sprintf(gettext("%s is not a valid redirect target port. It must be a port alias or integer between 1 and 65535."), $_POST['localbeginport']);
+		$input_errors[] = sprintf(gettext("%s 은(는) 올바른 재연결 대상 포트가 아닙니다. 포트 alias 또는 1 에서 65535 사이의 정수여야합니다."), $_POST['localbeginport']);
 	}
 
 	/* if user enters an alias and selects "network" then disallow. */
 	if (($_POST['srctype'] == "network" && is_alias($_POST['src'])) ||
 	    ($_POST['dsttype'] == "network" && is_alias($_POST['dst']))) {
-		$input_errors[] = gettext("Alias entries must specify a single host or alias.");
+		$input_errors[] = gettext("alias 항목은 단일 호스트 또는 별칭을 지정하셔야 합니다.");
 	}
 
 	if (!is_specialnet($_POST['srctype'])) {
 		if (($_POST['src'] && !is_ipaddroralias($_POST['src']))) {
-			$input_errors[] = sprintf(gettext("%s is not a valid source IP address or alias."), $_POST['src']);
+			$input_errors[] = sprintf(gettext("%s 은(는) 유효하지 않은 발신자 IP주소 또는 alias 입니다."), $_POST['src']);
 		}
 		if ($_POST['src'] && is_ipaddrv6($_POST['src'])) {
-			$input_errors[] = sprintf(gettext("Source must be IPv4."));
+			$input_errors[] = sprintf(gettext("IPv4여야 합니다."));
 		}
 		if (($_POST['srcmask'] && !is_numericint($_POST['srcmask']))) {
-			$input_errors[] = gettext("A valid source bit count must be specified.");
+			$input_errors[] = gettext("비트 수를 올바르게 지정하셔야 합니다.");
 		}
 	}
 
 	if (!is_specialnet($_POST['dsttype'])) {
 		if (($_POST['dst'] && !is_ipaddroralias($_POST['dst']))) {
-			$input_errors[] = sprintf(gettext("%s is not a valid destination IP address or alias."), $_POST['dst']);
+			$input_errors[] = sprintf(gettext("%s 은(는) 유효하지 않은 수신자 IP주소 또는 alias 입니다."), $_POST['dst']);
 		}
 		if ($_POST['dst'] && is_ipaddrv6($_POST['dst'])) {
-			$input_errors[] = sprintf(gettext("Destination must be IPv4."));
+			$input_errors[] = sprintf(gettext("IPv4여야 합니다."));
 		}
 		if (($_POST['dstmask'] && !is_numericint($_POST['dstmask']))) {
-			$input_errors[] = gettext("A valid destination bit count must be specified.");
+			$input_errors[] = gettext("비트 수를 올바르게 지정하셔야 합니다.");
 		}
 	}
 
@@ -353,7 +358,7 @@ if ($_POST['save']) {
 
 	if (!$input_errors) {
 		if (!isset($_POST['nordr']) && ($_POST['dstendport'] - $_POST['dstbeginport'] + $_POST['localbeginport']) > 65535) {
-			$input_errors[] = gettext("The target port range must be an integer between 1 and 65535.");
+			$input_errors[] = gettext("포트 번호는 1 에서 65535사이에서 지정해주십시오.");
 		}
 	}
 
@@ -379,7 +384,7 @@ if ($_POST['save']) {
 
 		if (!((($_POST['dstbeginport'] < $begp) && ($_POST['dstendport'] < $begp)) ||
 		      (($_POST['dstbeginport'] > $endp) && ($_POST['dstendport'] > $endp)))) {
-			$input_errors[] = gettext("The destination port range overlaps with an existing entry.");
+			$input_errors[] = gettext("대상 포트 범위가 기존 항목과 겹칩니다.");
 			break;
 		}
 	}
@@ -760,7 +765,7 @@ foreach ($wkports as $wkport => $wkportdesc) {
 	$portlist[$wkport] = $wkportdesc;
 }
 
-$group = new Form_Group('Source port range');
+$group = new Form_Group('발신 포트 ');
 $group->addClass('srcportrange');
 
 $group->add(new Form_Select(
@@ -1148,9 +1153,9 @@ events.push(function() {
 		hideClass('srcadv', hide);
 		hideClass('srcportrange', hide || !portsenabled);
 		if (hide) {
-			text = "<?=gettext('Display Advanced');?>";
+			text = "<?=gettext('어드밴스드 보이기');?>";
 		} else {
-			text = "<?=gettext('Hide Advanced');?>";
+			text = "<?=gettext('어드밴스드 숨기기');?>";
 		}
 		$('#btnsrcadv').html('<i class="fa fa-cog"></i> ' + text);
 	}

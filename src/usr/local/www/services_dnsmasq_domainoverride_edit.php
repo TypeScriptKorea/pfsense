@@ -24,6 +24,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.23
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-services-dnsforwarder-editdomainoverride
 ##|*NAME=Services: DNS Forwarder: Edit Domain Override
@@ -61,7 +66,7 @@ if ($_POST['save']) {
 
 		/* input validation */
 		$reqdfields = explode(" ", "domain ip");
-		$reqdfieldsn = array(gettext("Domain"), gettext("IP address"));
+		$reqdfieldsn = array(gettext("Domain"), gettext("IP 주소"));
 
 		do_input_validation($_POST, $reqdfields, $reqdfieldsn, $input_errors);
 
@@ -73,18 +78,18 @@ if ($_POST['save']) {
 			$subdomainstr = substr($_POST['domain'], 7);
 
 			if ($subdomainstr && !is_domain($subdomainstr)) {
-				$input_errors[] = gettext("A valid domain must be specified after _msdcs.");
+				$input_errors[] = gettext("_msdcs 뒤에 도메인을 설정해주십시오.");
 			}
 		} elseif ($_POST['domain'] && !is_domain($_POST['domain'])) {
-			$input_errors[] = gettext("A valid domain must be specified.");
+			$input_errors[] = gettext("도메인을 올바르게 지정하십시오.");
 		}
 
 		if ($_POST['ip'] && !is_ipaddr($_POST['ip']) && ($_POST['ip'] != '#') && ($_POST['ip'] != '!')) {
-			$input_errors[] = gettext("A valid IP address must be specified, or # for an exclusion or ! to not forward at all.");
+			$input_errors[] = gettext("IP주소를 올바르게 지정해주십시오. 제외하려면 #을 넣으시고 전송하지 않으려면 !를 넣으십시오.");
 		}
 
 		if ($_POST['dnssrcip'] && !in_array($_POST['dnssrcip'], get_configured_ip_addresses())) {
-			$input_errors[] = gettext("An interface IP address must be specified for the DNS query source.");
+			$input_errors[] = gettext("DNS 쿼리 소스에 대한 인터페이스 IP주소를 지정하십시오.");
 		}
 
 		if (!$input_errors) {

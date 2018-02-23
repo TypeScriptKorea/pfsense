@@ -23,6 +23,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.22
+한글화 번역 
+*/
+
 ##|+PRIV
 ##|*IDENT=page-services-dhcpserver
 ##|*NAME=Services: DHCP Server
@@ -248,44 +253,44 @@ if (isset($_POST['save'])) {
 	// Note: if DHCP Server is not enabled, then it is OK to adjust other parameters without specifying range from-to.
 	if ($_POST['enable'] || is_numeric($pool) || $act == "newpool") {
 		$reqdfields = explode(" ", "range_from range_to");
-		$reqdfieldsn = array(gettext("Range begin"), gettext("Range end"));
+		$reqdfieldsn = array(gettext("연결 시작"), gettext("연결 종료"));
 
 		do_input_validation($_POST, $reqdfields, $reqdfieldsn, $input_errors);
 	}
 
 	if (($_POST['nonak']) && !empty($_POST['failover_peerip'])) {
-		$input_errors[] = gettext("Ignore Denied Clients may not be used when a Failover Peer IP is defined.");
+		$input_errors[] = gettext("페일 오버 피어 IP가 정의된 경우에는 클라이언트를 사용하지 못할 수 있습니다.");
 	}
 
 	if ($_POST['range_from'] && !is_ipaddrv4($_POST['range_from'])) {
-		$input_errors[] = gettext("A valid IPv4 address must be specified for range from.");
+		$input_errors[] = gettext("올바른 IPv4 주소를 지정해주십시오.");
 	}
 	if ($_POST['range_to'] && !is_ipaddrv4($_POST['range_to'])) {
-		$input_errors[] = gettext("A valid IPv4 address must be specified for range to.");
+		$input_errors[] = gettext("올바른 IPv4 주소를 지정해주십시오.");
 	}
 	if (($_POST['range_from'] && !$_POST['range_to']) || ($_POST['range_to'] && !$_POST['range_from'])) {
-		$input_errors[] = gettext("Range From and Range To must both be entered.");
+		$input_errors[] = gettext("두 항목 모두 지정해주십시오.");
 	}
 	if (($_POST['gateway'] && $_POST['gateway'] != "none" && !is_ipaddrv4($_POST['gateway']))) {
-		$input_errors[] = gettext("A valid IP address must be specified for the gateway.");
+		$input_errors[] = gettext("게이트웨이 항목에 올바른 IP 주소를 지정해주십시오.");
 	}
 	if (($_POST['wins1'] && !is_ipaddrv4($_POST['wins1'])) || ($_POST['wins2'] && !is_ipaddrv4($_POST['wins2']))) {
-		$input_errors[] = gettext("A valid IP address must be specified for the primary/secondary WINS servers.");
+		$input_errors[] = gettext("WINS서버에 유효한 IP주소를 지정해주십시오.");
 	}
 	$parent_ip = get_interface_ip($_POST['if']);
 	if (is_ipaddrv4($parent_ip) && $_POST['gateway'] && $_POST['gateway'] != "none") {
 		$parent_sn = get_interface_subnet($_POST['if']);
 		if (!ip_in_subnet($_POST['gateway'], gen_subnet($parent_ip, $parent_sn) . "/" . $parent_sn) && !ip_in_interface_alias_subnet($_POST['if'], $_POST['gateway'])) {
-			$input_errors[] = sprintf(gettext("The gateway address %s does not lie within the chosen interface's subnet."), $_POST['gateway']);
+			$input_errors[] = sprintf(gettext("게이트웨이 %s 은(는) 선택하신 인터페이스의 서브넷에 속해있지 않습니다."), $_POST['gateway']);
 		}
 	}
 
 	if (($_POST['dns1'] && !is_ipaddrv4($_POST['dns1'])) || ($_POST['dns2'] && !is_ipaddrv4($_POST['dns2'])) || ($_POST['dns3'] && !is_ipaddrv4($_POST['dns3'])) || ($_POST['dns4'] && !is_ipaddrv4($_POST['dns4']))) {
-		$input_errors[] = gettext("A valid IP address must be specified for each of the DNS servers.");
+		$input_errors[] = gettext("각 DNS서버에 유효한 IP주소를 지정해주십시오.");
 	}
 
 	if ($_POST['deftime'] && (!is_numeric($_POST['deftime']) || ($_POST['deftime'] < 60))) {
-		$input_errors[] = gettext("The default lease time must be at least 60 seconds.");
+		$input_errors[] = gettext("60초 이상으로 지정해주셔야 합니다.");
 	}
 
 	if (isset($config['captiveportal']) && is_array($config['captiveportal'])) {
@@ -307,28 +312,28 @@ if (isset($_POST['save'])) {
 			}
 			if ($cpdata['timeout'] > $deftime) {
 				$input_errors[] = sprintf(gettext(
-					'The Captive Portal zone (%1$s) has Hard Timeout parameter set to a value bigger than Default lease time (%2$s).'), $cpZone, $deftime);
+					'캡처 포털 영역(%1$s)이 기본 리스 시간(%2$s)보다 큰 값으로 설정되어있습니다.'), $cpZone, $deftime);
 			}
 		}
 	}
 
 	if ($_POST['maxtime'] && (!is_numeric($_POST['maxtime']) || ($_POST['maxtime'] < 60) || ($_POST['maxtime'] <= $_POST['deftime']))) {
-		$input_errors[] = gettext("The maximum lease time must be at least 60 seconds and higher than the default lease time.");
+		$input_errors[] = gettext("최대 시간을 올바르게 설정해주십시오.");
 	}
 	if ($_POST['ddnsupdate'] && !is_domain($_POST['ddnsdomain'])) {
-		$input_errors[] = gettext("A valid domain name must be specified for the dynamic DNS registration.");
+		$input_errors[] = gettext("도메인 이름을 올바르게 지정해주십시오.");
 	}
 	if ($_POST['ddnsupdate'] && !is_ipaddrv4($_POST['ddnsdomainprimary'])) {
-		$input_errors[] = gettext("A valid primary domain name server IP address must be specified for the dynamic domain name.");
+		$input_errors[] = gettext("동적 도네임 이름을 올바르게 지정해주십시오.");
 	}
 	if ($_POST['ddnsupdate'] && (!$_POST['ddnsdomainkeyname'] || !$_POST['ddnsdomainkeyalgorithm'] || !$_POST['ddnsdomainkey'])) {
-		$input_errors[] = gettext("A valid domain key name, algorithm and secret must be specified.");
+		$input_errors[] = gettext("올바른 도메인 키 이름, 알고리즘, 패스워드를 지정해주십시오.");
 	}
 	if ($_POST['domainsearchlist']) {
 		$domain_array = preg_split("/[ ;]+/", $_POST['domainsearchlist']);
 		foreach ($domain_array as $curdomain) {
 			if (!is_domain($curdomain)) {
-				$input_errors[] = gettext("A valid domain search list must be specified.");
+				$input_errors[] = gettext("올바른 검색 목록을 지정해주십시오.");
 				break;
 			}
 		}
@@ -336,30 +341,30 @@ if (isset($_POST['save'])) {
 
 	// Validate MACs
 	if (!empty($_POST['mac_allow']) && !validate_partial_mac_list($_POST['mac_allow'])) {
-		$input_errors[] = gettext("If a mac allow list is specified, it must contain only valid partial MAC addresses.");
+		$input_errors[] = gettext("유효한 MAC 주소만 포함하십시오.");
 	}
 	if (!empty($_POST['mac_deny']) && !validate_partial_mac_list($_POST['mac_deny'])) {
-		$input_errors[] = gettext("If a mac deny list is specified, it must contain only valid partial MAC addresses.");
+		$input_errors[] = gettext("유효한 MAC 주소만 포함하십시오.");
 	}
 
 	if (($_POST['ntp1'] && (!is_ipaddrv4($_POST['ntp1']) && !is_hostname($_POST['ntp1']))) || ($_POST['ntp2'] && (!is_ipaddrv4($_POST['ntp2']) && !is_hostname($_POST['ntp2'])))) {
-		$input_errors[] = gettext("A valid IP address or hostname must be specified for the primary/secondary NTP servers.");
+		$input_errors[] = gettext("NTP 서버에 유효한 IP 주소 또는 호스트 이름을 지정하십시오.");
 	}
 	if (($_POST['domain'] && !is_domain($_POST['domain']))) {
-		$input_errors[] = gettext("A valid domain name must be specified for the DNS domain.");
+		$input_errors[] = gettext("DNS 도메인에 올바른 도메인 이름을 지정하십시오.");
 	}
 	if ($_POST['tftp'] && !is_ipaddrv4($_POST['tftp']) && !is_domain($_POST['tftp']) && !filter_var($_POST['tftp'], FILTER_VALIDATE_URL)) {
-		$input_errors[] = gettext("A valid IP address, hostname or URL must be specified for the TFTP server.");
+		$input_errors[] = gettext("TFTP서버에 올바른 IP주소, 호스트 이름 또는 URL을 지정하십시오.");
 	}
 	if (($_POST['nextserver'] && !is_ipaddrv4($_POST['nextserver']))) {
-		$input_errors[] = gettext("A valid IP address must be specified for the network boot server.");
+		$input_errors[] = gettext("네트워크 부트 서버에 올바른 IP 주소를 지정하십시오.");
 	}
 
 	if (gen_subnet($ifcfgip, $ifcfgsn) == $_POST['range_from']) {
-		$input_errors[] = gettext("The network address cannot be used in the starting subnet range.");
+		$input_errors[] = gettext("해당 서브넷 범위 안에서 사용할 수 없는 주소입니다.");
 	}
 	if (gen_subnet_max($ifcfgip, $ifcfgsn) == $_POST['range_to']) {
-		$input_errors[] = gettext("The broadcast address cannot be used in the ending subnet range.");
+		$input_errors[] = gettext("해당 서브넷 범위 안에서 사용할 수 없는 주소입니다.");
 	}
 
 	// Disallow a range that includes the virtualip
@@ -367,7 +372,7 @@ if (isset($_POST['save'])) {
 		foreach ($config['virtualip']['vip'] as $vip) {
 			if ($vip['interface'] == $if) {
 				if ($vip['subnet'] && is_inrange_v4($vip['subnet'], $_POST['range_from'], $_POST['range_to'])) {
-					$input_errors[] = sprintf(gettext("The subnet range cannot overlap with virtual IP address %s."), $vip['subnet']);
+					$input_errors[] = sprintf(gettext("서브넷 범위가 가상 IP주소 %s과(와) 겹칩니다."), $vip['subnet']);
 				}
 			}
 		}
@@ -383,32 +388,32 @@ if (isset($_POST['save'])) {
 	}
 
 	if ($_POST['staticarp'] && $noip) {
-		$input_errors[] = gettext("Cannot enable static ARP when there are static map entries without IP addresses. Ensure all static maps have IP addresses and try again.");
+		$input_errors[] = gettext("모든 정적 맵에 IP주소가 있는지 확인하고 다시 시도하십시오.");
 	}
 
 	if (is_array($pconfig['numberoptions']['item'])) {
 		foreach ($pconfig['numberoptions']['item'] as $numberoption) {
 			$numberoption_value = base64_decode($numberoption['value']);
 			if ($numberoption['type'] == 'text' && strstr($numberoption_value, '"')) {
-				$input_errors[] = gettext("Text type cannot include quotation marks.");
+				$input_errors[] = gettext("텍스트에 따옴표를 사용할 수 없습니다.");
 			} else if ($numberoption['type'] == 'string' && !preg_match('/^"[^"]*"$/', $numberoption_value) && !preg_match('/^[0-9a-f]{2}(?:\:[0-9a-f]{2})*$/i', $numberoption_value)) {
-				$input_errors[] = gettext("String type must be enclosed in quotes like \"this\" or must be a series of octets specified in hexadecimal, separated by colons, like 01:23:45:67:89:ab:cd:ef");
+				$input_errors[] = gettext("문자열은 \"이런식으로\" 따옴표로 묶거나 01:23:45:67:89:ab:cd:ef 처럼 콜론으로 구분하여 16진수로 지정된 일련의 8진수로 이뤄져야 합니다.");
 			} else if ($numberoption['type'] == 'boolean' && $numberoption_value != 'true' && $numberoption_value != 'false' && $numberoption_value != 'on' && $numberoption_value != 'off') {
-				$input_errors[] = gettext("Boolean type must be true, false, on, or off.");
+				$input_errors[] = gettext("Boolean 타입은 참값이어야 하며 false, once, 또는 off입니다.");
 			} else if ($numberoption['type'] == 'unsigned integer 8' && (!is_numeric($numberoption_value) || $numberoption_value < 0 || $numberoption_value > 255)) {
-				$input_errors[] = gettext("Unsigned 8-bit integer type must be a number in the range 0 to 255.");
+				$input_errors[] = gettext("8비트 unsigned 정수 타입은 0~255사이의 숫자로 이루어집니다.");
 			} else if ($numberoption['type'] == 'unsigned integer 16' && (!is_numeric($numberoption_value) || $numberoption_value < 0 || $numberoption_value > 65535)) {
-				$input_errors[] = gettext("Unsigned 16-bit integer type must be a number in the range 0 to 65535.");
+				$input_errors[] = gettext("16비트 정수 unsigned 타입은 0~65535사이의 숫자로 이루어집니다.");
 			} else if ($numberoption['type'] == 'unsigned integer 32' && (!is_numeric($numberoption_value) || $numberoption_value < 0 || $numberoption_value > 4294967295)) {
-				$input_errors[] = gettext("Unsigned 32-bit integer type must be a number in the range 0 to 4294967295.");
+				$input_errors[] = gettext("32비트 정수 unsigned 타입은 0~4294967295사이의 숫자로 이루어집니다.");
 			} else if ($numberoption['type'] == 'signed integer 8' && (!is_numeric($numberoption_value) || $numberoption_value < -128 || $numberoption_value > 127)) {
-				$input_errors[] = gettext("Signed 8-bit integer type must be a number in the range -128 to 127.");
+				$input_errors[] = gettext("8비트 signed 정수 타입은 -128~127사이의 숫자로 이루어집니다.");
 			} else if ($numberoption['type'] == 'signed integer 16' && (!is_numeric($numberoption_value) || $numberoption_value < -32768 || $numberoption_value > 32767)) {
-				$input_errors[] = gettext("Signed 16-bit integer type must be a number in the range -32768 to 32767.");
+				$input_errors[] = gettext("16비트 정수 signed 타입은 -32768~32767사이의 숫자로 이루어집니다.");
 			} else if ($numberoption['type'] == 'signed integer 32' && (!is_numeric($numberoption_value) || $numberoption_value < -2147483648 || $numberoption_value > 2147483647)) {
-				$input_errors[] = gettext("Signed 32-bit integer type must be a number in the range -2147483648 to 2147483647.");
+				$input_errors[] = gettext("32비트 정수 signed 타입은 -2147483648~2147483647사이의 숫자로 이루어집니다.");
 			} else if ($numberoption['type'] == 'ip-address' && !is_ipaddrv4($numberoption_value) && !is_hostname($numberoption_value)) {
-				$input_errors[] = gettext("IP address or host type must be an IP address or host name.");
+				$input_errors[] = gettext("IP주소 또는 호스트 유형은 IP주소 또는 호스트 이름이어야 합니다.");
 			}
 		}
 	}
@@ -418,7 +423,7 @@ if (isset($_POST['save'])) {
 		if ($_POST['enable'] && isset($config['dhcrelay']['enable']) &&
 		    (stristr($config['dhcrelay']['interface'], $if) !== false)) {
 			$input_errors[] = sprintf(gettext(
-			    "The DHCP relay on the %s interface must be disabled before enabling the DHCP server."),
+			    "DHCP 서버를 활성화하기 전에 %s 인터페이스의 DHCP 릴레이를 비활성화하십시오."),
 			    $iflist[$if]);
 		}
 
@@ -429,13 +434,13 @@ if (isset($_POST['save'])) {
 			    isset($config['dnsmasq']['regdhcpstatic']) ||
 			    isset($config['dnsmasq']['dhcpfirst']))) {
 				$input_errors[] = gettext(
-				    "Disable DHCP Registration features in DNS Forwarder before disabling DHCP Server.");
+				    "DHCP 서버를 비활성화하기전에 DNS전달자의 DHCP 등록 기능을 비활성화하십시오.");
 			}
 			if (isset($config['unbound']['enable']) &&
 			    (isset($config['unbound']['regdhcp']) ||
 			    isset($config['unbound']['regdhcpstatic']))) {
 				$input_errors[] = gettext(
-				    "Disable DHCP Registration features in DNS Resolver before disabling DHCP Server.");
+				    "DHCP 서버를 비활성화하기전에 DNS확인자의 DHCP 등록 기능을 비활성화하십시오.");
 			}
 		}
 	}
@@ -444,12 +449,12 @@ if (isset($_POST['save'])) {
 	if (!$input_errors && $_POST['range_from'] && $_POST['range_to']) {
 		/* make sure the range lies within the current subnet */
 		if (ip_greater_than($_POST['range_from'], $_POST['range_to'])) {
-			$input_errors[] = gettext("The range is invalid (first element higher than second element).");
+			$input_errors[] = gettext("올바르지 않은 범위입니다.");
 		}
 
 		if (!is_inrange_v4($_POST['range_from'], $subnet_start, $subnet_end) ||
 			!is_inrange_v4($_POST['range_to'], $subnet_start, $subnet_end)) {
-			$input_errors[] = gettext("The specified range lies outside of the current subnet.");
+			$input_errors[] = gettext("서브넷을 벗어난 범위입니다.");
 		}
 
 		if (is_numeric($pool) || ($act == "newpool")) {
@@ -459,7 +464,7 @@ if (isset($_POST['save'])) {
 				is_inrange_v4($_POST['range_to'],
 				$config['dhcpd'][$if]['range']['from'],
 				$config['dhcpd'][$if]['range']['to'])) {
-				$input_errors[] = gettext("The specified range must not be within the DHCP range for this interface.");
+				$input_errors[] = gettext("현재 사용중인 인터페이스의 DHCP범위에 속해있습니다. 범위를 다시 설정하십시오.");
 			}
 		}
 
@@ -472,7 +477,7 @@ if (isset($_POST['save'])) {
 				$p['range']['from'], $p['range']['to']) ||
 				is_inrange_v4($_POST['range_to'],
 				$p['range']['from'], $p['range']['to'])) {
-				$input_errors[] = gettext("The specified range must not be within the range configured on a DHCP pool for this interface.");
+				$input_errors[] = gettext("현재 사용중인 인터페이스의 DHCP범위에 속해있습니다. 범위를 다시 설정하십시오.");
 				break;
 			}
 		}
@@ -483,7 +488,7 @@ if (isset($_POST['save'])) {
 					continue;
 				}
 				if (is_inrange_v4($map['ipaddr'], $_POST['range_from'], $_POST['range_to'])) {
-					$input_errors[] = sprintf(gettext("The DHCP range cannot overlap any static DHCP mappings."));
+					$input_errors[] = sprintf(gettext("DHCP범위가 정적 DHCP 매핑과 겹칩니다. 범위를 다시 설정하십시오."));
 					break;
 				}
 			}
@@ -726,10 +731,10 @@ function build_pooltable() {
 	$pooltbl .=		'<table class="table table-striped table-hover table-condensed">';
 	$pooltbl .=			'<thead>';
 	$pooltbl .=				'<tr>';
-	$pooltbl .=					'<th>' . gettext("Pool Start") . '</th>';
-	$pooltbl .=					'<th>' . gettext("Pool End") . '</th>';
-	$pooltbl .=					'<th>' . gettext("Description") . '</th>';
-	$pooltbl .=					'<th>' . gettext("Actions") . '</th>';
+	$pooltbl .=					'<th>' . gettext("Pool 시작") . '</th>';
+	$pooltbl .=					'<th>' . gettext("Pool 종료") . '</th>';
+	$pooltbl .=					'<th>' . gettext("설명") . '</th>';
+	$pooltbl .=					'<th>' . gettext("액션") . '</th>';
 	$pooltbl .=				'</tr>';
 	$pooltbl .=			'</thead>';
 	$pooltbl .=			'<tbody>';
@@ -748,9 +753,9 @@ function build_pooltable() {
 				$pooltbl .= '<td ondblclick="document.location=\'services_dhcp.php?if=' . htmlspecialchars($if) . '&pool=' . $i . '\';">' .
 							htmlspecialchars($poolent['descr']) . '</td>';
 
-				$pooltbl .= '<td><a class="fa fa-pencil" title="'. gettext("Edit pool") . '" href="services_dhcp.php?if=' . htmlspecialchars($if) . '&pool=' . $i . '"></a>';
+				$pooltbl .= '<td><a class="fa fa-pencil" title="'. gettext("pool 편집") . '" href="services_dhcp.php?if=' . htmlspecialchars($if) . '&pool=' . $i . '"></a>';
 
-				$pooltbl .= ' <a class="fa fa-trash" title="'. gettext("Delete pool") . '" href="services_dhcp.php?if=' . htmlspecialchars($if) . '&act=delpool&id=' . $i . '" usepost></a></td>';
+				$pooltbl .= ' <a class="fa fa-trash" title="'. gettext("pool 삭제") . '" href="services_dhcp.php?if=' . htmlspecialchars($if) . '&act=delpool&id=' . $i . '" usepost></a></td>';
 				$pooltbl .= '</tr>';
 			}
 		$i++;
@@ -784,7 +789,7 @@ if ($changes_applied) {
 }
 
 if (is_subsystem_dirty('staticmaps')) {
-	print_apply_box(gettext("The static mapping configuration has been changed.") . "<br />" . gettext("The changes must be applied for them to take effect."));
+	print_apply_box(gettext("정적 매핑 구성이 변경되었습니다.") . "<br />" . gettext("변경사항을 저장하시면 적용됩니다."));
 }
 
 /* active tabs */
@@ -819,11 +824,11 @@ foreach ($iflist as $ifent => $ifname) {
 
 if ($tabscounter == 0) {
 	if ($have_small_subnet) {
-		$sentence2 = sprintf(gettext('%1$s has a CIDR mask of %2$s, which does not contain enough addresses.'), htmlspecialchars($example_name), htmlspecialchars($example_cidr));
+		$sentence2 = sprintf(gettext('%1$s 은(는) %2$s의 CIDR마스크를 가지고 있으며, 주소가 충분하지 않습니다.'), htmlspecialchars($example_name), htmlspecialchars($example_cidr));
 	} else {
-		$sentence2 = gettext("This system has no interfaces configured with a static IPv4 address.");
+		$sentence2 = gettext("정적 IPv4주소로 구성된 인터페이스가 없는 시스템입니다.");
 	}
-	print_info_box(gettext("The DHCP Server requires a static IPv4 subnet large enough to serve addresses to clients.") . " " . $sentence2);
+	print_info_box(gettext("DHCP서버에는 클라이언트에 주소를 제공할 수 있을 만큼 충분히 큰 정적 IPv4서브넷이 필요합니다.") . " " . $sentence2);
 	include("foot.inc");
 	exit;
 }
@@ -832,7 +837,7 @@ display_top_tabs($tab_array);
 
 $form = new Form();
 
-$section = new Form_Section('General Options');
+$section = new Form_Section('일반 옵션');
 
 if (!is_numeric($pool) && !($act == "newpool")) {
 	if (isset($config['dhcrelay']['enable'])) {
@@ -851,7 +856,7 @@ if (!is_numeric($pool) && !($act == "newpool")) {
 		));
 	}
 } else {
-	print_info_box(gettext('Editing pool-specific options. To return to the Interface, click its tab above.'), 'info', false);
+	print_info_box(gettext('옵션을 편집하는 중입니다. 인터페이스로 돌아가려면 위의 탭을 클릭하십시오.'), 'info', false);
 }
 
 $section->addInput(new Form_Checkbox(
@@ -1456,23 +1461,23 @@ if (!is_numeric($pool) && !($act == "newpool")) {
 ?>
 
 <div class="panel panel-default">
-	<div class="panel-heading"><h2 class="panel-title"><?=gettext("DHCP Static Mappings for this Interface")?></h2></div>
+	<div class="panel-heading"><h2 class="panel-title"><?=gettext("해당 인터페이스에 대한 DHCP 정적 매핑")?></h2></div>
 	<div class="table-responsive">
 			<table class="table table-striped table-hover table-condensed sortable-theme-bootstrap" data-sortable>
 				<thead>
 					<tr>
-						<th><?=gettext("Static ARP")?></th>
-						<th><?=gettext("MAC address")?></th>
+						<th><?=gettext("정적 ARP")?></th>
+						<th><?=gettext("MAC 주소")?></th>
 <?php
 	if ($got_cid):
 ?>
-						<th><?=gettext("Client Id")?></th>
+						<th><?=gettext("클라이언트 Id")?></th>
 <?php
 	endif;
 ?>
-						<th><?=gettext("IP address")?></th>
-						<th><?=gettext("Hostname")?></th>
-						<th><?=gettext("Description")?></th>
+						<th><?=gettext("IP 주소")?></th>
+						<th><?=gettext("호스트이름")?></th>
+						<th><?=gettext("설명")?></th>
 						<th></th>
 					</tr>
 				</thead>
@@ -1512,8 +1517,8 @@ if (!is_numeric($pool) && !($act == "newpool")) {
 							<?=htmlspecialchars($mapent['descr'])?>
 						</td>
 						<td>
-							<a class="fa fa-pencil"	title="<?=gettext('Edit static mapping')?>"	href="services_dhcp_edit.php?if=<?=htmlspecialchars($if)?>&amp;id=<?=$i?>"></a>
-							<a class="fa fa-trash"	title="<?=gettext('Delete static mapping')?>"	href="services_dhcp.php?if=<?=htmlspecialchars($if)?>&amp;act=del&amp;id=<?=$i?>" usepost></a>
+							<a class="fa fa-pencil"	title="<?=gettext('정적 매핑 편집')?>"	href="services_dhcp_edit.php?if=<?=htmlspecialchars($if)?>&amp;id=<?=$i?>"></a>
+							<a class="fa fa-trash"	title="<?=gettext('정적 매핑 삭제')?>"	href="services_dhcp.php?if=<?=htmlspecialchars($if)?>&amp;act=del&amp;id=<?=$i?>" usepost></a>
 						</td>
 					</tr>
 <?php
@@ -1531,7 +1536,7 @@ if (!is_numeric($pool) && !($act == "newpool")) {
 <nav class="action-buttons">
 	<a href="services_dhcp_edit.php?if=<?=htmlspecialchars($if)?>" class="btn btn-sm btn-success">
 		<i class="fa fa-plus icon-embed-btn"></i>
-		<?=gettext("Add")?>
+		<?=gettext("추가")?>
 	</a>
 </nav>
 <?php
@@ -1579,9 +1584,9 @@ events.push(function() {
 		hideInput('ddnsclientupdates', !showadvdns);
 
 		if (showadvdns) {
-			text = "<?=gettext('Hide Advanced');?>";
+			text = "<?=gettext('어드밴스드 숨기기');?>";
 		} else {
-			text = "<?=gettext('Display Advanced');?>";
+			text = "<?=gettext('어드밴스드 보이기');?>";
 		}
 		$('#btnadvdns').html('<i class="fa fa-cog"></i> ' + text);
 	}
@@ -1614,9 +1619,9 @@ events.push(function() {
 		hideInput('mac_deny', !showadvmac);
 
 		if (showadvmac) {
-			text = "<?=gettext('Hide Advanced');?>";
+			text = "<?=gettext('어드밴스드 숨기기');?>";
 		} else {
-			text = "<?=gettext('Display Advanced');?>";
+			text = "<?=gettext('어드밴스드 보이기');?>";
 		}
 		$('#btnadvmac').html('<i class="fa fa-cog"></i> ' + text);
 	}
@@ -1649,9 +1654,9 @@ events.push(function() {
 		hideInput('ntp2', !showadvntp);
 
 		if (showadvntp) {
-			text = "<?=gettext('Hide Advanced');?>";
+			text = "<?=gettext('어드밴스드 숨기기');?>";
 		} else {
-			text = "<?=gettext('Display Advanced');?>";
+			text = "<?=gettext('어드밴스드 보이기');?>";
 		}
 		$('#btnadvntp').html('<i class="fa fa-cog"></i> ' + text);
 	}
@@ -1683,9 +1688,9 @@ events.push(function() {
 		hideInput('tftp', !showadvtftp);
 
 		if (showadvtftp) {
-			text = "<?=gettext('Hide Advanced');?>";
+			text = "<?=gettext('어드밴스드 숨기기');?>";
 		} else {
-			text = "<?=gettext('Display Advanced');?>";
+			text = "<?=gettext('어드밴스드 보이기');?>";
 		}
 		$('#btnadvtftp').html('<i class="fa fa-cog"></i> ' + text);
 	}
@@ -1717,9 +1722,9 @@ events.push(function() {
 		hideInput('ldap', !showadvldap);
 
 		if (showadvldap) {
-			text = "<?=gettext('Hide Advanced');?>";
+			text = "<?=gettext('어드밴스드 숨기기');?>";
 		} else {
-			text = "<?=gettext('Display Advanced');?>";
+			text = "<?=gettext('어드밴스드 보이기');?>";
 		}
 		$('#btnadvldap').html('<i class="fa fa-cog"></i> ' + text);
 	}
@@ -1752,9 +1757,9 @@ events.push(function() {
 		hideClass('adnlopts', !showadvopts);
 
 		if (showadvopts) {
-			text = "<?=gettext('Hide Advanced');?>";
+			text = "<?=gettext('어드밴스드 숨기기');?>";
 		} else {
-			text = "<?=gettext('Display Advanced');?>";
+			text = "<?=gettext('어드밴스드 보이기');?>";
 		}
 		$('#btnadvopts').html('<i class="fa fa-cog"></i> ' + text);
 	}
@@ -1791,9 +1796,9 @@ events.push(function() {
 		hideInput('rootpath', !showadvnwkboot);
 
 		if (showadvnwkboot) {
-			text = "<?=gettext('Hide Advanced');?>";
+			text = "<?=gettext('어드밴스드 숨기기');?>";
 		} else {
-			text = "<?=gettext('Display Advanced');?>";
+			text = "<?=gettext('어드밴스드 보이기');?>";
 		}
 		$('#btnadvnwkboot').html('<i class="fa fa-cog"></i> ' + text);
 	}

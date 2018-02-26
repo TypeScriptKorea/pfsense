@@ -24,6 +24,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.26
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-firewall-nat-npt
 ##|*NAME=Firewall: NAT: NPt
@@ -125,8 +130,8 @@ if ($_POST['apply']) {
 }
 
 if (is_subsystem_dirty('natconf')) {
-	print_apply_box(gettext('The NAT configuration has been changed.') . '<br />' .
-					gettext('The changes must be applied for them to take effect.'));
+	print_apply_box(gettext('NAT 구성이 변경되었습니다.') . '<br />' .
+					gettext('변경사항을 저장하시면 적용됩니다.'));
 }
 
 $tab_array = array();
@@ -145,7 +150,7 @@ display_top_tabs($tab_array);
 					<tr>
 						<th><!-- checkbox --></th>
 						<th><!-- icon --></th>
-						<th><?=gettext("Interface")?></th>
+						<th><?=gettext("인터페이스")?></th>
 						<th><?=gettext("External Prefix")?></th>
 						<th><?=gettext("Internal prefix")?></th>
 						<th><?=gettext("Description")?></th>
@@ -204,9 +209,9 @@ display_top_tabs($tab_array);
 ?>
 						</td>
 						<td>
-							<a class="fa fa-pencil" title="<?=gettext("Edit mapping")?>" href="firewall_nat_npt_edit.php?id=<?=$i?>"></a>
-							<a class="fa fa-clone" title="<?=gettext("Add a new mapping based on this one")?>" href="firewall_nat_npt_edit.php?dup=<?=$i?>"></a>
-							<a class="fa fa-trash" title="<?=gettext("Delete mapping")?>" href="firewall_nat_npt.php?act=del&amp;id=<?=$i?>" usepost></a>
+							<a class="fa fa-pencil" title="<?=gettext("매핑 편집")?>" href="firewall_nat_npt_edit.php?id=<?=$i?>"></a>
+							<a class="fa fa-clone" title="<?=gettext("이 매핑을 기반으로 새 매핑 추가")?>" href="firewall_nat_npt_edit.php?dup=<?=$i?>"></a>
+							<a class="fa fa-trash" title="<?=gettext("매핑 삭제")?>" href="firewall_nat_npt.php?act=del&amp;id=<?=$i?>" usepost></a>
 						</td>
 					</tr>
 <?php
@@ -219,21 +224,21 @@ endforeach;
 	</div>
 
 	<nav class="action-buttons">
-		<a href="firewall_nat_npt_edit.php?after=-1" class="btn btn-sm btn-success" title="<?=gettext('Add mapping to the top of the list')?>">
+		<a href="firewall_nat_npt_edit.php?after=-1" class="btn btn-sm btn-success" title="<?=gettext('목록 상단에 매핑 추가')?>">
 			<i class="fa fa-level-up icon-embed-btn"></i>
-			<?=gettext('Add')?>
+			<?=gettext('추가')?>
 		</a>
-		<a href="firewall_nat_npt_edit.php" class="btn btn-sm btn-success" title="<?=gettext('Add mapping to the end of the list')?>">
+		<a href="firewall_nat_npt_edit.php" class="btn btn-sm btn-success" title="<?=gettext('목록 끝에 매핑 추가')?>">
 			<i class="fa fa-level-down icon-embed-btn"></i>
-			<?=gettext('Add')?>
+			<?=gettext('추가')?>
 		</a>
-		<button name="del_x" type="submit" class="btn btn-danger btn-sm" title="<?=gettext('Delete selected mappings')?>">
+		<button name="del_x" type="submit" class="btn btn-danger btn-sm" title="<?=gettext('선택한 매핑 삭제')?>">
 			<i class="fa fa-trash icon-embed-btn"></i>
-			<?=gettext("Delete"); ?>
+			<?=gettext("삭제"); ?>
 		</button>
-		<button type="submit" id="order-store" name="order-store" class="btn btn-primary btn-sm" disabled title="<?=gettext('Save mapping order')?>">
+		<button type="submit" id="order-store" name="order-store" class="btn btn-primary btn-sm" disabled title="<?=gettext('매핑 순서 저장')?>">
 			<i class="fa fa-save icon-embed-btn"></i>
-			<?=gettext("Save")?>
+			<?=gettext("저장")?>
 		</button>
 	</nav>
 </form>
@@ -247,7 +252,7 @@ events.push(function() {
 	$('table tbody.user-entries').sortable({
 		cursor: 'grabbing',
 		update: function(event, ui) {
-			$('#order-store').removeAttr('disabled');
+			$('#order-store').removeAttr('비활성화');
 			dirty = true;
 		}
 	});
@@ -268,7 +273,7 @@ events.push(function() {
 	// provide a warning message if the user tries to change page before saving
 	$(window).bind('beforeunload', function(){
 		if (!saving && dirty) {
-			return ("<?=gettext('One or more NPt mappings have been moved but have not yet been saved')?>");
+			return ("<?=gettext('하나 이상의 NPt 매핑이 이동되었지만 아직 저장되지 않았습니다.')?>");
 		} else {
 			return undefined;
 		}

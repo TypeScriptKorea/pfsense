@@ -19,6 +19,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.26
+한글화 작업 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-status-ipsec-leases
 ##|*NAME=Status: IPsec: Leases
@@ -49,11 +54,11 @@ if (isset($mobile['pool']) && is_array($mobile['pool'])) {
 		<table class="table table-striped table-condensed table-hover sortable-theme-bootstrap" data-sortable>
 			<thead>
 				<tr>
-					<th><?=gettext("Pool")?></th>
-					<th><?=gettext("Usage")?></th>
-					<th><?=gettext("Online")?></th>
+					<th><?=gettext("풀")?></th>
+					<th><?=gettext("용도")?></th>
+					<th><?=gettext("온라인")?></th>
 					<th><?=gettext("ID")?></th>
-					<th><?=gettext("Host")?></th>
+					<th><?=gettext("호스트")?></th>
 					<th><?=gettext("Status")?></th>
 				</tr>
 			</thead>
@@ -103,7 +108,7 @@ if (isset($mobile['pool']) && is_array($mobile['pool'])) {
 					}
 				} else {
 ?>
-					<td colspan="3" class="warning"><?=gettext('No leases from this pool yet.')?></td>
+					<td colspan="3" class="warning"><?=gettext('아직 리스하지 않은 풀입니다')?></td>
 				</tr>
 <?php
 				}
@@ -114,7 +119,7 @@ if (isset($mobile['pool']) && is_array($mobile['pool'])) {
 	</div>
 <?php
 } else {
-	print_info_box(gettext('No IPsec pools.'));
+	print_info_box(gettext('IPsec이 없습니다.'));
 }
 
 if (ipsec_enabled()) {
@@ -126,7 +131,7 @@ if (ipsec_enabled()) {
 <div class="infoblock blockopen">
 <?php
 }
-print_info_box(sprintf(gettext('IPsec can be configured %1$shere%2$s.'), '<a href="vpn_ipsec.php">', '</a>'), 'info', false);
+print_info_box(sprintf(gettext('IPsec는 %1$shere%2$s로 구성할 수 .'), '<a href="vpn_ipsec.php">', '</a>'), 'info', false);
 ?>
 </div>
 <?php

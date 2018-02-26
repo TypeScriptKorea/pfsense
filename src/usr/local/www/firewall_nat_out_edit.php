@@ -23,6 +23,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.26
+한글화 번역 
+*/
+
 ##|+PRIV
 ##|*IDENT=page-firewall-nat-outbound-edit
 ##|*NAME=Firewall: NAT: Outbound: Edit
@@ -153,13 +158,13 @@ if ($_POST['save']) {
 		$temp = str_replace(">", "", $value);
 		$newpost = htmlentities($temp);
 		if ($newpost <> $temp) {
-			$input_errors[] = sprintf(gettext("Invalid characters detected (%s).  Please remove invalid characters and save again."), $temp);
+			$input_errors[] = sprintf(gettext("유효하지 않은 문자가 감지되었습니다(%s). 문장을 편집하고 다시 저장하십시오."), $temp);
 		}
 	}
 
 	/* input validation */
 	$reqdfields = explode(" ", "interface protocol source source_subnet destination destination_subnet");
-	$reqdfieldsn = array(gettext("Interface"), gettext("Protocol"), gettext("Source"), gettext("Source bit count"), gettext("Destination"), gettext("Destination bit count"));
+	$reqdfieldsn = array(gettext("인터페이스"), gettext("프로토콜"), gettext("발신지"), gettext("발신지 비트 카운트"), gettext("수신지"), gettext("수신지 비트 카운트"));
 
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, $input_errors);
 
@@ -190,35 +195,35 @@ if ($_POST['save']) {
 	}
 
 	if ($protocol_uses_ports && $_POST['sourceport'] <> "" && !is_port_or_range_or_alias($_POST['sourceport'])) {
-		$input_errors[] = gettext("A valid port or port alias must be supplied for the source port entry.");
+		$input_errors[] = gettext("유효한 포트 또는 유효한 포트 alias가 제공되어야 합니다.");
 	}
 
 	if ($protocol_uses_ports && $_POST['dstport'] <> "" && !is_port_or_range_or_alias($_POST['dstport'])) {
-		$input_errors[] = gettext("A valid port or port alias must be supplied for the destination port entry.");
+		$input_errors[] = gettext("유효한 포트 또는 유효한 포트 alias가 제공되어야 합니다.");
 	}
 
 	if ($protocol_uses_ports && $_POST['natport'] <> "" && !is_port_or_range_or_alias($_POST['natport']) && !isset($_POST['nonat'])) {
-		$input_errors[] = gettext("A valid port must be supplied for the NAT port entry.");
+		$input_errors[] = gettext("NAT 포트를 등록하려면 유효한 포트가 제공되어야 합니다.");
 	}
 
 	if (($_POST['source_type'] != "any") && ($_POST['source_type'] != "(self)")) {
 		if ($_POST['source'] && !is_ipaddroralias($_POST['source']) && $_POST['source'] != "any") {
-			$input_errors[] = gettext("A valid source must be specified.");
+			$input_errors[] = gettext("발신지가 올바르지 않습니다.");
 		}
 	}
 
 	if ($_POST['source_subnet'] && !is_numericint($_POST['source_subnet'])) {
-		$input_errors[] = gettext("A valid source bit count must be specified.");
+		$input_errors[] = gettext("발신지 비트 카운트가 올바르지 않습니다.");
 	}
 
 	if ($_POST['destination_type'] != "any") {
 		if ($_POST['destination'] && !is_ipaddroralias($_POST['destination'])) {
-			$input_errors[] = gettext("A valid destination must be specified.");
+			$input_errors[] = gettext("수신지가 올바르지 않습니다.");
 		}
 	}
 
 	if ($_POST['destination_subnet'] && !is_numericint($_POST['destination_subnet'])) {
-		$input_errors[] = gettext("A valid destination bit count must be specified.");
+		$input_errors[] = gettext("수신지 비트 카운트가 올바르지 않습니다.");
 	}
 
 	if ($_POST['destination_type'] == "any") {
@@ -228,16 +233,16 @@ if ($_POST['save']) {
 	}
 
 	if ($_POST['target'] && !is_ipaddr($_POST['target']) && !is_subnet($_POST['target']) && !is_alias($_POST['target']) && !isset($_POST['nonat']) && !($_POST['target'] == "other-subnet")) {
-		$input_errors[] = gettext("A valid target IP address must be specified.");
+		$input_errors[] = gettext("IP주소가 올바르지 않습니다.");
 	}
 
 	if ($_POST['target'] == "other-subnet") {
 		if (!is_ipaddr($_POST['targetip'])) {
-			$input_errors[] = gettext("A valid target IP must be specified when using the 'Other Subnet' type.");
+			$input_errors[] = gettext("'다른 서브넷'타입을 사용하실 때는 올바른 IP주소를 지정해주십시오.");
 		}
 
 		if (!is_numericint($_POST['targetip_subnet'])) {
-			$input_errors[] = gettext("A valid target bit count must be specified when using the 'Other Subnet' type.");
+			$input_errors[] = gettext("'다른 서브넷'타입을 사용하실 때는 올바른 비트 카운트를 지정해주십시오.");
 		}
 	}
 
@@ -251,7 +256,7 @@ if ($_POST['save']) {
 			if (substr($_POST['poolopts'], 0, 11) == "round-robin") {
 				$poolopts = $_POST['poolopts'];
 			} else {
-				$input_errors[] = gettext("Only Round Robin pool options may be chosen when selecting an alias.");
+				$input_errors[] = gettext("alias를 선택하실 때는 라운드 로빈 풀 옵션만을 선택하셔야합니다.");
 			}
 		}
 		/* If specified, verify valid source-hash key or generate a valid key using md5 */
@@ -260,7 +265,7 @@ if ($_POST['save']) {
 				if (ctype_xdigit(substr($_POST['source_hash_key'],2)) && strlen($_POST['source_hash_key']) == 34) {
 					$source_hash_key = $_POST['source_hash_key'];
 				} else {
-					$input_errors[] = gettext("Incorrect format for source-hash key, \"0x\" must be followed by exactly 32 hexadecimal characters.");
+					$input_errors[] = gettext("해시 키의 형식이 잘못되었습니다.");
 				}
 			} else {
 				$source_hash_key = "0x".md5($_POST['source_hash_key']);
@@ -382,7 +387,7 @@ if ($_POST['save']) {
 			}
 		}
 
-		if (write_config(gettext("Firewall: NAT: Outbound - saved/edited outbound NAT mapping."))) {
+		if (write_config(gettext("방화벽: NAT: 아웃바운드 - 저장 / 편집 된 아웃 바운드 NAT 매핑."))) {
 			mark_subsystem_dirty('natconf');
 		}
 		header("Location: firewall_nat_out.php");
@@ -408,14 +413,14 @@ function build_target_list() {
 	// The prefix letter is removed before saving in the config,
 	// and added back when reading from the config.
 
-	$list[""] = gettext('Interface Address');
+	$list[""] = gettext('인터페이스 주소');
 
 	//Temporary array so we can sort IPs
 	$templist = array();
 	if (is_array($config['virtualip']['vip'])) {
 		foreach ($config['virtualip']['vip'] as $sn) {
 			if (($sn['mode'] == "proxyarp" || $sn['mode'] == "other") && $sn['type'] == "network") {
-				$templist['S' . $sn['subnet'] . '/' . $sn['subnet_bits']] = gettext('Subnet: ') . $sn['subnet'] . '/' . $sn['subnet_bits'] . ' (' . $sn['descr'] . ')';
+				$templist['S' . $sn['subnet'] . '/' . $sn['subnet_bits']] = gettext('서브넷: ') . $sn['subnet'] . '/' . $sn['subnet_bits'] . ' (' . $sn['descr'] . ')';
 				if (isset($sn['noexpand'])) {
 					continue;
 				}
@@ -434,7 +439,7 @@ function build_target_list() {
 	}
 	asort($templist);
 	//Append sorted IP array onto main array
-	$list = array_merge($list, $templist);
+	$list = array_merge($list, $templist); 
 	unset($templist);
 
 	foreach ($a_aliases as $alias) {
@@ -442,10 +447,10 @@ function build_target_list() {
 			continue;
 		}
 
-		$list['H' . $alias['name']] = gettext('Host Alias: ') . $alias['name'] . ' (' . $alias['descr'] . ')';
+		$list['H' . $alias['name']] = gettext('호스트 Alias: ') . $alias['name'] . ' (' . $alias['descr'] . ')';
 	}
 
-	$list['Oother-subnet'] = gettext('Other Subnet (Enter Below)');
+	$list['Oother-subnet'] = gettext('별도 서브넷 (아래 입력)');
 
 	return($list);
 }
@@ -456,7 +461,7 @@ if ($input_errors) {
 
 $form = new Form();
 
-$section = new Form_Section('Edit Advanced Outbound NAT Entry');
+$section = new Form_Section('고급 아웃바운드 NAT항목 ');
 
 $section->addInput(new Form_Checkbox(
 	'disabled',
@@ -601,21 +606,21 @@ $section->addInput(new Form_Select(
 	$pconfig['poolopts'],
 	array(
 		'' => gettext('Default'),
-		'round-robin' => gettext('Round Robin'),
-		'round-robin sticky-address' => gettext('Round Robin with Sticky Address'),
+		'round-robin' => gettext('라운드 로빈'),
+		'round-robin sticky-address' => gettext('고정 주소가 있는 라운드 로빈'),
 		'random' => gettext('Random'),
-		'random sticky-address' => gettext('Random with Sticky Address'),
-		'source-hash' => gettext('Source hash'),
-		'bitmask' => gettext('Bit mask')
+		'random sticky-address' => gettext('고정 주소가 있는 랜덤'),
+		'source-hash' => gettext('발신지 해시'),
+		'bitmask' => gettext('비트마스크')
 	)
 ))->setHelp('%s',
 			gettext('Only Round Robin types work with Host Aliases. Any type can be used with a Subnet.') .
 			'<br /></span><ul class="help-block">' .
-				'<li>' . gettext('Round Robin: Loops through the translation addresses.') . '</li>' .
-				'<li>' . gettext('Random: Selects an address from the translation address pool at random.') . '</li>' .
-				'<li>' . gettext('Source Hash: Uses a hash of the source address to determine the translation address, ensuring that the redirection address is always the same for a given source.') . '</li>' .
-				'<li>' . gettext('Bitmask: Applies the subnet mask and keeps the last portion identical; 10.0.1.50 -&gt; x.x.x.50.') . '</li>' .
-				'<li>' . gettext('Sticky Address: The Sticky Address option can be used with the Random and Round Robin pool types to ensure that a particular source address is always mapped to the same translation address.') . '</li>' .
+				'<li>' . gettext('라운드 로빈: 변환 주소를 탐색합니다.') . '</li>' .
+				'<li>' . gettext('랜덤: 변환 주소 풀에서 임의의 주소를 선택합니다.') . '</li>' .
+				'<li>' . gettext('발신지 해시: 원본 주소의 해시를 사용하여 변환 주소를 결정하고 리디렉션 주소가 지정된 소스에 대해 항상 동일하도록 합니다.') . '</li>' .
+				'<li>' . gettext('비트마스크: 서브넷 마스크를 적용하고 마지막 부분을 동일하게 유지시킵니다.; 10.0.1.50 -&gt; x.x.x.50.') . '</li>' .
+				'<li>' . gettext('고정 주소: 고정 주소 옵션을 임의 및 라운드 로빈 풀 유형과 함께 사용하여 특정 원본 주소가 항상 동일한 변환 주소에 매핑되도록 합니다.') . '</li>' .
 			'</ul><span class="help-block">');
 
 $section->addInput(new Form_Input(

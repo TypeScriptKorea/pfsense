@@ -23,6 +23,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.26
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-firewall-aliases
 ##|*NAME=Firewall: Aliases
@@ -97,7 +102,7 @@ if ($_POST['act'] == "del") {
 				unlink_if_exists("/var/db/aliastables/" . $a_aliases[$_POST['id']]['name'] . ".txt");
 			}
 			unset($a_aliases[$_POST['id']]);
-			if (write_config(gettext("Deleted a firewall alias."))) {
+			if (write_config(gettext("방화벽 alias를 삭제하였습니다."))) {
 				filter_configure();
 				mark_subsystem_dirty('aliases');
 			}
@@ -172,7 +177,7 @@ if ($_POST['apply']) {
 }
 
 if (is_subsystem_dirty('aliases')) {
-	print_apply_box(gettext("The alias list has been changed.") . "<br />" . gettext("The changes must be applied for them to take effect."));
+	print_apply_box(gettext("alias 리스트가 변경되었습니다.") . "<br />" . gettext("변경사항을 저장하시면 적용됩니다."));
 }
 
 display_top_tabs($tab_array);
@@ -180,14 +185,14 @@ display_top_tabs($tab_array);
 ?>
 
 <div class="panel panel-default">
-	<div class="panel-heading"><h2 class="panel-title"><?=sprintf(gettext('Firewall Aliases %s'), $bctab)?></h2></div>
+	<div class="panel-heading"><h2 class="panel-title"><?=sprintf(gettext('방화벽 Aliases %s'), $bctab)?></h2></div>
 	<div class="panel-body">
 
 <div class="table-responsive">
 <table class="table table-striped table-hover table-condensed sortable-theme-bootstrap" data-sortable>
 	<thead>
 		<tr>
-			<th><?=gettext("Name")?></th>
+			<th><?=gettext("이름")?></th>
 			<th><?=gettext("Values")?></th>
 			<th><?=gettext("Description")?></th>
 			<th><?=gettext("Actions")?></th>
@@ -252,8 +257,8 @@ display_top_tabs($tab_array);
 				<?=htmlspecialchars($alias['descr'])?>&nbsp;
 			</td>
 			<td>
-				<a class="fa fa-pencil" title="<?=gettext("Edit alias"); ?>" href="firewall_aliases_edit.php?id=<?=$i?>"></a>
-				<a class="fa fa-trash"	title="<?=gettext("Delete alias")?>" href="?act=del&amp;tab=<?=$tab?>&amp;id=<?=$i?>" usepost></a>
+				<a class="fa fa-pencil" title="<?=gettext("alias 편집"); ?>" href="firewall_aliases_edit.php?id=<?=$i?>"></a>
+				<a class="fa fa-trash"	title="<?=gettext("alias 삭제")?>" href="?act=del&amp;tab=<?=$tab?>&amp;id=<?=$i?>" usepost></a>
 			</td>
 		</tr>
 <?php endif?>
@@ -268,7 +273,7 @@ display_top_tabs($tab_array);
 <nav class="action-buttons">
 	<a href="firewall_aliases_edit.php?tab=<?=$tab?>" role="button" class="btn btn-success btn-sm">
 		<i class="fa fa-plus icon-embed-btn"></i>
-		<?=gettext("Add");?>
+		<?=gettext("추가");?>
 	</a>
 <?php
 if (($tab == "ip") || ($tab == "port") || ($tab == "all")):
@@ -286,10 +291,10 @@ endif
 	 That way jQuery (in pfenseHelpers.js) will automatically take care of the display. -->
 <div>
 	<div class="infoblock">
-		<?php print_info_box(gettext('Aliases act as placeholders for real hosts, networks or ports. They can be used to minimize the number ' .
-			'of changes that have to be made if a host, network or port changes.') . '<br />' .
-			gettext('The name of an alias can be entered instead of the host, network or port where indicated. The alias will be resolved according to the list above.') . '<br />' .
-			gettext('If an alias cannot be resolved (e.g. because it was deleted), the corresponding element (e.g. filter/NAT/shaper rule) will be considered invalid and skipped.'), 'info', false); ?>
+		<?php print_info_box(gettext('별칭은 실제 호스트, 네트워크 또는 포트에 대한 자리 표시자 역할을 합니다. ' .
+			'호스트, 네트워크 또는 포트가 변경될 경우 수행해야 하는 변경 작업을 최소화하는 데 사용할 수 있습니다.') . '<br />' .
+			gettext('alias 명칭은,호스트, 네트워크 또는 포트 대신 입력할 수 있습니다.') . '<br />' .
+			gettext('alias를 확인할 수 없는 경우(예:삭제된 경우), 해당 요소가(예: 필터/NAT/셰이프 규칙) 올바르지 않은 것으로 간주되어 절차를 건너.'), 'info', false); ?>
 	</div>
 </div>
 

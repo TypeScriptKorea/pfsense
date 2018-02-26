@@ -20,6 +20,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.26
+한글화 번역 
+*/
+
 ##|+PRIV
 ##|*IDENT=page-services-ntpd-acls
 ##|*NAME=Services: NTP ACL Settings
@@ -186,7 +191,7 @@ if ($changes_applied) {
 }
 
 $tab_array = array();
-$tab_array[] = array(gettext("Settings"), false, "services_ntpd.php");
+$tab_array[] = array(gettext("설정"), false, "services_ntpd.php");
 $tab_array[] = array(gettext("ACLs"), true, "services_ntpd_acls.php");
 $tab_array[] = array(gettext("Serial GPS"), false, "services_ntpd_gps.php");
 $tab_array[] = array(gettext("PPS"), false, "services_ntpd_pps.php");
@@ -194,7 +199,7 @@ display_top_tabs($tab_array);
 
 $form = new Form;
 
-$section = new Form_Section('Default Access Restrictions');
+$section = new Form_Section('기본 액세스 제한');
 
 $section->addInput(new Form_Checkbox(
 	'kod',
@@ -241,7 +246,7 @@ $section->addInput(new Form_Checkbox(
 /* End Default Restrictions*/
 $form->add($section);
 
-$section = new Form_Section('Custom Access Restrictions');
+$section = new Form_Section('사용자 지정 액세스 제한');
 
 $numrows = count($networkacl) - 1;
 $counter = 0;

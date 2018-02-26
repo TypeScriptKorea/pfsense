@@ -20,6 +20,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.26
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-system-usermanager-settings
 ##|*NAME=System: User Manager: Settings
@@ -41,30 +46,30 @@ if ($_REQUEST['ajax']) {
 	}
 
 	if (!$authcfg) {
-		printf(gettext('%1$sError: Could not find settings for %2$s%3$s'), '<span class="text-danger">', htmlspecialchars($authserver), "</span>");
+		printf(gettext('%1$s오류: %2$s%3$s에 대한 설정을 찾을 수 없습니다.'), '<span class="text-danger">', htmlspecialchars($authserver), "</span>");
 		exit;
 	} else {
 		print("<pre>");
 
 		print('<table class="table table-hover table-striped table-condensed">');
 
-		print("<tr><td>" . sprintf(gettext('Attempting connection to %1$s%2$s%3$s'), "<td><center>", htmlspecialchars($auth_server), "</center></td>"));
+		print("<tr><td>" . sprintf(gettext('%1$s%2$s%3$s에 연결 시도 중'), "<td><center>", htmlspecialchars($auth_server), "</center></td>"));
 		if (ldap_test_connection($authcfg)) {
-			print("<td><span class=\"text-center text-success\">" . gettext("OK") . "</span></td></tr>");
+			print("<td><span class=\"text-center text-success\">" . gettext("네") . "</span></td></tr>");
 
-			print("<tr><td>" . sprintf(gettext('Attempting bind to %1$s%2$s%3$s'), "<td><center>", htmlspecialchars($auth_server), "</center></td>"));
+			print("<tr><td>" . sprintf(gettext('%1$s%2$s%3$s에 바인딩 시도 중'), "<td><center>", htmlspecialchars($auth_server), "</center></td>"));
 			if (ldap_test_bind($authcfg)) {
-				print('<td><span class="text-center text-success">' . gettext("OK") . "</span></td></tr>");
+				print('<td><span class="text-center text-success">' . gettext("네") . "</span></td></tr>");
 
-				print("<tr><td>" . sprintf(gettext('Attempting to fetch Organizational Units from %1$s%2$s%3$s'), "<td><center>", htmlspecialchars($auth_server), "</center></td>"));
+				print("<tr><td>" . sprintf(gettext('%1$s%2$s%3$s에서 조직 단위를 가져오는 중'), "<td><center>", htmlspecialchars($auth_server), "</center></td>"));
 				$ous = ldap_get_user_ous(true, $authcfg);
 
 				if (count($ous)>1) {
-					print('<td><span class="text-center text-success">' . gettext("OK") . "</span></td></tr>");
+					print('<td><span class="text-center text-success">' . gettext("네") . "</span></td></tr>");
 					print('<tr ><td colspan="3">');
 
 					if (is_array($ous)) {
-						print("<b>" . gettext("Organization units found") . "</b>");
+						print("<b>" . gettext("조직 구성 단위를 발견하였습니다.") . "</b>");
 						print('<table class="table table-hover">');
 						foreach ($ous as $ou) {
 							print("<tr><td>" . $ou . "</td></tr>");
@@ -74,13 +79,13 @@ if ($_REQUEST['ajax']) {
 					print("</table>");
 					}
 				} else {
-					print("<td><span class=\"text-alert\">" . gettext("failed") . "</span></td></tr>");
+					print("<td><span class=\"text-alert\">" . gettext("실패") . "</span></td></tr>");
 				}
 
 				print("</table><p/>");
 
 			} else {
-				print('<td><span class="text-alert">' . gettext("failed") . "</span></td></tr>");
+				print('<td><span class="text-alert">' . gettext("실패") . "</span></td></tr>");
 				print("</table><p/>");
 			}
 		} else {
@@ -118,19 +123,19 @@ if ($_POST) {
 	if (isset($_POST['session_timeout'])) {
 		$timeout = intval($_POST['session_timeout']);
 		if ($timeout != "" && (!is_numeric($timeout) || $timeout <= 0)) {
-			$input_errors[] = gettext("Session timeout must be an integer value.");
+			$input_errors[] = gettext("세션 만료 시간은 정수여야합니다.");
 		}
 	}
 
 	if (isset($_POST['auth_refresh_time'])) {
 		$timeout = intval($_POST['auth_refresh_time']);
 		if (!is_numeric($timeout) || $timeout < 0 || $timeout > 3600 ) {
-			$input_errors[] = gettext("Authentication refresh time must be an integer between 0 and 3600 (inclusive).");
+			$input_errors[] = gettext("새로고침 시간은 0에서 3600사이의 정수여야합니다.");
 		}
 	}
 
 	if (($_POST['authmode'] == "Local Database") && $_POST['savetest']) {
-		$savemsg = gettext("Settings have been saved, but the test was not performed because it is not supported for local databases.");
+		$savemsg = gettext("설정이 저장되었지만 로컬 데이터베이스에 대해 지원되지 않기 때문에 테스트가 수행되지 않았습니다.");
 	}
 
 	if (!$input_errors) {
@@ -140,7 +145,7 @@ if ($_POST) {
 				if ($authsrv['type'] == "ldap") {
 					$save_and_test = true;
 				} else {
-					$savemsg = gettext("Settings have been saved, but the test was not performed because it is supported only for LDAP based backends.");
+					$savemsg = gettext("설정이 저장되었지만 LDAP기반 백엔드에 대해서만 지원되므로 테스트가 수행되지 않았습니다.");
 				}
 			}
 		}
@@ -238,7 +243,7 @@ $modal = new Modal("LDAP settings", "testresults", true);
 
 $modal->addInput(new Form_StaticText(
 	'Test results',
-	'<span id="ldaptestop">Testing pfSense LDAP settings... One moment please...' . $g['product_name'] . '</span>'
+	'<span id="ldaptestop">pfSense LDAP 설정을 테스트 중입니다... 잠시만 기다려주십시오...' . $g['product_name'] . '</span>'
 ));
 
 $form->add($modal);

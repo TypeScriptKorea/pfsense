@@ -23,6 +23,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.26
+한글화 번역 
+*/
+
 ##|+PRIV
 ##|*IDENT=page-services-snmp
 ##|*NAME=Services: SNMP
@@ -85,13 +90,13 @@ if ($_POST) {
 	/* input validation */
 	if ($_POST['enable']) {
 		if (strstr($_POST['syslocation'], "#")) {
-			$input_errors[] = gettext("Invalid character '#' in system location");
+			$input_errors[] = gettext("시스템 위치에 잘못된 문자 '#' 이 있음.");
 		}
 		if (strstr($_POST['syscontact'], "#")) {
-			$input_errors[] = gettext("Invalid character '#' in system contact");
+			$input_errors[] = gettext("시스템 연락처에 잘못된 문자 '#' 이 있음.");
 		}
 		if (strstr($_POST['rocommunity'], "#")) {
-			$input_errors[] = gettext("Invalid character '#' in read community string");
+			$input_errors[] = gettext("커뮤니티 문장에 잘못된 문자 '#' 이 있음.");
 		}
 
 		$reqdfields = explode(" ", "rocommunity");
@@ -107,7 +112,7 @@ if ($_POST) {
 
 	if ($_POST['trapenable']) {
 		if (strstr($_POST['trapstring'], "#")) {
-			$input_errors[] = gettext("Invalid character '#' in SNMP trap string");
+			$input_errors[] = gettext("SNMP트랩 문자열에 잘못된 문자 '#' 이 있음.");
 		}
 
 		$reqdfields = explode(" ", "trapserver");
@@ -217,7 +222,7 @@ $section->addInput(new Form_Checkbox(
 
 $form->add($section);
 
-$section = new Form_Section('SNMP Daemon Settings');
+$section = new Form_Section('SNMP 데몬 설정');
 
 $section->addInput(new Form_Input(
 	'pollport',
@@ -249,7 +254,7 @@ $section->addInput(new Form_Input(
 
 $form->add($section);
 
-$section = new Form_Section('SNMP Traps Enable');
+$section = new Form_Section('SNMP 트랩 활성화');
 
 $section->addInput(new Form_Checkbox(
 	'trapenable',
@@ -260,7 +265,7 @@ $section->addInput(new Form_Checkbox(
 
 $form->add($section);
 
-$section = new Form_Section('SNMP Trap Settings');
+$section = new Form_Section('SNMP 트랩 설정');
 
 if ($pconfig['trapenable']) {
 	$section->addClass('toggle-traps', 'in');
@@ -340,7 +345,7 @@ $group->add(new Form_MultiCheckbox(
 $section->add($group);
 $form->add($section);
 
-$section = new Form_Section('Interface Binding');
+$section = new Form_Section('인터페이스 바인딩');
 
 $iflist = build_if_list($pconfig['bindip']);
 

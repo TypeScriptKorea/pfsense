@@ -19,6 +19,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.26
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-interfaces-qinq
 ##|*NAME=Interfaces: QinQ
@@ -40,16 +45,16 @@ if ($_POST['act'] == "del") {
 
 	/* check if still in use */
 	if (isset($a_qinqs) && vlan_inuse($a_qinqs[$id])) {
-		$input_errors[] = gettext("This QinQ cannot be deleted because it is still being used as an interface.");
+		$input_errors[] = gettext("QinQ를 여전히 인터페이스로 사용중입니다. 삭제할 수 없습니다.");
 	} elseif (empty($a_qinqs[$id]['vlanif']) || !does_interface_exist($a_qinqs[$id]['vlanif'])) {
-		$input_errors[] = gettext("QinQ interface does not exist");
+		$input_errors[] = gettext("QinQ인터페이스가 존재하지 않습니다.");
 	} else {
 		$qinq =& $a_qinqs[$id];
 
 		$delmembers = explode(" ", $qinq['members']);
 		foreach ($delmembers as $tag) {
 			if (qinq_inuse($qinq, $tag)) {
-				$input_errors[] = gettext("This QinQ cannot be deleted because one of it tags is still being used as an interface.");
+				$input_errors[] = gettext("해당 QinQ의 태그 중 하나가 인터페이스로 계속 사용되고 있기 때문에 삭제할 수 없습니다.");
 				break;
 			}
 		}
@@ -104,9 +109,9 @@ display_top_tabs($tab_array);
 			<table class="table table-striped table-hover table-condensed table-rowdblclickedit">
 				<thead>
 					<tr>
-						<th><?=gettext("Interface"); ?></th>
-						<th><?=gettext("Tag");?></th>
-						<th><?=gettext("QinQ members"); ?></th>
+						<th><?=gettext("인터페이스"); ?></th>
+						<th><?=gettext("태그");?></th>
+						<th><?=gettext("QinQ 멤버"); ?></th>
 						<th><?=gettext("Description"); ?></th>
 						<th><?=gettext("Actions"); ?></th>
 					</tr>
@@ -131,8 +136,8 @@ display_top_tabs($tab_array);
 							<?=htmlspecialchars($qinq['descr'])?>&nbsp;
 						</td>
 						<td>
-							<a class="fa fa-pencil"	title="<?=gettext('Edit Q-in-Q interface')?>"	href="interfaces_qinq_edit.php?id=<?=$i?>"></a>
-							<a class="fa fa-trash"	title="<?=gettext('Delete Q-in-Q interface')?>"	href="interfaces_qinq.php?act=del&amp;id=<?=$i?>" usepost></a>
+							<a class="fa fa-pencil"	title="<?=gettext('Q-in-Q 인터페이스 편집')?>"	href="interfaces_qinq_edit.php?id=<?=$i?>"></a>
+							<a class="fa fa-trash"	title="<?=gettext('Q-in-Q 인터페이스 삭제')?>"	href="interfaces_qinq.php?act=del&amp;id=<?=$i?>" usepost></a>
 						</td>
 					</tr>
 <?php
@@ -147,14 +152,14 @@ endforeach;
 <nav class="action-buttons">
 	<a href="interfaces_qinq_edit.php" class="btn btn-success btn-sm">
 		<i class="fa fa-plus icon-embed-btn"></i>
-		<?=gettext("Add")?>
+		<?=gettext("추가")?>
 	</a>
 </nav>
 
 <div class="infoblock">
-	<?php print_info_box(sprintf(gettext('Not all drivers/NICs support 802.1Q QinQ tagging properly. %1$sOn cards that do not explicitly support it, ' .
-		'QinQ tagging will still work, but the reduced MTU may cause problems.%1$s' .
-		'See the %2$s handbook for information on supported cards.'), '<br />', $g['product_name']), 'info', false); ?>
+	<?php print_info_box(sprintf(gettext('NIC는 802.1QQi. 태깅을 제대로 지원합니다(모든 드라이버가 지원하는 기능은 아님). %1$s가 카드를 명시적으로 지원하지 않을 경우, ' .
+		'QinQ 태깅은 작동할 수 있으나 MTU가 낮아지면 문제가 발생할 수 있습니다. %1$s' .
+		'지원 카드에 대한 자세한 설명은 %2$s핸드북을 참조하시길 바랍니다.'), '<br />', $g['product_name']), 'info', false); ?>
 </div>
 
 <?php

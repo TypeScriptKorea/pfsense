@@ -19,6 +19,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.26
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-interfaces-gif
 ##|*NAME=Interfaces: GIF
@@ -54,7 +59,7 @@ if ($_POST['act'] == "del") {
 		$input_errors[] = gettext("Wrong index supplied");
 	/* check if still in use */
 	} else if (gif_inuse($_POST['id'])) {
-		$input_errors[] = gettext("This gif TUNNEL cannot be deleted because it is still being used as an interface.");
+		$input_errors[] = gettext("이 gif TUNNEL은 인터페이스로 계속 사용되고 있으므로 삭제할 수 없습니다.");
 	} else {
 		pfSense_interface_destroy($a_gifs[$_POST['id']]['gifif']);
 		unset($a_gifs[$_POST['id']]);
@@ -88,13 +93,13 @@ $tab_array[] = array(gettext("LAGGs"), false, "interfaces_lagg.php");
 display_top_tabs($tab_array);
 ?>
 <div class="panel panel-default">
-	<div class="panel-heading"><h2 class="panel-title"><?=gettext('GIF Interfaces')?></h2></div>
+	<div class="panel-heading"><h2 class="panel-title"><?=gettext('GIF 인터페이스')?></h2></div>
 	<div class="panel-body">
 		<div class="table-responsive">
 			<table class="table table-striped table-hover table-condensed table-rowdblclickedit">
 				<thead>
 					<tr>
-						<th><?=gettext("Interface"); ?></th>
+						<th><?=gettext("인터페이스"); ?></th>
 						<th><?=gettext("Tunnel to &hellip;"); ?></th>
 						<th><?=gettext("Description"); ?></th>
 						<th><?=gettext("Actions"); ?></th>
@@ -113,8 +118,8 @@ display_top_tabs($tab_array);
 							<?=htmlspecialchars($gif['descr'])?>
 						</td>
 						<td>
-							<a class="fa fa-pencil"	title="<?=gettext('Edit GIF interface')?>"	href="interfaces_gif_edit.php?id=<?=$i?>"></a>
-							<a class="fa fa-trash"	title="<?=gettext('Delete GIF interface')?>"	href="interfaces_gif.php?act=del&amp;id=<?=$i?>" usepost></a>
+							<a class="fa fa-pencil"	title="<?=gettext('GIF 인터페이스 편집')?>"	href="interfaces_gif_edit.php?id=<?=$i?>"></a>
+							<a class="fa fa-trash"	title="<?=gettext('GIF 인터페이스 삭제')?>"	href="interfaces_gif.php?act=del&amp;id=<?=$i?>" usepost></a>
 						</td>
 					</tr>
 <?php endforeach; ?>
@@ -127,7 +132,7 @@ display_top_tabs($tab_array);
 <nav class="action-buttons">
 	<a href="interfaces_gif_edit.php" class="btn btn-success btn-sm">
 		<i class="fa fa-plus icon-embed-btn"></i>
-		<?=gettext("Add")?>
+		<?=gettext("추가")?>
 	</a>
 </nav>
 

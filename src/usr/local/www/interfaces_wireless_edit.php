@@ -20,6 +20,11 @@
  * limitations under the License.
  */
 
+/*
+한글화 번역 시작
+2018.02.26
+*/
+
 ##|+PRIV
 ##|*IDENT=page-interfaces-wireless-edit
 ##|*NAME=Interfaces: Wireless: Edit
@@ -109,25 +114,25 @@ if ($_POST['save']) {
 		if (isset($id) && $a_clones[$id]) {
 			if (clone_inuse($id)) {
 				if ($clone['if'] != $a_clones[$id]['if']) {
-					$input_errors[] = gettext("This wireless clone cannot be modified because it is still assigned as an interface.");
+					$input_errors[] = gettext("이 무선 클론은 인터페이스로 할당되어 있으므로 수정할 수 없습니다.");
 				} else if ($clone['mode'] != $a_clones[$id]['mode']) {
-					$input_errors[] = gettext("Use the configuration page for the assigned interface to change the mode.");
+					$input_errors[] = gettext("할당된 인터페이스의 구성 페이지를 사용하여 모드를 변경합니다.");
 				}
 			}
 		}
 
 		if (!$input_errors) {
 			if (!interface_wireless_clone($clone['cloneif'], $clone)) {
-				$input_errors[] = sprintf(gettext('Error creating interface with mode %1$s.	 The %2$s interface may not support creating more clones with the selected mode.'), $wlan_modes[$clone['mode']], $clone['if']);
+				$input_errors[] = sprintf(gettext('모드 %1$s와 관련된 인터페이스를 생성하는 동안 오류가 발생했습니다.	 %2$s인터페이스는 선택한 모드를 사용하여 더 많은 클론을 생성하지 못할 수 있습니다.'), $wlan_modes[$clone['mode']], $clone['if']);
 			} else {
 				if (isset($id) && $a_clones[$id]) {
 					if ($clone['if'] != $a_clones[$id]['if']) {
 						pfSense_interface_destroy($a_clones[$id]['cloneif']);
 					}
-					$input_errors[] = sprintf(gettext("Created with id %s"), $id);
+					$input_errors[] = sprintf(gettext("ID%s로 만들기"), $id);
 					$a_clones[$id] = $clone;
 				} else {
-					$input_errors[] = gettext("Created without id");
+					$input_errors[] = gettext("ID 없이 ");
 					$a_clones[] = $clone;
 				}
 
@@ -155,11 +160,11 @@ function build_parent_list() {
 	if ($count > 0) {
 		return($parentlist);
 	} else {
-		return(array('0' => gettext('None available')));
+		return(array('0' => gettext('사용할 수 없음')));
 	}
 }
 
-$pgtitle = array(gettext("Interfaces"), gettext("Wireless"), gettext("Edit"));
+$pgtitle = array(gettext("Interfaces"), gettext("Wireless"), gettext("편집"));
 $pglinks = array("", "interfaces_wireless.php", "@self");
 include("head.inc");
 
@@ -169,7 +174,7 @@ if ($input_errors) {
 
 $form = new Form();
 
-$section = new Form_Section('Wireless Interface Configuration');
+$section = new Form_Section('무선 인터페이스 구성');
 
 $section->addInput(new Form_Select(
 	'if',

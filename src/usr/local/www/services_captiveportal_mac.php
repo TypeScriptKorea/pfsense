@@ -24,6 +24,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.26
+한글화 번역 추가
+*/
+
 ##|+PRIV
 ##|*IDENT=page-services-captiveportal-macaddresses
 ##|*NAME=Services: Captive Portal: Mac Addresses
@@ -57,7 +62,7 @@ $pgtitle = array(gettext("Services"), gettext("Captive Portal"), $a_cp[$cpzone][
 $pglinks = array("", "services_captiveportal_zones.php", "services_captiveportal.php?zone=" . $cpzone, "@self");
 $shortcut_section = "captiveportal";
 
-$actsmbl = array('pass' => '<i class="fa fa-check text-success"></i>&nbsp;' . gettext("Pass"),
+$actsmbl = array('pass' => '<i class="fa fa-check text-success"></i>&nbsp;' . gettext("통과"),
 	'block' => '<i class="fa fa-times text-danger"></i>&nbsp;' . gettext("Block"));
 
 if ($_POST['save']) {
@@ -82,12 +87,12 @@ if ($_POST['save']) {
 
 	if ($_POST['postafterlogin']) {
 		if (!is_array($a_passthrumacs)) {
-			echo gettext("No entry exists yet!") ."\n";
+			echo gettext("항목이 없습니다.") ."\n";
 			exit;
 		}
 
 		if (empty($_POST['zone'])) {
-			echo gettext("Please set the zone on which the operation should be allowed");
+			echo gettext("작업 허용 영역을 설정하십시오.");
 			exit;
 		}
 		if (!is_array($a_cp[$cpzone]['passthrumac'])) {
@@ -100,7 +105,7 @@ if ($_POST['save']) {
 			if (!empty($mac)) {
 				$_POST['delmac'] = $mac['mac'];
 			} else {
-				echo gettext("No entry exists for this username:") . " " . $_POST['username'] . "\n";
+				echo gettext("해당 사용자명에 대한 항목이 없습니다:") . " " . $_POST['username'] . "\n";
 			}
 		}
 
@@ -121,9 +126,9 @@ if ($_POST['save']) {
 				@unlink("{$g['tmp_path']}/{$uniqid}_tmp");
 				unset($a_passthrumacs[$idx]);
 				write_config();
-				echo gettext("The entry was successfully deleted") . "\n";
+				echo gettext("성공적으로 삭제되었습니다.") . "\n";
 			} else {
-				echo gettext("No entry exists for this mac address:") . " " . $_POST['delmac'] . "\n";
+				echo gettext("mac 주소에 대한 항목이 없습니다:") . " " . $_POST['delmac'] . "\n";
 			}
 		}
 		exit;
@@ -154,16 +159,16 @@ if ($_POST['apply']) {
 }
 
 if (is_subsystem_dirty('passthrumac')) {
-	print_apply_box(gettext("The Captive Portal MAC address configuration has been changed.") . "<br />" . gettext("The changes must be applied for them to take effect."));
+	print_apply_box(gettext("Captive Portal MAC 주소 구성이 변경되었습니다.") . "<br />" . gettext("변경사항을 저장하면 적용됩니다."));
 }
 
 $tab_array = array();
-$tab_array[] = array(gettext("Configuration"), false, "services_captiveportal.php?zone={$cpzone}");
+$tab_array[] = array(gettext("구성"), false, "services_captiveportal.php?zone={$cpzone}");
 $tab_array[] = array(gettext("MACs"), true, "services_captiveportal_mac.php?zone={$cpzone}");
-$tab_array[] = array(gettext("Allowed IP Addresses"), false, "services_captiveportal_ip.php?zone={$cpzone}");
-$tab_array[] = array(gettext("Allowed Hostnames"), false, "services_captiveportal_hostname.php?zone={$cpzone}");
-$tab_array[] = array(gettext("Vouchers"), false, "services_captiveportal_vouchers.php?zone={$cpzone}");
-$tab_array[] = array(gettext("File Manager"), false, "services_captiveportal_filemanager.php?zone={$cpzone}");
+$tab_array[] = array(gettext("허용된 IP주소"), false, "services_captiveportal_ip.php?zone={$cpzone}");
+$tab_array[] = array(gettext("허용된 호스트이름"), false, "services_captiveportal_hostname.php?zone={$cpzone}");
+$tab_array[] = array(gettext("바우처"), false, "services_captiveportal_vouchers.php?zone={$cpzone}");
+$tab_array[] = array(gettext("파일 매니저"), false, "services_captiveportal_filemanager.php?zone={$cpzone}");
 display_top_tabs($tab_array, true);
 ?>
 <div class="table-responsive">
@@ -171,8 +176,8 @@ display_top_tabs($tab_array, true);
 		<thead>
 			<tr>
 				<th><?=gettext('Action')?></th>
-				<th><?=gettext("MAC address")?></th>
-				<th><?=gettext("Description")?></th>
+				<th><?=gettext("MAC 주소")?></th>
+				<th><?=gettext("설명")?></th>
 				<th><?=gettext("Actions")?></th>
 			</tr>
 		</thead>
@@ -194,8 +199,8 @@ foreach ($a_cp[$cpzone]['passthrumac'] as $mac): ?>
 					<?=htmlspecialchars($mac['descr'])?>
 				</td>
 				<td>
-					<a class="fa fa-pencil"	title="<?=gettext("Edit MAC address"); ?>" href="services_captiveportal_mac_edit.php?zone=<?=$cpzone?>&amp;id=<?=$i?>"></a>
-					<a class="fa fa-trash"	title="<?=gettext("Delete MAC address")?>" href="services_captiveportal_mac.php?zone=<?=$cpzone?>&amp;act=del&amp;id=<?=$i?>"usepost></a>
+					<a class="fa fa-pencil"	title="<?=gettext("MAC 주소 편집"); ?>" href="services_captiveportal_mac_edit.php?zone=<?=$cpzone?>&amp;id=<?=$i?>"></a>
+					<a class="fa fa-trash"	title="<?=gettext("MAC 주소 삭제")?>" href="services_captiveportal_mac.php?zone=<?=$cpzone?>&amp;act=del&amp;id=<?=$i?>"usepost></a>
 				</td>
 			</tr>
 <?php
@@ -216,12 +221,12 @@ endif;
 <nav class="action-buttons">
 	<a href="services_captiveportal_mac_edit.php?zone=<?=$cpzone?>&amp;act=add" class="btn btn-success btn-sm">
 		<i class="fa fa-plus icon-embed-btn"></i>
-		<?=gettext("Add")?>
+		<?=gettext("추가")?>
 	</a>
 </nav>
 
 <div class="infoblock">
-	<?php print_info_box(gettext('Adding MAC addresses as "pass" MACs allows them access through the captive portal automatically without being taken to the portal page.'), 'info', false); ?>
+	<?php print_info_box(gettext('MAC 주소를 "통과"MAC로 추가하면 포털 페이지로 이동하지 않고도 자동으로 캡 티브 포털을 통해 액세스 할 수 있습니다.'), 'info', false); ?>
 </div>
 <?php
 include("foot.inc");

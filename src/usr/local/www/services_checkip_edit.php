@@ -19,6 +19,10 @@
  * limitations under the License.
  */
 
+/*
+2018.02.27
+*/
+
 ##|+PRIV
 ##|*IDENT=page-services-checkipedit
 ##|*NAME=Services: Check IP Service: Edit
@@ -60,18 +64,18 @@ if ($_POST) {
 	$reqdfields = array();
 	$reqdfieldsn = array();
 	$reqdfields = array_merge($reqdfields, explode(" ", "name url"));
-	$reqdfieldsn = array_merge($reqdfieldsn, array(gettext("Name"), gettext("URL")));
+	$reqdfieldsn = array_merge($reqdfieldsn, array(gettext("이름"), gettext("URL")));
 
 	do_input_validation($_POST, $reqdfields, $reqdfieldsn, $input_errors);
 
 	if (($_POST['name'] && !is_validaliasname($_POST['name']))) {
-		$input_errors[] = gettext("The Check IP Service name contains invalid characters.");
+		$input_errors[] = gettext("올바르지 않은 문자가 들어있습니다.");
 	}
 	if (($_POST['url'] && !is_URL($_POST['url']))) {
-		$input_errors[] = gettext("The Check IP Service URL is not valid.");
+		$input_errors[] = gettext("올바르지 않은 URL입니다.");
 	}
 	if ($_POST['passwordfld'] != $_POST['passwordfld_confirm']) {
-		$input_errors[] = gettext("Password and confirmed password must match.");
+		$input_errors[] = gettext("암호가 일치하지 않습니다.");
 	}
 
 	if (!$input_errors) {
@@ -96,14 +100,14 @@ if ($_POST) {
 			$a_checkip[] = $checkip;
 		}
 
-		write_config(gettext("New/Edited Check IP Services entry was posted."));
+		write_config(gettext("IP 체크 서비스 항목이 게시되었습니다."));
 
 		header("Location: services_checkip.php");
 		exit;
 	}
 }
 
-$pgtitle = array(gettext("Services"), gettext("Dynamic DNS"), gettext("Check IP Services"), gettext("Edit"));
+$pgtitle = array(gettext("Services"), gettext("동적 DNS"), gettext("IP 체크 서비스"), gettext("편집"));
 $pglinks = array("", "services_dyndns.php", "services_checkip.php", "@self");
 include("head.inc");
 

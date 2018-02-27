@@ -20,6 +20,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.27
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-loadbalancer-pool
 ##|*NAME=Load Balancer: Pool
@@ -54,7 +59,7 @@ if ($_POST['act'] == "del") {
 		if (is_array($config['load_balancer']['virtual_server'])) {
 			foreach ($config['load_balancer']['virtual_server'] as $vs) {
 				if ($vs['poolname'] == $a_pool[$_POST['id']]['name']) {
-					$input_errors[] = gettext("This entry cannot be deleted because it is still referenced by at least one virtual server.");
+					$input_errors[] = gettext("해당 항목은 하나 이상의 가상 서버에서 계속 참조되므로 삭제할 수 없습니다.");
 					break;
 				}
 			}
@@ -80,7 +85,7 @@ for ($i = 0; isset($config['load_balancer']['lbpool'][$i]); $i++) {
 	$a_pool[$i]['monitor'] = "<a href=\"/load_balancer_monitor_edit.php?id={$mondex[$a_pool[$i]['monitor']]}\">" . htmlspecialchars($a_pool[$i]['monitor']) . "</a>";
 }
 
-$pgtitle = array(gettext("Services"), gettext("Load Balancer"), gettext("Pools"));
+$pgtitle = array(gettext("Services"), gettext("로드 밸런서"), gettext("Pools"));
 $pglinks = array("", "@self", "@self");
 $shortcut_section = "relayd";
 
@@ -95,7 +100,7 @@ if ($_POST['apply']) {
 }
 
 if (is_subsystem_dirty('loadbalancer')) {
-	print_apply_box(gettext("The load balancer configuration has been changed.") . "<br />" . gettext("The changes must be applied for them to take effect."));
+	print_apply_box(gettext("로드 밸런스 구성이 변경되었습니다.") . "<br />" . gettext("변경사항을 저장하시면 적용됩니다."));
 }
 
 /* active tabs */
@@ -109,16 +114,16 @@ display_top_tabs($tab_array);
 ?>
 <form action="load_balancer_pool.php" method="post">
 	<div class="panel panel-default">
-		<div class="panel-heading"><h2 class="panel-title"><?=gettext('Pool')?></h2></div>
+		<div class="panel-heading"><h2 class="panel-title"><?=gettext('풀')?></h2></div>
 		<div class="panel-body table-responsive">
 			<table class="table table-striped table-hover table-condensed table-rowdblclickedit">
 				<thead>
 					<tr>
-						<th><?=gettext('Name')?></th>
-						<th><?=gettext('Mode')?></th>
-						<th><?=gettext('Servers')?></th>
-						<th><?=gettext('Port')?></th>
-						<th><?=gettext('Monitor')?></th>
+						<th><?=gettext('이름')?></th>
+						<th><?=gettext('모드')?></th>
+						<th><?=gettext('서버')?></th>
+						<th><?=gettext('모트')?></th>
+						<th><?=gettext('모니터')?></th>
 						<th><?=gettext('Description')?></th>
 						<th><?=gettext('Actions')?></th>
 					</tr>
@@ -157,9 +162,9 @@ foreach ($a_pool as $pool) {
 							<?=htmlspecialchars($pool['descr'])?>
 						</td>
 						<td>
-							<a class="fa fa-pencil"	title="<?=gettext('Edit pool')?>"	href="load_balancer_pool_edit.php?id=<?=$idx?>"></a>
-							<a class="fa fa-clone"	title="<?=gettext('Copy pool')?>"	href="load_balancer_pool_edit.php?act=dup&amp;id=<?=$idx?>"></a>
-							<a class="fa fa-trash"	title="<?=gettext('Delete pool')?>"	href="load_balancer_pool.php?act=del&amp;id=<?=$idx?>" usepost></a>
+							<a class="fa fa-pencil"	title="<?=gettext('풀 편집')?>"	href="load_balancer_pool_edit.php?id=<?=$idx?>"></a>
+							<a class="fa fa-clone"	title="<?=gettext('풀 카피')?>"	href="load_balancer_pool_edit.php?act=dup&amp;id=<?=$idx?>"></a>
+							<a class="fa fa-trash"	title="<?=gettext('풀 삭제')?>"	href="load_balancer_pool.php?act=del&amp;id=<?=$idx?>" usepost></a>
 						</td>
 					</tr>
 <?php

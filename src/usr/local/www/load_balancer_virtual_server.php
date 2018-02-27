@@ -20,6 +20,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.27
+한글화 번역 
+*/
+
 ##|+PRIV
 ##|*IDENT=page-services-loadbalancer-virtualservers
 ##|*NAME=Services: Load Balancer: Virtual Servers
@@ -102,7 +107,7 @@ function alias_idx($name, $type) {
 	return(-1);
 }
 
-$pgtitle = array(gettext("Services"), gettext("Load Balancer"), gettext("Virtual Servers"));
+$pgtitle = array(gettext("Services"), gettext("로드 밸런서"), gettext("가상 서버"));
 $pglinks = array("", "load_balancer_pool.php", "@self");
 $shortcut_section = "relayd-virtualservers";
 
@@ -117,31 +122,31 @@ if ($_POST['apply']) {
 }
 
 if (is_subsystem_dirty('loadbalancer')) {
-	print_apply_box(gettext("The virtual server configuration has been changed.") . "<br />" . gettext("The changes must be applied for them to take effect."));
+	print_apply_box(gettext("가상 서버 구성이 변경되었습니다.") . "<br />" . gettext("변경사항을 저장하시면 적용됩니다."));
 }
 
 /* active tabs */
 $tab_array = array();
-$tab_array[] = array(gettext("Pools"), false, "load_balancer_pool.php");
-$tab_array[] = array(gettext("Virtual Servers"), true, "load_balancer_virtual_server.php");
-$tab_array[] = array(gettext("Monitors"), false, "load_balancer_monitor.php");
-$tab_array[] = array(gettext("Settings"), false, "load_balancer_setting.php");
+$tab_array[] = array(gettext("풀"), false, "load_balancer_pool.php");
+$tab_array[] = array(gettext("가상 서버"), true, "load_balancer_virtual_server.php");
+$tab_array[] = array(gettext("모니터"), false, "load_balancer_monitor.php");
+$tab_array[] = array(gettext("설정"), false, "load_balancer_setting.php");
 display_top_tabs($tab_array);
 ?>
 
 <form action="load_balancer_virtual_server.php" method="post">
 	<div class="panel panel-default">
-		<div class="panel-heading"><h2 class="panel-title"><?=gettext('Virtual Servers')?></h2></div>
+		<div class="panel-heading"><h2 class="panel-title"><?=gettext('가상 서버')?></h2></div>
 		<div class="panel-body table-responsive">
 			<table class="table table-striped table-hover table-rowdblclickedit">
 				<thead>
 					<tr>
-						<th><?=gettext('Name')?></th>
-						<th><?=gettext('Protocol')?></th>
-						<th><?=gettext('IP Address'); ?></th>
-						<th><?=gettext('Port'); ?></th>
-						<th><?=gettext('Pool'); ?></th>
-						<th><?=gettext('Fallback pool'); ?></th>
+						<th><?=gettext('이름')?></th>
+						<th><?=gettext('프로토콜')?></th>
+						<th><?=gettext('IP 주소'); ?></th>
+						<th><?=gettext('포트'); ?></th>
+						<th><?=gettext('풀'); ?></th>
+						<th><?=gettext('대체 '); ?></th>
 						<th><?=gettext('Description'); ?></th>
 						<th><?=gettext('Actions'); ?></th>
 					</tr>
@@ -174,9 +179,9 @@ if (!empty($a_vs)) {
 						<td><?=$a_v['sitedown']?></td>
 						<td><?=htmlspecialchars($a_v['descr'])?></td>
 						<td>
-							<a class="fa fa-pencil"	title="<?=gettext('Edit virtual server')?>"	href="load_balancer_virtual_server_edit.php?id=<?=$i?>"></a>
-							<a class="fa fa-clone"	title="<?=gettext('Copy virtual server')?>"	href="load_balancer_virtual_server_edit.php?act=dup&amp;id=<?=$i?>"></a>
-							<a class="fa fa-trash"	title="<?=gettext('Delete virtual server')?>"	href="load_balancer_virtual_server.php?act=del&amp;id=<?=$i?>" usepost></a>
+							<a class="fa fa-pencil"	title="<?=gettext('가상 서버 편집')?>"	href="load_balancer_virtual_server_edit.php?id=<?=$i?>"></a>
+							<a class="fa fa-clone"	title="<?=gettext('가상 서버 복사')?>"	href="load_balancer_virtual_server_edit.php?act=dup&amp;id=<?=$i?>"></a>
+							<a class="fa fa-trash"	title="<?=gettext('가상 서버 삭제')?>"	href="load_balancer_virtual_server.php?act=del&amp;id=<?=$i?>" usepost></a>
 						</td>
 					</tr>
 <?php
@@ -185,7 +190,7 @@ if (!empty($a_vs)) {
 } else {
 ?>						<tr>
 							<td	 colspan="8"> <?php
-								print_info_box(gettext('No virtual servers have been configured.'));
+								print_info_box(gettext('가상 서버가 구성되지 않았습니다.'));
 ?>							</td>
 						</tr> <?php
 }
@@ -199,7 +204,7 @@ if (!empty($a_vs)) {
 <nav class="action-buttons">
 	<a href="load_balancer_virtual_server_edit.php" class="btn btn-success btn-sm">
 		<i class="fa fa-plus icon-embed-btn"></i>
-		<?=gettext("Add")?>
+		<?=gettext("추가")?>
 	</a>
 </nav>
 

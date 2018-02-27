@@ -19,6 +19,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.27
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-services-captiveportal-zones
 ##|*NAME=Services: Captive Portal Zones
@@ -61,19 +66,19 @@ $shortcut_section = "captiveportal";
 include("head.inc");
 
 if (is_subsystem_dirty('captiveportal')) {
-	print_apply_box(gettext("The Captive Portal entry list has been changed.") . "<br />" . gettext("The changes must be applied for them to take effect."));
+	print_apply_box(gettext("전속 포탈 구성이 변경되었습니다.") . "<br />" . gettext("변경사항을 저장하시면 적용됩니다."));
 }
 ?>
 <form action="services_captiveportal_zones.php" method="post">
 	<div class="panel panel-default">
-	<div class="panel-heading"><h2 class="panel-title"><?=gettext('Captive Portal Zones')?></h2></div>
+	<div class="panel-heading"><h2 class="panel-title"><?=gettext('전속 포탈 존')?></h2></div>
 		<div class="panel-body table-responsive">
 			<table class="table table-striped table-hover table-rowdblclickedit sortable-theme-bootstrap" data-sortable>
 				<thead>
 					<tr>
 						<th><?=gettext('Zone')?></th>
 						<th><?=gettext('Interfaces')?></th>
-						<th><?=gettext('Number of users'); ?></th>
+						<th><?=gettext('사용자 수'); ?></th>
 						<th><?=gettext('Description'); ?></th>
 						<th data-sortable="false"><?=gettext('Actions'); ?></th>
 					</tr>
@@ -99,8 +104,8 @@ if (is_subsystem_dirty('captiveportal')) {
 						<td><?=count(captiveportal_read_db());?></td>
 						<td><?=htmlspecialchars($cpitem['descr']);?>&nbsp;</td>
 						<td>
-							<a class="fa fa-pencil" title="<?=gettext("Edit zone"); ?>" href="services_captiveportal.php?zone=<?=$cpzone?>"></a>
-							<a class="fa fa-trash"  title="<?=gettext("Delete zone")?>" href="services_captiveportal_zones.php?act=del&amp;zone=<?=$cpzone;?>" usepost></a>
+							<a class="fa fa-pencil" title="<?=gettext("존 편집"); ?>" href="services_captiveportal.php?zone=<?=$cpzone?>"></a>
+							<a class="fa fa-trash"  title="<?=gettext("존 삭제")?>" href="services_captiveportal_zones.php?act=del&amp;zone=<?=$cpzone;?>" usepost></a>
 						</td>
 					</tr>
 <?php
@@ -115,7 +120,7 @@ if (is_subsystem_dirty('captiveportal')) {
 <nav class="action-buttons">
 	<a href="services_captiveportal_zones_edit.php" class="btn btn-success btn-sm">
 		<i class="fa fa-plus icon-embed-btn"></i>
-		<?=gettext('Add')?>
+		<?=gettext('')?>
 	</a>
 </nav>
 

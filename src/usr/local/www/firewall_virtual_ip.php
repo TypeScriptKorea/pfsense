@@ -24,6 +24,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.27
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-firewall-virtualipaddresses
 ##|*NAME=Firewall: Virtual IP Addresses
@@ -87,7 +92,7 @@ if ($_POST['act'] == "del") {
 			foreach ($config['nat']['rule'] as $rule) {
 				if ($rule['destination']['address'] != "") {
 					if ($rule['destination']['address'] == $a_vip[$_POST['id']]['subnet']) {
-						$input_errors[] = gettext("This entry cannot be deleted because it is still referenced by at least one NAT mapping.");
+						$input_errors[] = gettext("이 항목은 적어도 하나 이상의 NAT 매핑에서 계속 참조되므로 삭제할 수 없습니다.");
 						break;
 					}
 				}
@@ -106,7 +111,7 @@ if ($_POST['act'] == "del") {
 							} else {
 								$openvpn_desc = $openvpn['ipaddr'] . ":" . $openvpn['local_port'];
 							}
-							$input_errors[] = sprintf(gettext('This entry cannot be deleted because it is still referenced by OpenVPN %1$s %2$s.'), $openvpn_type_text, $openvpn_desc);
+							$input_errors[] = sprintf(gettext('이 항목은 OpenVPN %1$s %2$s가 계속 참조하기 때문에 삭제할 수 없습니다..'), $openvpn_type_text, $openvpn_desc);
 							break;
 						}
 					}
@@ -146,7 +151,7 @@ if ($_POST['act'] == "del") {
 
 
 				if (ip_in_subnet($gateway['gateway'], $subnet)) {
-					$input_errors[] = gettext("This entry cannot be deleted because it is still referenced by at least one Gateway.");
+					$input_errors[] = gettext("이 항목은 하나 이상의 게이트웨이에서 계속 참조하므로 삭제할 수 없습니다.");
 					break;
 				}
 			}
@@ -179,13 +184,13 @@ if ($_POST['act'] == "del") {
 			}
 
 			if ($found_carp === true && $found_other_alias === false && $found_if === false) {
-				$input_errors[] = sprintf(gettext("This entry cannot be deleted because it is still referenced by a CARP IP with the description %s."), $vip['descr']);
+				$input_errors[] = sprintf(gettext("이 항목은 %s가있는 CARP IP에서 계속 참조하므로 삭제할 수 없습니다."), $vip['descr']);
 			}
 		} else if ($a_vip[$_POST['id']]['mode'] == "carp") {
 			$vipiface = "{$a_vip[$_POST['id']]['interface']}_vip{$a_vip[$_POST['id']]['vhid']}";
 			foreach ($a_vip as $vip) {
 				if ($vipiface == $vip['interface'] && $vip['mode'] == "ipalias") {
-					$input_errors[] = sprintf(gettext("This entry cannot be deleted because it is still referenced by an IP alias entry with the description %s."), $vip['descr']);
+					$input_errors[] = sprintf(gettext("%s가 있는 IP 별칭 항목에서 이 항목을 계속 참조하기 때문에 삭제할 수 없습니다."), $vip['descr']);
 				}
 			}
 		}
@@ -229,7 +234,7 @@ $types = array('proxyarp' => gettext('Proxy ARP'),
 			   'ipalias' => gettext('IP Alias')
 			   );
 
-$pgtitle = array(gettext("Firewall"), gettext("Virtual IPs"));
+$pgtitle = array(gettext("Firewall"), gettext("가상 IP"));
 include("head.inc");
 
 if ($input_errors) {
@@ -237,7 +242,7 @@ if ($input_errors) {
 } else if ($_POST['apply']) {
 	print_apply_result_box($retval);
 } else if (is_subsystem_dirty('vip')) {
-	print_apply_box(gettext("The VIP configuration has been changed.") . "<br />" . gettext("The changes must be applied for them to take effect."));
+	print_apply_box(gettext("VIP 구성이 변경되었습니다.") . "<br />" . gettext("변경사항을 저장하시면 적용됩니다."));
 }
 
 /* active tabs
@@ -248,14 +253,14 @@ display_top_tabs($tab_array);
 */
 ?>
 <div class="panel panel-default">
-	<div class="panel-heading"><h2 class="panel-title"><?=gettext('Virtual IP Address')?></h2></div>
+	<div class="panel-heading"><h2 class="panel-title"><?=gettext('가상 IP ')?></h2></div>
 	<div class="panel-body table-responsive">
 		<table class="table table-striped table-hover table-condensed table-rowdblclickedit sortable-theme-bootstrap" data-sortable>
 			<thead>
 				<tr>
-					<th><?=gettext("Virtual IP address")?></th>
-					<th><?=gettext("Interface")?></th>
-					<th><?=gettext("Type")?></th>
+					<th><?=gettext("가상 IP 주소")?></th>
+					<th><?=gettext("인터페이스")?></th>
+					<th><?=gettext("타입")?></th>
 					<th><?=gettext("Description")?></th>
 					<th><?=gettext("Actions")?></th>
 				</tr>
@@ -312,8 +317,8 @@ foreach ($a_vip as $vipent):
 						<?=htmlspecialchars($vipent['descr'])?>
 					</td>
 					<td>
-						<a class="fa fa-pencil" title="<?=gettext("Edit virtual ip"); ?>" href="firewall_virtual_ip_edit.php?id=<?=$i?>"></a>
-						<a class="fa fa-trash"	title="<?=gettext("Delete virtual ip")?>" href="firewall_virtual_ip.php?act=del&amp;id=<?=$i?>" usepost></a>
+						<a class="fa fa-pencil" title="<?=gettext("가상 IP 편집"); ?>" href="firewall_virtual_ip_edit.php?id=<?=$i?>"></a>
+						<a class="fa fa-trash"	title="<?=gettext("가상 IP 삭제")?>" href="firewall_virtual_ip.php?act=del&amp;id=<?=$i?>" usepost></a>
 					</td>
 				</tr>
 <?php
@@ -329,13 +334,13 @@ endforeach;
 <nav class="action-buttons">
 	<a href="firewall_virtual_ip_edit.php" class="btn btn-sm btn-success">
 		<i class="fa fa-plus icon-embed-btn"></i>
-		<?=gettext('Add')?>
+		<?=gettext('추가')?>
 	</a>
 </nav>
 
 <div class="infoblock">
-	<?php print_info_box(sprintf(gettext('The virtual IP addresses defined on this page may be used in %1$sNAT%2$s mappings.'), '<a href="firewall_nat.php">', '</a>') . '<br />' .
-		sprintf(gettext('Check the status of CARP Virtual IPs and interfaces %1$shere%2$s.'), '<a href="status_carp.php">', '</a>'), 'info', false); ?>
+	<?php print_info_box(sprintf(gettext('해당 페이지에 정의 된 가상 IP 주소는 %1$sNAT%2$s 매핑에 사용될 수 있습니다.'), '<a href="firewall_nat.php">', '</a>') . '<br />' .
+		sprintf(gettext('가상 IP와 인터페이스의 상태를 %1$s이곳에서%2$s 확인하실 수 .'), '<a href="status_carp.php">', '</a>'), 'info', false); ?>
 </div>
 
 <?php

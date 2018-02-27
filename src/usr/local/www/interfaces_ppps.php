@@ -23,6 +23,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.27
+한글화 번역 
+*/
+
 ##|+PRIV
 ##|*IDENT=page-interfaces-ppps
 ##|*NAME=Interfaces: PPPs
@@ -53,7 +58,7 @@ function ppp_inuse($num) {
 if ($_POST['act'] == "del") {
 	/* check if still in use */
 	if (ppp_inuse($_POST['id'])) {
-		$input_errors[] = gettext("This point-to-point link cannot be deleted because it is still being used as an interface.");
+		$input_errors[] = gettext("해당 지점 간 링크가 사용중이므로 삭제할 수 없습니다.");
 	} elseif (is_array($config['ppps']['ppp']) && is_array($config['ppps']['ppp'][$_POST['id']])) {
 
 		unset($config['ppps']['ppp'][$_POST['id']]['pppoe-reset-type']);
@@ -75,9 +80,9 @@ $shortcut_section = "interfaces";
 include("head.inc");
 
 $tab_array = array();
-$tab_array[] = array(gettext("Interface Assignments"), false, "interfaces_assign.php");
-$tab_array[] = array(gettext("Interface Groups"), false, "interfaces_groups.php");
-$tab_array[] = array(gettext("Wireless"), false, "interfaces_wireless.php");
+$tab_array[] = array(gettext("인터페이스 할당"), false, "interfaces_assign.php");
+$tab_array[] = array(gettext("인터페이스 그룹"), false, "interfaces_groups.php");
+$tab_array[] = array(gettext("무선연결"), false, "interfaces_wireless.php");
 $tab_array[] = array(gettext("VLANs"), false, "interfaces_vlan.php");
 $tab_array[] = array(gettext("QinQs"), false, "interfaces_qinq.php");
 $tab_array[] = array(gettext("PPPs"), true, "interfaces_ppps.php");
@@ -88,14 +93,14 @@ $tab_array[] = array(gettext("LAGGs"), false, "interfaces_lagg.php");
 display_top_tabs($tab_array);
 ?>
 <div class="panel panel-default">
-	<div class="panel-heading"><h2 class="panel-title"><?=gettext('PPP Interfaces')?></h2></div>
+	<div class="panel-heading"><h2 class="panel-title"><?=gettext('PPP 인터페이스')?></h2></div>
 	<div class="panel-body">
 		<div class="table-responsive">
 			<table class="table table-striped table-hover table-condensed table-rowdblclickedit">
 				<thead>
 					<tr>
-						<th><?=gettext("Interface"); ?></th>
-						<th><?=gettext("Interface(s)/Port(s)"); ?></th>
+						<th><?=gettext("인터페이스"); ?></th>
+						<th><?=gettext("인터페이스/포트"); ?></th>
 						<th><?=gettext("Description"); ?></th>
 						<th><?=gettext("Actions")?></th>
 					</tr>
@@ -126,8 +131,8 @@ foreach ($a_ppps as $id => $ppp) {
 							<?=htmlspecialchars($ppp['descr'])?>
 						</td>
 						<td>
-							<a class="fa fa-pencil"	title="<?=gettext('Edit PPP interface')?>"	href="interfaces_ppps_edit.php?id=<?=$i?>"></a>
-							<a class="fa fa-trash"	title="<?=gettext('Delete PPP interface')?>"	href="interfaces_ppps.php?act=del&amp;id=<?=$i?>" usepost></a>
+							<a class="fa fa-pencil"	title="<?=gettext('PPP 인터페이스 편집')?>"	href="interfaces_ppps_edit.php?id=<?=$i?>"></a>
+							<a class="fa fa-trash"	title="<?=gettext('PPP 인터페이스 삭제')?>"	href="interfaces_ppps.php?act=del&amp;id=<?=$i?>" usepost></a>
 						</td>
 					</tr>
 <?php
@@ -143,7 +148,7 @@ foreach ($a_ppps as $id => $ppp) {
 <nav class="action-buttons">
 	<a href="interfaces_ppps_edit.php" class="btn btn-success btn-sm">
 		<i class="fa fa-plus icon-embed-btn"></i>
-		<?=gettext("Add")?>
+		<?=gettext("")?>
 	</a>
 </nav>
 

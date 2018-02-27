@@ -19,6 +19,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.27
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-interfaces-bridge
 ##|*NAME=Interfaces: Bridge
@@ -50,12 +55,12 @@ function bridge_inuse($num) {
 
 if ($_POST['act'] == "del") {
 	if (!isset($_POST['id'])) {
-		$input_errors[] = gettext("Wrong parameters supplied");
+		$input_errors[] = gettext("잘못된 파라미터가 제공됨.");
 	} else if (empty($a_bridges[$_POST['id']])) {
-		$input_errors[] = gettext("Wrong index supplied");
+		$input_errors[] = gettext("잘못된 색인이 제공됨.");
 	/* check if still in use */
 	} else if (bridge_inuse($_POST['id'])) {
-		$input_errors[] = gettext("This bridge cannot be deleted because it is assigned as an interface.");
+		$input_errors[] = gettext("이 브릿지는 인터페이스로 지정되었으므로 삭제할 수 없습니다.");
 	} else {
 		if (!does_interface_exist($a_bridges[$_POST['id']]['bridgeif'])) {
 			log_error("Bridge interface does not exist, skipping ifconfig destroy.");
@@ -93,14 +98,14 @@ $tab_array[] = array(gettext("LAGGs"), false, "interfaces_lagg.php");
 display_top_tabs($tab_array);
 ?>
 <div class="panel panel-default">
-	<div class="panel-heading"><h2 class="panel-title"><?=gettext('Bridge Interfaces')?></h2></div>
+	<div class="panel-heading"><h2 class="panel-title"><?=gettext('브릿지 인터페이스')?></h2></div>
 	<div class="panel-body">
 		<div class="table-responsive">
 			<table class="table table-striped table-hover table-condensed table-rowdblclickedit">
 				<thead>
 					<tr>
-						<th><?=gettext("Interface"); ?></th>
-						<th><?=gettext("Members"); ?></th>
+						<th><?=gettext("인터페이스"); ?></th>
+						<th><?=gettext("멤버"); ?></th>
 						<th><?=gettext("Description"); ?></th>
 						<th><?=gettext("Actions"); ?></th>
 					</tr>
@@ -136,8 +141,8 @@ foreach ($a_bridges as $bridge) {
 							<?=htmlspecialchars($bridge['descr'])?>
 						</td>
 						<td>
-							<a class="fa fa-pencil"	title="<?=gettext('Edit interface bridge')?>"	href="interfaces_bridge_edit.php?id=<?=$i?>"></a>
-							<a class="fa fa-trash"	title="<?=gettext('Delete interface bridge')?>"	href="interfaces_bridge.php?act=del&amp;id=<?=$i?>" usepost></a>
+							<a class="fa fa-pencil"	title="<?=gettext('브릿지 인터페이스 편집')?>"	href="interfaces_bridge_edit.php?id=<?=$i?>"></a>
+							<a class="fa fa-trash"	title="<?=gettext('브릿지 인터페이스 삭제')?>"	href="interfaces_bridge.php?act=del&amp;id=<?=$i?>" usepost></a>
 						</td>
 					</tr>
 <?php
@@ -153,7 +158,7 @@ foreach ($a_bridges as $bridge) {
 <nav class="action-buttons">
 	<a href="interfaces_bridge_edit.php" class="btn btn-success btn-sm">
 		<i class="fa fa-plus icon-embed-btn"></i>
-		<?=gettext("Add")?>
+		<?=gettext("추가")?>
 	</a>
 </nav>
 

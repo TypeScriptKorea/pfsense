@@ -20,6 +20,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.27
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-services-ntpd-pps
 ##|*NAME=Services: NTP PPS
@@ -121,13 +126,13 @@ display_top_tabs($tab_array);
 
 $form = new Form;
 
-$section = new Form_Section('NTP Serial PPS Configuration');
+$section = new Form_Section('NTP 직렬 PPS 구성');
 
 $section->addInput(new Form_StaticText(
 	'Notes',
-	'Devices with a Pulse Per Second output such as radios that receive a time signal from DCF77 (DE), JJY (JP), MSF (GB) or WWVB (US) may be used as a PPS reference for NTP. ' .
-	'A serial GPS may also be used, but the serial GPS driver would usually be the better option. ' .
-	'A PPS signal only provides a reference to the change of a second, so at least one other source to number the seconds is required.' . '<br /><br />' .
+	'DCF77 (DE), JJY (JP), MSF (GB) 또는 WWVB (US)에서 시간 신호를 수신하는 라디오와 같은 초당 펄스 출력 장치는 NTP의 PPS 참조로 사용될 수 있습니다. ' .
+	'직렬 GPS도 사용할 수 있지만, 일반적으로 직렬 GPS드라이버를 사용하는 것이 좋습니다.  ' .
+	'PPS신호는 초의 변경에 대한 참조만을 제공하므로 초를 번호로 지정하려면 다른 원본을 하나 이상 참조하십시오. ' . '<br /><br />' .
 	'At least 3 additional time sources should be configured under ' .
 	'<a href="services_ntpd.php">' . 'Services > NTP > Settings' . '</a>' . ' to reliably supply the time of each PPS pulse.'
 ));

@@ -23,6 +23,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.27
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-vpn-ipsec
 ##|*NAME=VPN: IPsec
@@ -65,7 +70,7 @@ if ($_POST['apply']) {
 		foreach ($_POST['p1entry'] as $p1entrydel) {
 			unset($a_phase1[$p1entrydel]);
 		}
-		if (write_config(gettext("Deleted selected IPsec Phase 1 entries."))) {
+		if (write_config(gettext("선택한 IPsec 1 단계 항목을 삭제했습니다."))) {
 			mark_subsystem_dirty('ipsec');
 		}
 	}
@@ -75,7 +80,7 @@ if ($_POST['apply']) {
 		foreach ($_POST['p2entry'] as $p2entrydel) {
 			unset($a_phase2[$p2entrydel]);
 		}
-		if (write_config(gettext("Deleted selected IPsec Phase 2 entries."))) {
+		if (write_config(gettext("선택한 IPsec 2 단계 항목을 삭제했습니다."))) {
 			mark_subsystem_dirty('ipsec');
 		}
 	}
@@ -209,7 +214,7 @@ if ($_POST['apply']) {
 	}
 
 	if ($save === 1) {
-		if (write_config(gettext("Saved configuration changes for IPsec tunnels."))) {
+		if (write_config(gettext("IPsec 터널의 저장된 구성 변경 사항"))) {
 			mark_subsystem_dirty('ipsec');
 		}
 	}
@@ -234,13 +239,13 @@ if ($_POST['apply']) {
 }
 
 if (is_subsystem_dirty('ipsec')) {
-	print_apply_box(gettext("The IPsec tunnel configuration has been changed.") . "<br />" . gettext("The changes must be applied for them to take effect."));
+	print_apply_box(gettext("터널 구성이 변경되었습니다.") . "<br />" . gettext("변경사항을 저장하시면 적용됩니다."));
 }
 ?>
 
 <form name="mainform" method="post">
 	<div class="panel panel-default">
-		<div class="panel-heading"><h2 class="panel-title"><?=gettext('IPsec Tunnels')?></h2></div>
+		<div class="panel-heading"><h2 class="panel-title"><?=gettext('IPsec 터널')?></h2></div>
 		<div class="panel-body table-responsive">
 			<table class="table table-striped table-hover">
 				<thead>
@@ -290,10 +295,10 @@ $i = 0; foreach ($a_phase1 as $ph1ent):
 					<tr id="fr<?=$i?>" onclick="fr_toggle(<?=$i?>)" id="frd<?=$i?>" ondblclick="document.location='vpn_ipsec_phase1.php?p1index=<?=$i?>'" class="<?= $entryStatus ?>">
 						<td>
 							<input type="checkbox" id="frc<?=$i?>" onclick="fr_toggle(<?=$i?>)" name="p1entry[]" value="<?=$i?>"  />
-							<a	class="fa fa-anchor icon-pointer" id="Xmove_<?=$i?>" title="<?=gettext("Move checked entries to here")?>"></a>
+							<a	class="fa fa-anchor icon-pointer" id="Xmove_<?=$i?>" title="<?=gettext("여기로 체크한 항목 이동")?>"></a>
 						</td>
 						<td>
-							<button value="toggle_<?=$i?>" name="toggle_<?=$i?>" title="<?=gettext("click to toggle enabled/disabled status")?>" class="btn btn-xs btn-<?= ($entryStatus == 'disabled' ? 'success' : 'warning') ?>" type="submit"><?= ($entryStatus == 'disabled' ? 'Enable' : 'Disable') ?></button>
+							<button value="toggle_<?=$i?>" name="toggle_<?=$i?>" title="<?=gettext("상태를 전환하시려면 클릭하십시오.")?>" class="btn btn-xs btn-<?= ($entryStatus == 'disabled' ? 'success' : 'warning') ?>" type="submit"><?= ($entryStatus == 'disabled' ? 'Enable' : 'Disable') ?></button>
 						</td>
 						<td id="frd<?=$i?>">
 <?php
@@ -321,7 +326,7 @@ $i = 0; foreach ($a_phase1 as $ph1ent):
 			if (!isset($ph1ent['mobile'])) {
 				echo $if."<br />".$ph1ent['remote-gateway'];
 			} else {
-				echo $if."<br /><strong>" . gettext("Mobile Client") . "</strong>";
+				echo $if."<br /><strong>" . gettext("모바일 클라이언트") . "</strong>";
 			}
 ?>
 						</td>
@@ -381,14 +386,14 @@ $i = 0; foreach ($a_phase1 as $ph1ent):
 							<?=htmlspecialchars($ph1ent['descr'])?>
 						</td>
 						<td style="cursor: pointer;">
-<!--							<a	class="fa fa-anchor" id="Xmove_<?=$i?>" title="<?=gettext("Move checked entries to here")?>"></a> -->
-							<button style="display: none;" class="btn btn-default btn-xs" type="submit" id="move_<?=$i?>" name="move_<?=$i?>" value="move_<?=$i?>"><?=gettext("Move checked entries to here")?></button>
-							<a class="fa fa-pencil" href="vpn_ipsec_phase1.php?p1index=<?=$i?>" title="<?=gettext("Edit phase1 entry"); ?>"></a>
+<!--							<a	class="fa fa-anchor" id="Xmove_<?=$i?>" title="<?=gettext("여기로 체크한 항목 이동")?>"></a> -->
+							<button style="display: none;" class="btn btn-default btn-xs" type="submit" id="move_<?=$i?>" name="move_<?=$i?>" value="move_<?=$i?>"><?=gettext("여기로 체크한 항목 이동")?></button>
+							<a class="fa fa-pencil" href="vpn_ipsec_phase1.php?p1index=<?=$i?>" title="<?=gettext("1단계 항목 편집"); ?>"></a>
 <?php if (!isset($ph1ent['mobile'])): ?>
-							<a class="fa fa-clone" href="vpn_ipsec_phase1.php?dup=<?=$i?>" title="<?=gettext("Copy phase1 entry"); ?>"></a>
+							<a class="fa fa-clone" href="vpn_ipsec_phase1.php?dup=<?=$i?>" title="<?=gettext("1단계 항목 복사"); ?>"></a>
 <?php endif; ?>
-							<a	class="fa fa-trash no-confirm" id="Xdel_<?=$i?>" title="<?=gettext('Delete phase1 entry'); ?>"></a>
-							<button style="display: none;" class="btn btn-xs btn-warning" type="submit" id="del_<?=$i?>" name="del_<?=$i?>" value="del_<?=$i?>" title="<?=gettext('Delete phase1 entry'); ?>">delete</button>
+							<a	class="fa fa-trash no-confirm" id="Xdel_<?=$i?>" title="<?=gettext('1단계 항목 삭제'); ?>"></a>
+							<button style="display: none;" class="btn btn-xs btn-warning" type="submit" id="del_<?=$i?>" name="del_<?=$i?>" value="del_<?=$i?>" title="<?=gettext('1단계 항목 삭제'); ?>">delete</button>
 
 						</td>
 					</tr>
@@ -416,7 +421,7 @@ $i = 0; foreach ($a_phase1 as $ph1ent):
 				$fr_prefix = "frp2{$i}";
 				$fr_header = $fr_prefix . "header";
 ?>
-								<button class="btn btn-info" type="button" onclick="show_phase2('tdph2-<?=$i?>','shph2but-<?=$i?>')" value="+"><i class="fa fa-plus-circle"></i> <?php printf(gettext("Show Phase 2 Entries (%s)"), $phase2count); ?></button>
+								<button class="btn btn-info" type="button" onclick="show_phase2('tdph2-<?=$i?>','shph2but-<?=$i?>')" value="+"><i class="fa fa-plus-circle"></i> <?php printf(gettext("2단계 항목 보이기 (%s)"), $phase2count); ?></button>
 							</div>
 							<div id="tdph2-<?=$i?>" <?=($tdph2_visible != '1' ? 'style="display:none"' : '')?>>
 								<table class="table table-striped table-hover">
@@ -453,10 +458,10 @@ $i = 0; foreach ($a_phase1 as $ph1ent):
 										<tr id="<?=$fr_prefix . $j?>" ondblclick="document.location='vpn_ipsec_phase2.php?p2index=<?=$ph2ent['uniqid']?>'" class="<?= $entryStatus ?>">
 											<td>
 												<input type="checkbox" id="<?=$fr_c?>" name="p2entry[]" value="<?=$ph2index?>" onclick="fr_bgcolor('<?=$j?>', '<?=$fr_prefix?>')" />
-												<button class="fa fa-anchor button-icon" type="submit" name="movep2_<?=$j?>" value="movep2_<?=$j?>" title="<?=gettext("Move checked P2s here")?>"></button>
+												<button class="fa fa-anchor button-icon" type="submit" name="movep2_<?=$j?>" value="movep2_<?=$j?>" title="<?=gettext("체크된 P2s를 여기로 이동")?>"></button>
 											</td>
 											<td>
-												<button value="togglep2_<?=$ph2index?>" name="togglep2_<?=$ph2index?>" title="<?=gettext("click to toggle enabled/disabled status")?>" class="btn btn-xs btn-<?= ($entryStatus == 'disabled'? 'success' : 'warning') ?>" type="submit"><?= ($entryStatus == 'disabled'? 'Enable' : 'Disable') ?></button>
+												<button value="togglep2_<?=$ph2index?>" name="togglep2_<?=$ph2index?>" title="<?=gettext("상태를 전환하시려면 클릭하십시오.")?>" class="btn btn-xs btn-<?= ($entryStatus == 'disabled'? 'success' : 'warning') ?>" type="submit"><?= ($entryStatus == 'disabled'? 'Enable' : 'Disable') ?></button>
 											</td>
 											<td id="<?=$fr_d?>" onclick="fr_toggle('<?=$j?>', '<?=$fr_prefix?>')">
 												<?=$ph2ent['mode']?>
@@ -504,11 +509,11 @@ $i = 0; foreach ($a_phase1 as $ph1ent):
 ?>
 											</td>
 											<td style="cursor: pointer;">
-<!--												<button class="fa fa-anchor button-icon" type="submit" name="movep2_<?=$j?>" value="movep2_<?=$j?>" title="<?=gettext("Move checked P2s here")?>"></button> -->
-												<a class="fa fa-pencil" href="vpn_ipsec_phase2.php?p2index=<?=$ph2ent['uniqid']?>" title="<?=gettext("Edit phase2 entry"); ?>"></a>
-												<a class="fa fa-clone" href="vpn_ipsec_phase2.php?dup=<?=$ph2ent['uniqid']?>" title="<?=gettext("Add a new Phase 2 based on this one"); ?>"></a>
-												<a	class="fa fa-trash no-confirm" id="Xdelp2_<?=$ph2index?>" title="<?=gettext('Delete phase2 entry'); ?>"></a>
-												<button style="display: none;" class="btn btn-xs btn-warning" type="submit" id="delp2_<?=$ph2index?>" name="delp2_<?=$ph2index?>" value="delp2_<?=$ph2index?>" title="<?=gettext('delete phase2 entry'); ?>">delete</button>
+<!--												<button class="fa fa-anchor button-icon" type="submit" name="movep2_<?=$j?>" value="movep2_<?=$j?>" title="<?=gettext("체크된 P2를 여기로 이동")?>"></button> -->
+												<a class="fa fa-pencil" href="vpn_ipsec_phase2.php?p2index=<?=$ph2ent['uniqid']?>" title="<?=gettext("2단계 항목 편집"); ?>"></a>
+												<a class="fa fa-clone" href="vpn_ipsec_phase2.php?dup=<?=$ph2ent['uniqid']?>" title="<?=gettext("이를 기반으로 새 2단계 추가"); ?>"></a>
+												<a	class="fa fa-trash no-confirm" id="Xdelp2_<?=$ph2index?>" title="<?=gettext('2단계 항목 삭제'); ?>"></a>
+												<button style="display: none;" class="btn btn-xs btn-warning" type="submit" id="delp2_<?=$ph2index?>" name="delp2_<?=$ph2index?>" value="delp2_<?=$ph2index?>" title="<?=gettext('2단계 항목 삭제'); ?>">delete</button>
 											</td>
 										</tr>
 <?php $j++; endforeach; ?>
@@ -517,7 +522,7 @@ $i = 0; foreach ($a_phase1 as $ph1ent):
 											<td>
 												<a class="btn btn-xs btn-success" href="vpn_ipsec_phase2.php?ikeid=<?=$ph1ent['ikeid']?><?php if (isset($ph1ent['mobile'])) echo "&amp;mobile=true"?>">
 													<i class="fa fa-plus icon-embed-btn"></i>
-													<?=gettext("Add P2")?>
+													<?=gettext("P2 ")?>
 												</a>
 											</td>
 											<td colspan="7"></td>
@@ -546,21 +551,21 @@ $i = 0; foreach ($a_phase1 as $ph1ent):
 ?>
 		<a href="vpn_ipsec_phase1.php" class="btn btn-success btn-sm"  usepost>
 			<i class="fa fa-plus icon-embed-btn"></i>
-			<?=gettext("Add P1")?>
+			<?=gettext("P1 추가")?>
 		</a>
 <?php if ($i !== 0): ?>
-		<button type="submit" name="del" class="btn btn-danger btn-sm" value="<?=gettext("Delete selected P1s")?>">
+		<button type="submit" name="del" class="btn btn-danger btn-sm" value="<?=gettext("선택한 P1 삭제")?>">
 			<i class="fa fa-trash icon-embed-btn"></i>
-			<?=gettext("Delete P1s")?>
+			<?=gettext("P1 삭제")?>
 		</button>
 <?php endif; ?>
 	</nav>
 </form>
 
 <div class="infoblock">
-	<?php print_info_box(sprintf(gettext('The IPsec status can be checked at %1$s%2$s%3$s.'), '<a href="status_ipsec.php">', gettext("Status:IPsec"), '</a>') . '<br />' .
-	sprintf(gettext('IPsec debug mode can be enabled at %1$s%2$s%3$s.'), '<a href="vpn_ipsec_settings.php">', gettext("VPN:IPsec:Advanced Settings"), '</a>') . '<br />' .
-	sprintf(gettext('IPsec can be set to prefer older SAs at %1$s%2$s%3$s.'), '<a href="vpn_ipsec_settings.php">', gettext("VPN:IPsec:Advanced Settings"), '</a>'), 'info', false); ?>
+	<?php print_info_box(sprintf(gettext('%1$s%2$s%3$s에서 IPsec 상태를 확인할 수 .'), '<a href="status_ipsec.php">', gettext("Status:IPsec"), '</a>') . '<br />' .
+	sprintf(gettext('%1$s%2$s%3$s에서 IPsec 디버그 모드를 활성화할 수 있습니다.'), '<a href="vpn_ipsec_settings.php">', gettext("VPN:IPsec:Advanced Settings"), '</a>') . '<br />' .
+	sprintf(gettext('%1$s%2$s%3$s에서 IPsec이 오래된 SA를 선호하도록 설정할 수 있습니다.'), '<a href="vpn_ipsec_settings.php">', gettext("VPN:IPsec:Advanced Settings"), '</a>'), 'info', false); ?>
 </div>
 
 <script type="text/javascript">
@@ -585,13 +590,13 @@ events.push(function() {
 	});
 
 	$('[id^=Xdel_]').click(function (event) {
-		if (confirm("<?=gettext('Confirmation required to delete this P1 entry.')?>")) {
+		if (confirm("<?=gettext('P1항목을 삭제하기 위해 확인이 필요합니다.')?>")) {
 			$('#' + event.target.id.slice(1)).click();
 		}
 	});
 
 	$('[id^=Xdelp2_]').click(function (event) {
-		if (confirm("<?=gettext('Confirmation required to delete this P2 entry.')?>")) {
+		if (confirm("<?=gettext('P2항목을 삭제하기 위해 확인이 필요합니다.')?>")) {
 			$('#' + event.target.id.slice(1)).click();
 		}
 	});

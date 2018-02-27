@@ -23,6 +23,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.26
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-firewall-rules
 ##|*NAME=Firewall: Rules
@@ -313,7 +318,7 @@ foreach ($tab_array as $dtab) {
 	}
 }
 
-$pgtitle = array(gettext("Firewall"), gettext("Rules"), $bctab);
+$pgtitle = array(gettext("방화벽"), gettext("Rules"), $bctab);
 $pglinks = array("", "firewall_rules.php", "@self");
 $shortcut_section = "firewall";
 
@@ -329,7 +334,7 @@ if ($_POST['apply']) {
 }
 
 if (is_subsystem_dirty('filter')) {
-	print_apply_box(gettext("The firewall rule configuration has been changed.") . "<br />" . gettext("The changes must be applied for them to take effect."));
+	print_apply_box(gettext("방화벽 규칙설정이 변경되었습니다.") . "<br />" . gettext("변경 사항을 저장하시면 적용됩니다."));
 }
 
 display_top_tabs($tab_array, false, 'pills');
@@ -379,16 +384,16 @@ $columns_in_table = 13;
 						<th><!-- checkbox --></th>
 						<th><!-- status icons --></th>
 						<th><?=gettext("States")?></th>
-						<th><?=gettext("Protocol")?></th>
-						<th><?=gettext("Source")?></th>
-						<th><?=gettext("Port")?></th>
-						<th><?=gettext("Destination")?></th>
-						<th><?=gettext("Port")?></th>
-						<th><?=gettext("Gateway")?></th>
-						<th><?=gettext("Queue")?></th>
-						<th><?=gettext("Schedule")?></th>
-						<th><?=gettext("Description")?></th>
-						<th><?=gettext("Actions")?></th>
+						<th><?=gettext("프로토콜")?></th>
+						<th><?=gettext("발신지")?></th>
+						<th><?=gettext("포트")?></th>
+						<th><?=gettext("수신지")?></th>
+						<th><?=gettext("포트")?></th>
+						<th><?=gettext("게이트웨이")?></th>
+						<th><?=gettext("큐")?></th>
+						<th><?=gettext("스케줄")?></th>
+						<th><?=gettext("설명")?></th>
+						<th><?=gettext("액션")?></th>
 					</tr>
 				</thead>
 
@@ -530,8 +535,8 @@ foreach ($a_filter as $filteri => $filterent):
 		$sched_caption_escaped = "";
 		$sched_content = "";
 		$schedstatus = false;
-		$dayArray = array (gettext('Mon'), gettext('Tues'), gettext('Wed'), gettext('Thur'), gettext('Fri'), gettext('Sat'), gettext('Sun'));
-		$monthArray = array (gettext('January'), gettext('February'), gettext('March'), gettext('April'), gettext('May'), gettext('June'), gettext('July'), gettext('August'), gettext('September'), gettext('October'), gettext('November'), gettext('December'));
+		$dayArray = array (gettext('월'), gettext('화'), gettext('수'), gettext('목'), gettext('금'), gettext('토'), gettext('일'));
+		$monthArray = array (gettext('1월'), gettext('2월'), gettext('3월'), gettext('4월'), gettext('5월'), gettext('6월'), gettext('7월'), gettext('8월'), gettext('9월'), gettext('10월'), gettext('11월'), gettext('12'));
 		if ($config['schedules']['schedule'] != "" && is_array($config['schedules']['schedule'])) {
 			$idx = 0;
 			foreach ($a_schedules as $schedule) {
@@ -696,7 +701,7 @@ foreach ($a_filter as $filteri => $filterent):
 							explode(',', $filterent['icmptype'])
 						)
 					);
-				echo sprintf('<br /><div style="cursor:help;padding:1px;line-height:1.1em;max-height:2.5em;max-width:180px;overflow-y:auto;overflow-x:hidden" title="%s:%s%s"><small><u>%s</u></small></div>', gettext('ICMP subtypes'), chr(13), $t, str_replace(',', '</u>, <u>',$filterent['icmptype']));
+				echo sprintf('<br /><div style="cursor:help;padding:1px;line-height:1.1em;max-height:2.5em;max-width:180px;overflow-y:auto;overflow-x:hidden" title="%s:%s%s"><small><u>%s</u></small></div>', gettext('ICMP 하위타입'), chr(13), $t, str_replace(',', '</u>, <u>',$filterent['icmptype']));
 			}
 		} else {
 			echo " *";
@@ -705,7 +710,7 @@ foreach ($a_filter as $filteri => $filterent):
 						</td>
 						<td>
 							<?php if (isset($alias['src'])): ?>
-								<a href="/firewall_aliases_edit.php?id=<?=$alias['src']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias details')?>" data-content="<?=alias_info_popup($alias['src'])?>" data-html="true">
+								<a href="/firewall_aliases_edit.php?id=<?=$alias['src']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias 세부정보')?>" data-content="<?=alias_info_popup($alias['src'])?>" data-html="true">
 									<?=str_replace('_', '_<wbr>', htmlspecialchars(pprint_address($filterent['source'])))?>
 								</a>
 							<?php else: ?>
@@ -714,7 +719,7 @@ foreach ($a_filter as $filteri => $filterent):
 						</td>
 						<td>
 							<?php if (isset($alias['srcport'])): ?>
-								<a href="/firewall_aliases_edit.php?id=<?=$alias['srcport']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias details')?>" data-content="<?=alias_info_popup($alias['srcport'])?>" data-html="true">
+								<a href="/firewall_aliases_edit.php?id=<?=$alias['srcport']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias 세부정보')?>" data-content="<?=alias_info_popup($alias['srcport'])?>" data-html="true">
 									<?=str_replace('_', '_<wbr>', htmlspecialchars(pprint_port($filterent['source']['port'])))?>
 								</a>
 							<?php else: ?>
@@ -723,7 +728,7 @@ foreach ($a_filter as $filteri => $filterent):
 						</td>
 						<td>
 							<?php if (isset($alias['dst'])): ?>
-								<a href="/firewall_aliases_edit.php?id=<?=$alias['dst']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias details')?>" data-content="<?=alias_info_popup($alias['dst'])?>" data-html="true">
+								<a href="/firewall_aliases_edit.php?id=<?=$alias['dst']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias 세부정보')?>" data-content="<?=alias_info_popup($alias['dst'])?>" data-html="true">
 									<?=str_replace('_', '_<wbr>', htmlspecialchars(pprint_address($filterent['destination'])))?>
 								</a>
 							<?php else: ?>
@@ -732,7 +737,7 @@ foreach ($a_filter as $filteri => $filterent):
 						</td>
 						<td>
 							<?php if (isset($alias['dstport'])): ?>
-								<a href="/firewall_aliases_edit.php?id=<?=$alias['dstport']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias details')?>" data-content="<?=alias_info_popup($alias['dstport'])?>" data-html="true">
+								<a href="/firewall_aliases_edit.php?id=<?=$alias['dstport']?>" data-toggle="popover" data-trigger="hover focus" title="<?=gettext('Alias 세부정보')?>" data-content="<?=alias_info_popup($alias['dstport'])?>" data-html="true">
 									<?=str_replace('_', '_<wbr>', htmlspecialchars(pprint_port($filterent['destination']['port'])))?>
 								</a>
 							<?php else: ?>
@@ -773,17 +778,17 @@ foreach ($a_filter as $filteri => $filterent):
 						<td class="action-icons">
 						<!-- <?=(isset($filterent['disabled']) ? 'enable' : 'disable')?> -->
 							<a	class="fa fa-anchor icon-pointer" id="Xmove_<?=$filteri?>" title="<?=$XmoveTitle?>"></a>
-							<a href="firewall_rules_edit.php?id=<?=$filteri;?>" class="fa fa-pencil" title="<?=gettext('Edit')?>"></a>
-							<a href="firewall_rules_edit.php?dup=<?=$filteri;?>" class="fa fa-clone" title="<?=gettext('Copy')?>"></a>
+							<a href="firewall_rules_edit.php?id=<?=$filteri;?>" class="fa fa-pencil" title="<?=gettext('편집')?>"></a>
+							<a href="firewall_rules_edit.php?dup=<?=$filteri;?>" class="fa fa-clone" title="<?=gettext('복사')?>"></a>
 <?php if (isset($filterent['disabled'])) {
 ?>
-							<a href="?act=toggle&amp;if=<?=htmlspecialchars($if);?>&amp;id=<?=$filteri;?>" class="fa fa-check-square-o" title="<?=gettext('Enable')?>" usepost></a>
+							<a href="?act=toggle&amp;if=<?=htmlspecialchars($if);?>&amp;id=<?=$filteri;?>" class="fa fa-check-square-o" title="<?=gettext('활성화')?>" usepost></a>
 <?php } else {
 ?>
-							<a href="?act=toggle&amp;if=<?=htmlspecialchars($if);?>&amp;id=<?=$filteri;?>" class="fa fa-ban" title="<?=gettext('Disable')?>" usepost></a>
+							<a href="?act=toggle&amp;if=<?=htmlspecialchars($if);?>&amp;id=<?=$filteri;?>" class="fa fa-ban" title="<?=gettext('비활성화')?>" usepost></a>
 <?php }
 ?>
-							<a href="?act=del&amp;if=<?=htmlspecialchars($if);?>&amp;id=<?=$filteri;?>" class="fa fa-trash" title="<?=gettext('Delete this rule')?>" usepost></a>
+							<a href="?act=del&amp;if=<?=htmlspecialchars($if);?>&amp;id=<?=$filteri;?>" class="fa fa-trash" title="<?=gettext('규칙삭제')?>" usepost></a>
 						</td>
 					</tr>
 <?php
@@ -805,34 +810,34 @@ if ($seprows[$nrules]) {
 	<div class="alert alert-warning" role="alert">
 		<p>
 		<?php if ($_REQUEST['if'] == "FloatingRules"): ?>
-			<?=gettext("No floating rules are currently defined.");?>
+			<?=gettext("현재 부동규칙이 정의되어있지 않습니다.");?>
 		<?php else: ?>
-			<?=gettext("No rules are currently defined for this interface");?><br />
-			<?=gettext("All incoming connections on this interface will be blocked until pass rules are added.");?>
+			<?=gettext("해당 인터페이스에 정의되어있는 규칙이 없습니다.");?><br />
+			<?=gettext("'통과' 규칙이 추가될때까지 해당 인터페이스의 모든 수신이 차단됩니다.");?>
 		<?php endif;?>
-			<?=gettext("Click the button to add a new rule.");?>
+			<?=gettext("버튼을 눌러 새 규칙을 추가하십시오.");?>
 		</p>
 	</div>
 <?php endif;?>
 
 	<nav class="action-buttons">
-		<a href="firewall_rules_edit.php?if=<?=htmlspecialchars($if);?>&amp;after=-1" role="button" class="btn btn-sm btn-success" title="<?=gettext('Add rule to the top of the list')?>">
+		<a href="firewall_rules_edit.php?if=<?=htmlspecialchars($if);?>&amp;after=-1" role="button" class="btn btn-sm btn-success" title="<?=gettext('목록 맨 위에 규칙 추가')?>">
 			<i class="fa fa-level-up icon-embed-btn"></i>
 			<?=gettext("Add");?>
 		</a>
-		<a href="firewall_rules_edit.php?if=<?=htmlspecialchars($if);?>" role="button" class="btn btn-sm btn-success" title="<?=gettext('Add rule to the end of the list')?>">
+		<a href="firewall_rules_edit.php?if=<?=htmlspecialchars($if);?>" role="button" class="btn btn-sm btn-success" title="<?=gettext('목록 끝에 규칙 추가')?>">
 			<i class="fa fa-level-down icon-embed-btn"></i>
 			<?=gettext("Add");?>
 		</a>
-		<button name="del_x" type="submit" class="btn btn-danger btn-sm" value="<?=gettext("Delete selected rules"); ?>" title="<?=gettext('Delete selected rules')?>">
+		<button name="del_x" type="submit" class="btn btn-danger btn-sm" value="<?=gettext("Delete selected rules"); ?>" title="<?=gettext('선택한 규칙 삭제')?>">
 			<i class="fa fa-trash icon-embed-btn"></i>
 			<?=gettext("Delete"); ?>
 		</button>
-		<button type="submit" id="order-store" name="order-store" class="btn btn-sm btn-primary" value="store changes" disabled title="<?=gettext('Save rule order')?>">
+		<button type="submit" id="order-store" name="order-store" class="btn btn-sm btn-primary" value="store changes" disabled title="<?=gettext('규칙 순서 저장')?>">
 			<i class="fa fa-save icon-embed-btn"></i>
 			<?=gettext("Save")?>
 		</button>
-		<button type="submit" id="addsep" name="addsep" class="btn btn-sm btn-warning" title="<?=gettext('Add separator')?>">
+		<button type="submit" id="addsep" name="addsep" class="btn btn-sm btn-warning" title="<?=gettext('구분 기호 추가')?>">
 			<i class="fa fa-plus icon-embed-btn"></i>
 			<?=gettext("Separator")?>
 		</button>
@@ -844,7 +849,7 @@ if ($seprows[$nrules]) {
 		<dl class="dl-horizontal responsive">
 		<!-- Legend -->
 			<dt><?=gettext('Legend')?></dt>				<dd></dd>
-			<dt><i class="fa fa-check text-success"></i></dt>		<dd><?=gettext("Pass");?></dd>
+			<dt><i class="fa fa-check text-success"></i></dt>		<dd><?=gettext("통과");?></dd>
 			<dt><i class="fa fa-filter"></i></dt>	<dd><?=gettext("Match");?></dd>
 			<dt><i class="fa fa-times text-danger"></i></dt>	<dd><?=gettext("Block");?></dd>
 			<dt><i class="fa fa-hand-stop-o text-warning"></i></dt>		<dd><?=gettext("Reject");?></dd>
@@ -855,21 +860,18 @@ if ($seprows[$nrules]) {
 
 <?php
 	if ("FloatingRules" != $if) {
-		print(gettext("Rules are evaluated on a first-match basis (i.e. " .
-			"the action of the first rule to match a packet will be executed). ") . '<br />' .
-			gettext("This means that if block rules are used, it is important to pay attention " .
-			"to the rule order. Everything that isn't explicitly passed is blocked " .
-			"by default. "));
+		print(gettext("규칙은 첫번째 매치를 기준으로 평가됩니다(즉, 패킷과 일치하는 첫번째 규칙의 작업이 실행됩니다).") . '<br />' .
+			gettext("이는 블록 규칙이 사용되는 경우 규칙 순서에 주의를 기울이는 것이 중요함을 의미합니다. " .
+			"명시적으로 통과하지 않는 모든 항목은 기본적으로 차단됩니다. "));
 	} else {
-		print(gettext("Floating rules are evaluated on a first-match basis (i.e. " .
-			"the action of the first rule to match a packet will be executed) only " .
-			"if the 'quick' option is checked on a rule. Otherwise they will only match if no " .
-			"other rules match. Pay close attention to the rule order and options " .
-			"chosen. If no rule here matches, the per-interface or default rules are used. "));
+		print(gettext("플로팅 규칙은 규칙에서 '빠른'옵션을 선택한 경우에만 첫 번째 " .
+			"매치를 기준으로 평가됩니다(즉, 첫 번째 규칙이 실행됩니다). " .
+			"그렇지 않으면 다른 규칙이 일치하지 않는 경우에만 일치합니다. " .
+			"규칙 순서와 선택한 옵션에 주의하십시오. 여기에 일치하는 규칙이 없으면 인터페이스별 또는 기본 규칙이 사용됩니다. "));
 	}
 
-	printf(gettext('%1$sClick the anchor icon %2$s to move checked rules before the clicked row. Hold down ' .
-			'the shift key and click to move the rules after the clicked row.'), '<br /><br />', '<i class="fa fa-anchor"></i>')
+	printf(gettext('%1$s의 앵커 아이콘 %2$s를 클릭하면 클릭 한 행 앞에 확인 된 규칙이 이동합니다. ' .
+			'Shift키를 누른 채 클릭하면 클릭한 행의 뒤 규칙이 이동됩니다.'), '<br /><br />', '<i class="fa fa-anchor"></i>')
 ?>
 	</div>
 	</div>
@@ -880,9 +882,9 @@ if ($seprows[$nrules]) {
 
 //Need to create some variables here so that jquery/pfSenseHelpers.js can read them
 iface = "<?=strtolower($if)?>";
-cncltxt = '<?=gettext("Cancel")?>';
-svtxt = '<?=gettext("Save")?>';
-svbtnplaceholder = '<?=gettext("Enter a description, Save, then drag to final location.")?>';
+cncltxt = '<?=gettext("취소")?>';
+svtxt = '<?=gettext("저장")?>';
+svbtnplaceholder = '<?=gettext("설명을 입력하고 저장하신 뒤, 최종 위치로 드레그 하십시오.")?>';
 configsection = "filter";
 
 events.push(function() {
@@ -988,7 +990,7 @@ events.push(function() {
 	// Provide a warning message if the user tries to change page before saving
 	$(window).bind('beforeunload', function(){
 		if ((!saving && dirty) || newSeperator) {
-			return ("<?=gettext('One or more rules have been moved but have not yet been saved')?>");
+			return ("<?=gettext('하나 이상의 규칙이 이동되었지만 아직 저장되지 않았습니다.')?>");
 		} else {
 			return undefined;
 		}

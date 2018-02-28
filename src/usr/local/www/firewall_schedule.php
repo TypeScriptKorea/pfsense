@@ -23,6 +23,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.28
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-firewall-schedules
 ##|*NAME=Firewall: Schedules
@@ -32,8 +37,8 @@
 
 define('CLOCK', '<i class="fa fa-clock-o icon-black"></i>');
 
-$dayArray = array (gettext('Mon'), gettext('Tues'), gettext('Wed'), gettext('Thur'), gettext('Fri'), gettext('Sat'), gettext('Sun'));
-$monthArray = array (gettext('January'), gettext('February'), gettext('March'), gettext('April'), gettext('May'), gettext('June'), gettext('July'), gettext('August'), gettext('September'), gettext('October'), gettext('November'), gettext('December'));
+$dayArray = array (gettext('월'), gettext('화'), gettext('수'), gettext('목'), gettext('금'), gettext('토'), gettext('일'));
+$monthArray = array (gettext('1월'), gettext('2월'), gettext('3월'), gettext('4월'), gettext('5월'), gettext('6월'), gettext('7월'), gettext('8월'), gettext('9월'), gettext('10월'), gettext('11월'), gettext('12월'));
 
 require_once("guiconfig.inc");
 require_once("filter.inc");
@@ -66,10 +71,10 @@ if ($_POST['act'] == "del") {
 		}
 
 		if ($is_schedule_referenced == true) {
-			$savemsg = sprintf(gettext("Cannot delete schedule. Currently in use by %s."), $referenced_by);
+			$savemsg = sprintf(gettext("%s에서 현재 사용중인 일정입니다 삭제할 수 없습니다."), $referenced_by);
 		} else {
 			unset($a_schedules[$_POST['id']]);
-			write_config(gettext("Firewall schedule deleted."));
+			write_config(gettext("방화벽 일정을 삭제했습니다."));
 			header("Location: firewall_schedule.php");
 			exit;
 		}
@@ -90,8 +95,8 @@ if ($savemsg) {
 			<thead>
 				<tr>
 					<th><!--"Active" indicator--></th>
-					<th><?=gettext("Name")?></th>
-					<th><?=gettext("Range: Date / Times / Name")?></th>
+					<th><?=gettext("이름")?></th>
+					<th><?=gettext("범위: 날짜 / 시간 / ")?></th>
 					<th><?=gettext("Description")?></th>
 					<th><?=gettext("Actions")?></th>
 				</tr>
@@ -104,7 +109,7 @@ foreach ($a_schedules as $schedule):
 ?>
 				<tr>
 					<td>
-						<?=($schedstatus) ? '<a title="' . gettext("Schedule is currently active") . '">' . CLOCK . '</a>':''?>
+						<?=($schedstatus) ? '<a title="' . gettext("일정이 현재 활성 상태입니다.") . '">' . CLOCK . '</a>':''?>
 					</td>
 					<td>
 						 <?=htmlspecialchars($schedule['name'])?>
@@ -223,8 +228,8 @@ foreach ($a_schedules as $schedule):
 					</td>
 
 					<td>
-						<a class="fa fa-pencil" title="<?=gettext("Edit schedule"); ?>" href="firewall_schedule_edit.php?id=<?=$i?>"></a>
-						<a class="fa fa-trash" title="<?=gettext("Delete schedule")?>" href="firewall_schedule.php?act=del&amp;id=<?=$i?>" usepost></a>
+						<a class="fa fa-pencil" title="<?=gettext("일정 편집"); ?>" href="firewall_schedule_edit.php?id=<?=$i?>"></a>
+						<a class="fa fa-trash" title="<?=gettext("일정 삭제")?>" href="firewall_schedule.php?act=del&amp;id=<?=$i?>" usepost></a>
 
 					</td>
 				</tr>
@@ -237,17 +242,17 @@ endforeach;
 	</div>
 </div>
 
-<?=($i > 0) ? CLOCK . gettext(' Indicates that the schedule is currently active.'):''?>
+<?=($i > 0) ? CLOCK . gettext(' 예약이 현재 활성 상태입니다.'):''?>
 
 <nav class="action-buttons">
 	<a href="firewall_schedule_edit.php" class="btn btn-sm btn-success">
 		<i class="fa fa-plus icon-embed-btn"></i>
-		<?=gettext("Add")?>
+		<?=gettext("추가")?>
 	</a>
 </nav>
 
 <div class="infoblock">
-	<?php print_info_box(gettext('Schedules act as placeholders for time ranges to be used in firewall rules.'), 'info', false); ?>
+	<?php print_info_box(gettext('스케줄은 방화벽 규칙에 사용될 시간 범위에 대한 자리 표시자 역할을 합니다.'), 'info', false); ?>
 </div>
 
 <?php

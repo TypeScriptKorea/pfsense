@@ -20,6 +20,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.28
+한글화 번역 
+*/
+
 ##|+PRIV
 ##|*IDENT=page-status-openvpn
 ##|*NAME=Status: OpenVPN
@@ -95,14 +100,14 @@ include("head.inc"); ?>
 ?>
 
 <div class="panel panel-default">
-		<div class="panel-heading"><h2 class="panel-title"><?=htmlspecialchars($server['name']);?> <?=gettext('Client Connections')?></h2></div>
+		<div class="panel-heading"><h2 class="panel-title"><?=htmlspecialchars($server['name']);?> <?=gettext('클라이언트 연결')?></h2></div>
 		<div class="panel-body table-responsive">
 			<table class="table table-striped table-hover table-condensed sortable-theme-bootstrap" data-sortable>
 				<thead>
 					<tr>
-						<th><?=gettext("Common Name")?></th>
-						<th><?=gettext("Real Address")?></th>
-						<th><?=gettext("Virtual Address"); ?></th>
+						<th><?=gettext("이름")?></th>
+						<th><?=gettext("실제 주소")?></th>
+						<th><?=gettext("가상 주소"); ?></th>
 						<th><?=gettext("Connected Since"); ?></th>
 						<th><?=gettext("Bytes Sent/Received")?></th>
 						<th><!-- Icons --></th>
@@ -137,7 +142,7 @@ include("head.inc"); ?>
 							<a
 							   onclick="killClient('<?=$server['mgmt'];?>', '<?=$conn['remote_host'];?>');" style="cursor:pointer;"
 							   id="<?php echo "i:{$server['mgmt']}:{$conn['remote_host']}"; ?>"
-							   title="<?php echo sprintf(gettext("Kill client connection from %s"), $conn['remote_host']); ?>">
+							   title="<?php echo sprintf(gettext("%s에서 클라이언트 연결 해제"), $conn['remote_host']); ?>">
 							<i class="fa fa-times"></i>
 							</a>
 						</td>
@@ -172,23 +177,23 @@ include("head.inc"); ?>
 		if (is_array($server['routes']) && count($server['routes'])):
 ?>
 <div id="shroutebut-<?= $i ?>">
-	<button type="button" class="btn btn-info" onClick="show_routes('tabroute-<?= $i ?>','shroutebut-<?= $i ?>')" value="<?php echo gettext("Show Routing Table"); ?>">
+	<button type="button" class="btn btn-info" onClick="show_routes('tabroute-<?= $i ?>','shroutebut-<?= $i ?>')" value="<?php echo gettext("라우팅 테이블 보이기"); ?>">
 		<i class="fa fa-plus-circle icon-embed-btn"></i>
 		<?php echo gettext("Show Routing Table"); ?>
 	</button>
-	- <?= gettext("Display OpenVPN's internal routing table for this server.") ?>
+	- <?= gettext("이 서버에 대한 OpenVPN의 내부 라우팅 테이블을 표시하십시오.") ?>
 	<br /><br />
 </div>
 <div class="panel panel-default" id="tabroute-<?=$i?>" style="display: none;">
-		<div class="panel-heading"><h2 class="panel-title"><?=htmlspecialchars($server['name']);?> <?=gettext("Routing Table"); ?></h2></div>
+		<div class="panel-heading"><h2 class="panel-title"><?=htmlspecialchars($server['name']);?> <?=gettext("라우팅 테이블"); ?></h2></div>
 		<div class="panel-body table-responsive">
 			<table class="table table-striped table-hover table-condensed sortable-theme-bootstrap" data-sortable>
 				<thead>
 					<tr>
-						<th><?=gettext("Common Name"); ?></th>
-						<th><?=gettext("Real Address"); ?></th>
-						<th><?=gettext("Target Network"); ?></th>
-						<th><?=gettext("Last Used"); ?></th>
+						<th><?=gettext("이름"); ?></th>
+						<th><?=gettext("실제 주소"); ?></th>
+						<th><?=gettext("타겟 네트워크"); ?></th>
+						<th><?=gettext("마지막 사용"); ?></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -208,7 +213,7 @@ include("head.inc"); ?>
 				</tbody>
 				<tfoot>
 					<tr>
-						<td colspan="4"><?= gettext("An IP address followed by C indicates a host currently connected through the VPN.") ?></td>
+						<td colspan="4"><?= gettext("IP주소 다음에 C가 오면 현재 VPN을 통해 연결된 호스트가 표시됩니다.") ?></td>
 					</tr>
 				</tfoot>
 			</table>
@@ -228,16 +233,16 @@ include("head.inc"); ?>
 	if (!empty($sk_servers)) {
 ?>
 <div class="panel panel-default">
-	<div class="panel-heading"><h2 class="panel-title"><?=gettext("Peer to Peer Server Instance Statistics"); ?></h2></div>
+	<div class="panel-heading"><h2 class="panel-title"><?=gettext("피어 투 피어 서버 인스턴스 통계"); ?></h2></div>
 		<div class="panel-body table-responsive">
 			<table class="table table-striped table-hover table-condensed sortable-theme-bootstrap" data-sortable>
 				<thead>
 					<tr>
-						<th><?=gettext("Name"); ?></th>
+						<th><?=gettext("이름"); ?></th>
 						<th><?=gettext("Status"); ?></th>
 						<th><?=gettext("Connected Since"); ?></th>
-						<th><?=gettext("Virtual Address"); ?></th>
-						<th><?=gettext("Remote Host"); ?></th>
+						<th><?=gettext("가상 주소"); ?></th>
+						<th><?=gettext("원격 호스트"); ?></th>
 						<th><?=gettext("Bytes Sent / Received"); ?></th>
 						<th><?=gettext("Service"); ?></th>
 					</tr>
@@ -288,17 +293,17 @@ include("head.inc"); ?>
 	if (!empty($clients)) {
 ?>
 <div class="panel panel-default">
-	<div class="panel-heading"><h2 class="panel-title"><?=gettext("Client Instance Statistics"); ?></h2></div>
+	<div class="panel-heading"><h2 class="panel-title"><?=gettext("클라이언트 인스턴스 통계"); ?></h2></div>
 		<div class="panel-body table-responsive">
 			<table class="table table-striped table-hover table-condensed sortable-theme-bootstrap" data-sortable>
 				<thead>
 					<tr>
-						<th><?=gettext("Name"); ?></th>
+						<th><?=gettext("이름"); ?></th>
 						<th><?=gettext("Status"); ?></th>
 						<th><?=gettext("Connected Since"); ?></th>
-						<th><?=gettext("Local Address"); ?></th>
-						<th><?=gettext("Virtual Address"); ?></th>
-						<th><?=gettext("Remote Host"); ?></th>
+						<th><?=gettext("로컬 주소"); ?></th>
+						<th><?=gettext("가상 주소"); ?></th>
+						<th><?=gettext("원격 호스트"); ?></th>
 						<th><?=gettext("Bytes Sent/Received"); ?></th>
 						<th><?=gettext("Service"); ?></th>
 					</tr>
@@ -358,11 +363,11 @@ include("head.inc"); ?>
 }
 
 if ($DisplayNote) {
- 	print_info_box(gettext("If there are custom options that override the management features of OpenVPN on a client or server, they will cause that OpenVPN instance to not work correctly with this status page."));
+ 	print_info_box(gettext("클라이언트 또는 서버에서 OpenVPN의 관리 기능을 무시하는 사용자 지정 옵션이있는 경우 OpenVPN 인스턴스가 이 상태 페이지에서 제대로 작동하지 않게 됩니다."));
 }
 
 if ((empty($clients)) && (empty($servers)) && (empty($sk_servers))) {
-	print_info_box(gettext("No OpenVPN instances defined."));
+	print_info_box(gettext("OpenVPN인스턴스가 정의되지 않았습니다."));
 }
 ?>
 </form>

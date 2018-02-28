@@ -21,6 +21,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.28
+한글화 번역 
+*/
+
 ##|+PRIV
 ##|*IDENT=page-services-loadbalancer-setting
 ##|*NAME=Services: Load Balancer: Settings
@@ -53,11 +58,11 @@ if ($_POST) {
 
 		/* input validation */
 		if ($_POST['timeout'] && !is_numeric($_POST['timeout'])) {
-			$input_errors[] = gettext("Timeout must be a numeric value");
+			$input_errors[] = gettext("시간초과는 숫자로 설정해주셔야 합니다.");
 		}
 
 		if ($_POST['interval'] && !is_numeric($_POST['interval'])) {
-			$input_errors[] = gettext("Interval must be a numeric value");
+			$input_errors[] = gettext("간격은 숫자로 설정해주셔야 합니다.");
 		}
 
 		if ($_POST['prefork']) {
@@ -97,20 +102,20 @@ if ($_POST['apply']) {
 }
 
 if (is_subsystem_dirty('loadbalancer')) {
-	print_apply_box(gettext("The load balancer configuration has been changed.") . "<br />" . gettext("The changes must be applied for them to take effect."));
+	print_apply_box(gettext("로드 밸런서 구성이 변경되었습니다.") . "<br />" . gettext("변경사항을 저장하시면 적용됩니다."));
 }
 
 /* active tabs */
 $tab_array = array();
-$tab_array[] = array(gettext("Pools"), false, "load_balancer_pool.php");
-$tab_array[] = array(gettext("Virtual Servers"), false, "load_balancer_virtual_server.php");
-$tab_array[] = array(gettext("Monitors"), false, "load_balancer_monitor.php");
-$tab_array[] = array(gettext("Settings"), true, "load_balancer_setting.php");
+$tab_array[] = array(gettext("풀"), false, "load_balancer_pool.php");
+$tab_array[] = array(gettext("가상 서버"), false, "load_balancer_virtual_server.php");
+$tab_array[] = array(gettext("모니터"), false, "load_balancer_monitor.php");
+$tab_array[] = array(gettext("설정"), true, "load_balancer_setting.php");
 display_top_tabs($tab_array);
 
 $form = new Form();
 
-$section = new Form_Section('Relayd Global Settings');
+$section = new Form_Section('Relayd 전역 설정');
 
 $section->addInput(new Form_Input(
 	'timeout',

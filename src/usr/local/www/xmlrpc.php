@@ -20,6 +20,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.28
+한글화 번역 
+*/
+
 ##|+PRIV
 ##|*IDENT=page-xmlrpclibrary
 ##|*NAME=XMLRPC Library
@@ -65,7 +70,7 @@ class pfsense_xmlrpc_server {
 
 			require_once("XML/RPC2/Exception.php");
 			throw new XML_RPC2_FaultException(gettext(
-			    'Authentication failed: Invalid username or password'),
+			    '인증 실패: 사용자 이름 또는 비밀번호가 잘못되었습니다.'),
 			    -1);
 		}
 
@@ -82,7 +87,7 @@ class pfsense_xmlrpc_server {
 
 			require_once("XML/RPC2/Exception.php");
 			throw new XML_RPC2_FaultException(gettext(
-			    'Authentication failed: not enough privileges'),
+			    '인증 실패: 권한이 없습니다.'),
 			    -2);
 		}
 
@@ -363,7 +368,7 @@ class pfsense_xmlrpc_server {
 		$mergedkeys = implode(", ", array_merge(array_keys($sections),
 		    $syncd_full_sections));
 		write_config(sprintf(gettext(
-		    "Merged in config (%s sections) from XMLRPC client."),
+		    "XMLWPS클라이언트의 구성(%s 섹션)에 병합되었습니다."),
 		    $mergedkeys));
 
 		/*
@@ -484,7 +489,7 @@ class pfsense_xmlrpc_server {
 		global $config;
 
 		if ($this->loop_detected) {
-			log_error("Disallowing CARP sync loop");
+			log_error("CARP동기화 루프 삭제");
 			return true;
 		}
 
@@ -492,7 +497,7 @@ class pfsense_xmlrpc_server {
 		    $config['installedpackages'], $section);
 		$mergedkeys = implode(", ", array_keys($section));
 		write_config(sprintf(gettext(
-		    "Merged in config (%s sections) from XMLRPC client."),
+		    "XMLRPC클라이언트의 구성(%s섹션)으로 이동했습니다."),
 		    $mergedkeys));
 
 		return true;
@@ -511,7 +516,7 @@ class pfsense_xmlrpc_server {
 		global $config;
 
 		if ($this->loop_detected) {
-			log_error("Disallowing CARP sync loop");
+			log_error("CARP동기화 루프 삭제");
 			return true;
 		}
 
@@ -519,7 +524,7 @@ class pfsense_xmlrpc_server {
 		$config = $config_new;
 		$mergedkeys = implode(", ", array_keys($section));
 		write_config(sprintf(gettext(
-		    "Merged in config (%s sections) from XMLRPC client."),
+		    "XMLWPS클라이언트의 구성(%s 섹션)에 병합되었습니다."),
 		    $mergedkeys));
 
 		return true;
@@ -592,7 +597,7 @@ class pfsense_xmlrpc_server {
 		$this->auth();
 
 		if ($this->loop_detected) {
-			log_error("Disallowing CARP sync loop");
+			log_error("CARP동기화 루프 삭제");
 			return true;
 		}
 

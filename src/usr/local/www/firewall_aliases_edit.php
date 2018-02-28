@@ -23,6 +23,11 @@
  * limitations under the License.
  */
 
+/*
+2018.02.27
+한글화 번역 
+*/
+
 ##|+PRIV
 ##|*IDENT=page-firewall-alias-edit
 ##|*NAME=Firewall: Alias: Edit
@@ -66,13 +71,13 @@ if ($debug) {
 }
 
 $singular_types = array(
-	'host'	=> gettext("host"),
-	'network' => gettext("network"),
-	'port' => gettext("port"),
+	'host'	=> gettext("호스트"),
+	'network' => gettext("네트워크"),
+	'port' => gettext("포트"),
 	'url' => gettext("URL (IP)"),
-	'url_ports' => gettext("URL (Port)"),
-	'urltable' => gettext("URL Table (IP)"),
-	'urltable_ports' => gettext("URL Table (Port)"),
+	'url_ports' => gettext("URL (포트)"),
+	'urltable' => gettext("URL 테이블 (IP)"),
+	'urltable_ports' => gettext("URL 테이블 (포트)"),
 );
 
 function alias_same_type($name, $type) {
@@ -146,7 +151,7 @@ $pglinks = array("", "firewall_aliases.php?tab=" . $tab, "@self");
 if ($_POST['save']) {
 
 	unset($input_errors);
-	$vertical_bar_err_text = gettext("Vertical bars (|) at start or end, or double in the middle of descriptions not allowed. Descriptions have been cleaned. Check and save again.");
+	$vertical_bar_err_text = gettext("시작 또는 끝에 수직 막대 (|)를 사용하거나 설명의 중간에 두 번 입력 할 수 없습니다. 점검하고 다시 저장하십시오.");
 
 	/* input validation */
 
@@ -162,7 +167,7 @@ if ($_POST['save']) {
 	/* check for name conflicts */
 	foreach ($a_aliases as $key => $alias) {
 		if (($alias['name'] == $_POST['name']) && (empty($a_aliases[$id]) || ($key != $id))) {
-			$input_errors[] = gettext("An alias with this name already exists.");
+			$input_errors[] = gettext("이미 지정된 alias가 있는 이름입니다.");
 			break;
 		}
 	}
@@ -170,7 +175,7 @@ if ($_POST['save']) {
 	/* Check for reserved keyword names */
 	foreach ($reserved_keywords as $rk) {
 		if ($rk == $_POST['name']) {
-			$input_errors[] = sprintf(gettext("Cannot use a reserved keyword as an alias name: %s"), $rk);
+			$input_errors[] = sprintf(gettext("이 이름으로 alias를 지정할 수 없습니다: %s"), $rk);
 		}
 	}
 
@@ -180,13 +185,13 @@ if ($_POST['save']) {
 	 * One namespace is shared by Interfaces, Interface Groups and Aliases.
 	 */
 	if (substr($_POST['name'], 0, 4) == 'pkg_') {
-		$input_errors[] = gettext("The alias name cannot start with pkg_");
+		$input_errors[] = gettext("alias 이름은 pkg_로 시작할 수 없습니다.");
 	}
 
 	/* check for name interface description conflicts */
 	foreach ($config['interfaces'] as $interface) {
 		if (strcasecmp($interface['descr'], $_POST['name']) == 0) {
-			$input_errors[] = gettext("An interface description with this name already exists.");
+			$input_errors[] = gettext("해당 인터페이스에 설명이 이미 있습니다.");
 			break;
 		}
 	}
@@ -231,7 +236,7 @@ if ($_POST['save']) {
 					$input_errors[] = $vertical_bar_err_text;
 				}
 			} else {
-				$final_address_details[] = sprintf(gettext("Entry added %s"), date('r'));
+				$final_address_details[] = sprintf(gettext("%s 항목을 추가함"), date('r'));
 			}
 		}
 	} else if ($_POST['type'] == "url" || $_POST['type'] == "url_ports") {
@@ -285,7 +290,7 @@ if ($_POST['save']) {
 					}
 					mwexec("/bin/rm -rf " . escapeshellarg($temp_filename));
 				} else {
-					$input_errors[] = sprintf(gettext("URL '%s' is not valid."), $_POST['address' . $x]);
+					$input_errors[] = sprintf(gettext("URL '%s'는 유효하지 않습니다."), $_POST['address' . $x]);
 				}
 			}
 		}
@@ -350,8 +355,8 @@ if ($_POST['save']) {
 									$alias_address_count++;
 								}
 							} else {
-								$input_errors[] = sprintf(gettext('Range is too large to expand into individual host IP addresses (%s)'), $address_item);
-								$input_errors[] = sprintf(gettext('The maximum number of entries in an alias is %s'), $max_alias_addresses);
+								$input_errors[] = sprintf(gettext('범위가 너무 커서 개별 호스트 IP주소로 확장할 수 없습니다(%s).'), $address_item);
+								$input_errors[] = sprintf(gettext('설정가능한 alias의 최대 항목 수는 %s입니다.'), $max_alias_addresses);
 								// Put the user-entered data in the output anyway, so it will be re-displayed for correction.
 								$input_addresses[] = $address_item;
 								$input_address_subnet[] = "";
@@ -359,7 +364,7 @@ if ($_POST['save']) {
 							}
 						}
 					} else if ($iprange_type == 6) {
-						$input_errors[] = sprintf(gettext('IPv6 address ranges are not supported (%s)'), $address_item);
+						$input_errors[] = sprintf(gettext('IPv6 주소 범위가 지원되지 않습니다 (%s).'), $address_item);
 						// Put the user-entered data in the output anyway, so it will be re-displayed for correction.
 						$input_addresses[] = $address_item;
 						$input_address_subnet[] = "";
@@ -380,15 +385,15 @@ if ($_POST['save']) {
 										$alias_address_count++;
 									}
 								} else {
-									$input_errors[] = sprintf(gettext('Subnet is too large to expand into individual host IP addresses (%s)'), $address_item);
-									$input_errors[] = sprintf(gettext('The maximum number of entries in an alias is %s'), $max_alias_addresses);
+									$input_errors[] = sprintf(gettext('서브넷이 너무 커서 개별 호스트 IP주소로 확장할 수 없습니다(%s).'), $address_item);
+									$input_errors[] = sprintf(gettext('설정가능한 alias의 최대 항목 수는 %s입니다.'), $max_alias_addresses);
 									// Put the user-entered data in the output anyway, so it will be re-displayed for correction.
 									$input_addresses[] = $address_item;
 									$input_address_subnet[] = "";
 									$final_address_details[] = $detail_text;
 								}
 							} else {
-								$input_errors[] = sprintf(gettext('IPv6 subnets are not supported in host aliases (%s)'), $address_item);
+								$input_errors[] = sprintf(gettext('호스트 alias (%s)에서 IPv6 서브넷이 지원되지 않습니다.'), $address_item);
 								// Put the user-entered data in the output anyway, so it will be re-displayed for correction.
 								$input_addresses[] = $address_item;
 								$input_address_subnet[] = "";
@@ -415,7 +420,7 @@ if ($_POST['save']) {
 						}
 					}
 					if ($alias_address_count > $max_alias_addresses) {
-						$input_errors[] = sprintf(gettext('The maximum number of entries in an alias has been exceeded (%s)'), $max_alias_addresses);
+						$input_errors[] = sprintf(gettext('alias 최대 항목 수를 초과했습니다. (%s)'), $max_alias_addresses);
 						break;
 					}
 				}
@@ -434,18 +439,18 @@ if ($_POST['save']) {
 				}
 			} else if ($_POST['type'] == "port") {
 				if (!is_port_or_range($input_address)) {
-					$input_errors[] = sprintf(gettext("%s is not a valid port or alias."), $input_address);
+					$input_errors[] = sprintf(gettext("%s은(는) 올바른 포트 또는 alias가 아닙니다."), $input_address);
 				}
 			} else if ($_POST['type'] == "host" || $_POST['type'] == "network") {
 				if (is_subnet($input_address) ||
 				    (!is_ipaddr($input_address) && !is_hostname($input_address))) {
-					$input_errors[] = sprintf(gettext('%1$s is not a valid %2$s address, FQDN or alias.'), $input_address, $singular_types[$_POST['type']]);
+					$input_errors[] = sprintf(gettext('%1$s는 유효한 %2$s 주소, FQDN 또는 별칭이 아닙니다.'), $input_address, $singular_types[$_POST['type']]);
 				}
 			}
 			$tmpaddress = $input_address;
 			if ($_POST['type'] != "host" && is_ipaddr($input_address) && $input_address_subnet[$idx] <> "") {
 				if (!is_subnet($input_address . "/" . $input_address_subnet[$idx])) {
-					$input_errors[] = sprintf(gettext('%1$s/%2$s is not a valid subnet.'), $input_address, $input_address_subnet[$idx]);
+					$input_errors[] = sprintf(gettext('%1$s/%2$s 은 올바른 서브넷이 아닙니다.'), $input_address, $input_address_subnet[$idx]);
 				} else {
 					$tmpaddress .= "/" . $input_address_subnet[$idx];
 				}
@@ -454,7 +459,7 @@ if ($_POST['save']) {
 		}
 		unset($desc_fmt_err_found);
 		if ($wrongaliases <> "") {
-			$input_errors[] = sprintf(gettext('The alias(es): %s cannot be nested because they are not of the same type.'), $wrongaliases);
+			$input_errors[] = sprintf(gettext('The alias(es): %s은(는) 같은 유형이 아니기 때문에 중첩될 수 없습니다.'), $wrongaliases);
 		}
 	}
 
@@ -504,7 +509,7 @@ if ($_POST['save']) {
 		// Sort list
 		$a_aliases = msort($a_aliases, "name");
 
-		if (write_config(gettext("Edited a firewall alias."))) {
+		if (write_config(gettext("방화벽 alias를 편집했습니다."))) {
 			mark_subsystem_dirty('aliases');
 		}
 
@@ -543,36 +548,36 @@ $section_str = array(
 );
 
 $btn_str = array(
-	'network' => gettext("Add Network"),
-	'host'	=> gettext("Add Host"),
-	'port' => gettext("Add Port"),
-	'url' => gettext("Add URL"),
-	'url_ports' => gettext("Add URL"),
-	'urltable' => gettext("Add URL Table"),
-	'urltable_ports' => gettext("Add URL Table")
+	'network' => gettext("네트워크 추가"),
+	'host'	=> gettext("호스트 추가"),
+	'port' => gettext("포트 추가"),
+	'url' => gettext("URL 추가"),
+	'url_ports' => gettext("URL 추가"),
+	'urltable' => gettext("URL 테이블 추가"),
+	'urltable_ports' => gettext("URL 테이블 추가")
 );
 
 $label_str = array(
 	'network' => gettext("Network or FQDN"),
 	'host'	=> gettext("IP or FQDN"),
-	'port' => gettext("Port"),
+	'port' => gettext("포트"),
 	'url' => gettext("URL (IPs)"),
 	'url_ports' => gettext("URL (Ports)"),
 	'urltable' => gettext("URL Table (IPs)"),
 	'urltable_ports' => gettext("URL Table (Ports)")
 );
 
-$special_cidr_usage_text = gettext("The value after the \"/\" is the update frequency in days.");
+$special_cidr_usage_text = gettext("\"/\"다음의 값은 업데이트 빈도입니다.");
 
 $help = array(
-	'network' => gettext("Networks are specified in CIDR format. Select the CIDR mask that pertains to each entry. /32 specifies a single IPv4 host, /128 specifies a single IPv6 host, /24 specifies 255.255.255.0, /64 specifies a normal IPv6 network, etc. Hostnames (FQDNs) may also be specified, using a /32 mask for IPv4 or /128 for IPv6. An IP range such as 192.168.1.1-192.168.1.254 may also be entered and a list of CIDR networks will be derived to fill the range."),
-	'host' => gettext("Enter as many hosts as desired. Hosts must be specified by their IP address or fully qualified domain name (FQDN). FQDN hostnames are periodically re-resolved and updated. If multiple IPs are returned by a DNS query, all are used. An IP range such as 192.168.1.1-192.168.1.10 or a small subnet such as 192.168.1.16/28 may also be entered and a list of individual IP addresses will be generated."),
-	'port' => gettext("Enter ports as desired, with a single port or port range per entry. Port ranges can be expressed by separating with a colon."),
-	'url' => gettext("Enter as many URLs as desired. After saving, the URLs will be downloaded and the items imported into the alias. Use only with small sets of IP addresses (less than 3000)."),
-	'url_ports' => gettext("Enter as many URLs as desired. After saving, the URLs will be downloaded and the items imported into the alias. Use only with small sets of Ports (less than 3000)."),
-	'urltable' => gettext("Enter a single URL containing a large number of IPs and/or Subnets. After saving, the URLs will be downloaded and a table file containing these addresses will be created. This will work with large numbers of addresses (30,000+) or small numbers.") .
+	'network' => gettext("네트워크는 CIDR형식으로 지정됩니다. 각 항목과 관련된 CIDR마스크를 선택합니다. /32는 단일 IPv4호스트를 지정합니다. /128은 단일 IPv6호스트를 지정합니다. /24는 255.255.255.0을 지정합니다. /64는 일반 IPv6네트워크 등을 지정합니다. IPv4의 경우/32마스크를 사용하고 IPv6의 경우 128마스크를 사용하여 호스트 이름(FQDN)을 지정할 수도 있습니다. 192.168.1.1-192.168.1.254 같은 IP범위를 입력하고 범위를 채우기 위해 CIDR네트워크 목록을 가져올 수도 있습니다."),
+	'host' => gettext("원하는 수만큼 호스트를 입력하십시오. 호스트는 해당 IP주소 또는 FQDN(정규화된 도메인 이름)을 통해 지정되어야 합니다. FQDN호스트 이름은 주기적으로 다시 확인되고 업데이트됩니다. DNS쿼리에서 여러 IP가 반환되는 경우 모든 IP가 사용됩니다. 192.168.1.1-192.168.1.10과 같은 IP범위 또는 192.168.1.16/28과 같은 작은 서브넷도 입력할 수 있으며 개별 IP주소 목록도 입력합니다."),
+	'port' => gettext("항목 당 단일 포트 또는 포트 범위를 사용하여 원하는대로 포트를 입력하십시오. 포트 범위는 콜론으로 구분하여 나타낼 수 있습니다."),
+	'url' => gettext("원하는만큼 URL을 입력하십시오. 저장 후 URL이 다운로드되고 항목을 별칭으로 가져옵니다. 작은 IP 주소 집합 (3000 미만)에서만 사용하십시오."),
+	'url_ports' => gettext("원하는만큼 URL을 입력하십시오. 저장 후 URL이 다운로드되고 항목을 별칭으로 가져옵니다. 작은 포트 세트 (3000 미만)에서만 사용하십시오."),
+	'urltable' => gettext("다수의 IP 및 / 또는 서브넷을 포함하는 단일 URL을 입력하십시오. 저장 후 URL이 다운로드되고이 주소를 포함하는 테이블 파일이 생성됩니다.") .
 		"<br /><b>" . $special_cidr_usage_text . "</b>",
-	'urltable_ports' => gettext("Enter a single URL containing a list of Port numbers and/or Port ranges. After saving, the URL will be downloaded.") .
+	'urltable_ports' => gettext("포트 번호 및 포트 범위 목록이 포함 된 단일 URL을 입력하십시오. 저장 후 URL이 다운로드됩니다.") .
 		"<br /><b>" . $special_cidr_usage_text . "</b>",
 );
 

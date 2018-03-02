@@ -23,6 +23,11 @@
  * limitations under the License.
  */
 
+/*
+2018.03.02
+한글화 번역 시작
+*/
+
 ##|+PRIV
 ##|*IDENT=page-services-igmpproxy-edit
 ##|*NAME=Services: IGMP Proxy: Edit
@@ -139,7 +144,7 @@ $h2 = new Form_Input(
 
 $form = new Form;
 
-$section = new Form_Section('IGMP Proxy Edit');
+$section = new Form_Section('IGMP Proxy 편집');
 
 $optionlist = array();
 $iflist = get_configured_interface_with_descr();
@@ -166,7 +171,7 @@ $section->addInput(new Form_Select(
 	'type',
 	'*Type',
 	$pconfig['type'],
-	['upstream' => gettext('Upstream Interface'), 'downstream' => gettext('Downstream Interface')]
+	['upstream' => gettext('업스트림 인터페이스'), 'downstream' => gettext('다운스트림 ')]
 ))->setHelp('The upstream network interface is the outgoing interface which is responsible for communicating to available multicast data sources. ' .
 			'There can only be one upstream interface.%1$s' .
 			'Downstream network interfaces are the distribution	interfaces to the destination networks, where multicast clients can join groups and '.
